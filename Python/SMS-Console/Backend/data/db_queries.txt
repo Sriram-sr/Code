@@ -1,0 +1,227 @@
+Student Table:
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    date_of_birth DATE,
+    gender VARCHAR(10),
+    email VARCHAR(100),
+    phone_number VARCHAR(20),
+    address VARCHAR(200),
+    guardian_name VARCHAR(100),
+    guardian_phone_number VARCHAR(20),
+    admission_date DATE,
+    nationality VARCHAR(50),
+    emergency_contact_name VARCHAR(100),
+    emergency_contact_phone VARCHAR(20)
+);
+
+
+INSERT INTO Students (student_id, first_name, last_name, date_of_birth, gender, email, phone_number, address, guardian_name, guardian_phone_number, admission_date, nationality, emergency_contact_name, emergency_contact_phone)
+VALUES
+    (1, 'John', 'Doe', '2002-05-15', 'Male', 'john.doe@example.com', '+1234567890', '123 Main St, City', 'Jane Doe', '+9876543210', '2020-08-25', 'USA', 'Mary Smith', '+1357908642'),
+    (2, 'Alice', 'Johnson', '2003-02-10', 'Female', 'alice.johnson@example.com', '+9876543210', '456 Park Ave, Town', 'Bob Johnson', '+1234567890', '2019-09-10', 'Canada', 'Michael Brown', '+2468135790'),
+    (3, 'David', 'Smith', '2002-11-22', 'Male', 'david.smith@example.com', '+5555555555', '789 Elm St, Village', 'Samantha Smith', '+4444444444', '2020-05-01', 'USA', 'Lucy Anderson', '+7777777777'),
+    (4, 'Emily', 'Taylor', '2003-07-05', 'Female', 'emily.taylor@example.com', '+1111111111', '101 Oak St, City', 'John Taylor', '+2222222222', '2019-12-18', 'UK', 'Oliver Turner', '+9999999999'),
+    (5, 'Michael', 'Lee', '2002-09-30', 'Male', 'michael.lee@example.com', '+7777777777', '222 Maple Ave, Town', 'Sophia Lee', '+8888888888', '2021-02-22', 'USA', 'Grace Wilson', '+3333333333'),
+    (6, 'Emma', 'Wang', '2003-04-12', 'Female', 'emma.wang@example.com', '+4444444444', '333 Pine St, Village', 'James Wang', '+5555555555', '2020-07-07', 'China', 'Jacob Chen', '+2222222222'),
+    (7, 'Matthew', 'Garcia', '2002-06-18', 'Male', 'matthew.garcia@example.com', '+9999999999', '444 Birch Ave, City', 'Isabella Garcia', '+1111111111', '2019-10-03', 'USA', 'Ava Martinez', '+4444444444'),
+    (8, 'Olivia', 'Lopez', '2003-01-09', 'Female', 'olivia.lopez@example.com', '+2222222222', '555 Cedar St, Town', 'Luis Lopez', '+7777777777', '2021-05-20', 'Mexico', 'Sophia Sanchez', '+1111111111'),
+    (9, 'Daniel', 'Kim', '2002-08-27', 'Male', 'daniel.kim@example.com', '+6666666666', '666 Walnut Ave, Village', 'Jennifer Kim', '+3333333333', '2020-04-11', 'USA', 'Grace Park', '+6666666666'),
+    (10, 'Sophia', 'Chang', '2003-03-14', 'Female', 'sophia.chang@example.com', '+8888888888', '777 Oakwood St, City', 'David Chang', '+6666666666', '2019-11-28', 'South Korea', 'Emily Kim', '+8888888888');
+
+Department table:
+
+CREATE TABLE Departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(100),
+    department_code VARCHAR(20),
+    head_of_department VARCHAR(100),
+    contact_email VARCHAR(100)
+);
+
+INSERT INTO Departments (department_id, department_name, department_code, head_of_department, contact_email)
+VALUES
+    (1, 'Computer Science', 'CS', 'Dr. John Smith', 'john.smith@example.com'),
+    (2, 'Mathematics', 'MATH', 'Prof. Alice Johnson', 'alice.johnson@example.com'),
+    (3, 'Physics', 'PHYS', 'Dr. David Lee', 'david.lee@example.com'),
+    (4, 'History', 'HIST', 'Prof. Sarah Miller', 'sarah.miller@example.com'),
+    (5, 'Biology', 'BIOL', 'Dr. Emily Wilson', 'emily.wilson@example.com');
+
+Teacher Table
+
+CREATE TABLE Teachers (
+    teacher_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    phone_number VARCHAR(20),
+    address VARCHAR(200),
+    department_id INT,  -- Optional Foreign Key referencing Departments table
+    hire_date DATE,
+    specialization VARCHAR(100),
+    is_active BOOLEAN,
+    FOREIGN KEY (department_id) REFERENCES Departments(department_id)
+);
+
+INSERT INTO Teachers (teacher_id, first_name, last_name, email, phone_number, address, department_id, hire_date, specialization, is_active)
+VALUES
+    (1, 'Mark', 'Johnson', 'mark.johnson@example.com', '+1234567890', '123 Main St, City', 1, '2020-01-15', 'Computer Science', true),
+    (2, 'Emma', 'Williams', 'emma.williams@example.com', '+9876543210', '456 Park Ave, Town', 2, '2019-05-20', 'Mathematics', true),
+    (3, 'Michael', 'Lee', 'michael.lee@example.com', '+5555555555', '789 Elm St, Village', 1, '2021-03-10', 'Computer Engineering', true),
+    (4, 'Laura', 'Miller', 'laura.miller@example.com', '+1111111111', '101 Oak St, City', 4, '2018-08-25', 'History', false),
+    (5, 'Sarah', 'Wilson', 'sarah.wilson@example.com', '+7777777777', '222 Maple Ave, Town', 5, '2022-02-10', 'Biology', true),
+    (6, 'Daniel', 'Chang', 'daniel.chang@example.com', '+6666666666', '666 Walnut Ave, Village', NULL, '2017-11-30', 'Physics', true),
+    (7, 'Sophia', 'Garcia', 'sophia.garcia@example.com', '+4444444444', '333 Pine St, Village', NULL, '2019-09-15', 'Chemistry', true),
+    (8, 'Alex', 'Lopez', 'alex.lopez@example.com', '+2222222222', '555 Cedar St, Town', 3, '2020-06-28', 'Electrical Engineering', true),
+    (9, 'Oliver', 'Brown', 'oliver.brown@example.com', '+9999999999', '777 Oakwood St, City', 2, '2018-04-05', 'Algebra', true),
+    (10, 'Sophie', 'Anderson', 'sophie.anderson@example.com', '+8888888888', '888 Elmwood Ave, Town', NULL, '2021-10-12', 'Literature', true);
+
+Courses Table
+
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100),
+    course_code VARCHAR(20),
+    description TEXT,
+    credits INT,
+    department_id INT,
+    start_date DATE,
+    end_date DATE,
+    instructor_id INT,
+    prerequisite_course_id INT,
+    course_level VARCHAR(20),
+    is_active BOOLEAN,
+    max_students INT,
+    syllabus_url VARCHAR(200),
+    FOREIGN KEY (department_id) REFERENCES Departments(department_id),
+    FOREIGN KEY (instructor_id) REFERENCES Teachers(teacher_id),
+    FOREIGN KEY (prerequisite_course_id) REFERENCES Courses(course_id)
+);
+
+INSERT INTO Courses (course_id, course_name, course_code, description, credits, department_id, start_date, end_date, instructor_id, prerequisite_course_id, course_level, is_active, max_students, syllabus_url)
+VALUES
+    (1, 'Introduction to Computer Science', 'CS101', 'This course provides an introduction to computer science fundamentals.', 3, 1, '2023-09-01', '2023-12-15', 1, NULL, 'Beginner', true, 50, 'https://example.com/cs101-syllabus'),
+    (2, 'Advanced Mathematics', 'MATH301', 'An advanced course in mathematics covering various topics.', 4, 2, '2023-10-05', '2024-01-15', 2, NULL, 'Advanced', true, 40, 'https://example.com/math301-syllabus'),
+    (3, 'Web Development', 'WEB202', 'Learn web development technologies and frameworks.', 3, 1, '2023-11-10', '2024-03-20', 3, 1, 'Intermediate', true, 30, 'https://example.com/web202-syllabus'),
+    (4, 'European History', 'HIST201', 'A survey of European history from ancient to modern times.', 3, 4, '2023-09-15', '2023-12-20', 4, NULL, 'Intermediate', true, 45, 'https://example.com/hist201-syllabus'),
+    (5, 'Biology Fundamentals', 'BIO101', 'Introduction to basic concepts in biology and life sciences.', 4, 5, '2023-10-01', '2024-02-10', 5, NULL, 'Beginner', true, 60, 'https://example.com/bio101-syllabus'),
+    (6, 'Quantum Physics', 'PHYS401', 'Study of quantum mechanics and its applications in physics.', 5, 1, '2023-11-20', '2024-04-30', 6, 3, 'Advanced', true, 25, 'https://example.com/phys401-syllabus'),
+    (7, 'Organic Chemistry', 'CHEM301', 'An advanced course in organic chemistry principles and reactions.', 4, 3, '2023-09-10', '2023-12-20', 7, NULL, 'Advanced', true, 35, 'https://example.com/chem301-syllabus'),
+    (8, 'Electrical Circuits', 'EE202', 'Fundamentals of electrical circuits and circuit analysis.', 3, 3, '2023-10-15', '2024-02-10', 8, 6, 'Intermediate', true, 30, 'https://example.com/ee202-syllabus'),
+    (9, 'Linear Algebra', 'MATH201', 'Introduction to linear algebra and vector spaces.', 3, 2, '2023-11-01', '2024-03-15', 9, NULL, 'Beginner', true, 40, 'https://example.com/math201-syllabus'),
+    (10, 'World Literature', 'LIT202', 'Exploration of world literature from various cultures and time periods.', 4, NULL, '2023-09-20', '2024-01-25', 10, NULL, 'Intermediate', true, 50, 'https://example.com/lit202-syllabus');
+
+Enrollment Table:
+
+CREATE TABLE Enrollments (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    enrollment_status VARCHAR(20),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+INSERT INTO Enrollments (enrollment_id, student_id, course_id, enrollment_date, enrollment_status)
+VALUES
+    (1, 1, 8, '2023-08-01', 'active'),
+    (2, 2, 6, '2023-08-02', 'active'),
+    (3, 3, 9, '2023-08-03', 'active'),
+    (4, 4, 1, '2023-08-04', 'active'),
+    (5, 5, 1, '2023-08-05', 'active');
+
+Grades Table:
+
+CREATE TABLE Grades (
+    grade_id INT PRIMARY KEY,
+    enrollment_id INT,
+    grade VARCHAR(2),
+    grade_date DATE,
+    comments TEXT,
+    grader_id INT,
+    feedback_url VARCHAR(200),
+    FOREIGN KEY (enrollment_id) REFERENCES Enrollments(enrollment_id),
+    FOREIGN KEY (grader_id) REFERENCES Teachers(teacher_id) -- Assuming Teachers table exists
+);
+
+INSERT INTO Grades (grade_id, enrollment_id, grade, grade_date, comments, grader_id, feedback_url)
+VALUES
+    (1, 1, 'A', '2023-08-15', 'Excellent work!', 1, 'https://example.com/feedback1'),
+    (2, 2, 'B+', '2023-08-16', 'Good effort!', 2, 'https://example.com/feedback2'),
+    (3, 3, 'B', '2023-08-17', 'Well done!', 3, 'https://example.com/feedback3'),
+    (4, 4, 'A-', '2023-08-18', 'Great job!', 4, 'https://example.com/feedback4'),
+    (5, 5, 'C', '2023-08-19', 'Keep working hard!', 5, 'https://example.com/feedback5');
+
+CREATE TABLE Attendance (
+    attendance_id INT PRIMARY KEY,
+    enrollment_id INT,
+    attendance_date DATE,
+    status VARCHAR(20),
+    additional_info TEXT,
+    teacher_id INT,
+    FOREIGN KEY (enrollment_id) REFERENCES Enrollments(enrollment_id),
+    FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id)
+);
+
+INSERT INTO Attendance (attendance_id, enrollment_id, attendance_date, status, additional_info, teacher_id)
+VALUES
+    (1, 1, '2023-08-20', 'present', 'Arrived on time', 1),
+    (2, 2, '2023-08-20', 'absent', 'Sick', 2),
+    (3, 3, '2023-08-21', 'present', 'Active participation', 3),
+    (4, 4, '2023-08-21', 'present', 'Contributed to class discussion', 4),
+    (5, 5, '2023-08-22', 'absent', 'Family emergency', 5);
+
+Users Table
+
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    password VARCHAR(100),
+    user_type VARCHAR(20),
+    profile_picture VARCHAR(200),
+    is_active BOOLEAN,
+    last_login DATETIME,
+    registration_date DATE,
+    reset_token VARCHAR(100),
+    reset_token_expiry DATETIME
+);
+
+INSERT INTO Users (user_id, username, password, user_type, profile_picture, is_active, last_login, registration_date, reset_token, reset_token_expiry)
+VALUES
+    (1, 'JohnDoe', 'Doe@8124', 'student', NULL, true, '2023-08-01 10:30:00', '2023-08-01', NULL, NULL),
+    (2, 'AliceJohnson', 'Johnson@8124', 'student', NULL, true, '2023-08-02 11:45:00', '2023-08-02', NULL, NULL),
+    (3, 'DavidSmith', 'Smith@8124', 'student', NULL, true, '2023-08-03 14:20:00', '2023-08-03', NULL, NULL),
+    (4, 'EmilyTaylor', 'Taylor@8124', 'student', NULL, true, '2023-08-04 09:15:00', '2023-08-04', NULL, NULL),
+    (5, 'MichaelLee', 'Lee@8124', 'student', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (6, 'EmmaWang', 'Wang@8124', 'student', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (7, 'MatthewGarcia', 'Garcia@8124', 'student', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (8, 'OliviaLopez', 'Lopez@8124', 'student', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (9, 'DanielKim', 'Kim@8124', 'student', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (10, 'SophiaChang', 'Chang@8124', 'student', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (11, 'MarkJohnson', 'Johnson@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (12, 'EmmaWilliams', 'Williams@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (13, 'StuartBroad', 'Lee@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (14, 'LauraMiller', 'Miller@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (15, 'SarahWilson', 'Wilson@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (16, 'Daniel', 'Chang@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (17, 'SophiaGarcia', 'Garcia@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (18, 'AlexLopez', 'Lopez@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (19, 'OliverBrown', 'Brown@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL),
+    (20, 'SophiaAnderson', 'Anderson@8124', 'teacher', NULL, true, '2023-08-05 16:00:00', '2023-08-05', NULL, NULL);
+
+To update Students table with user_id which points to user table
+
+ALTER TABLE Students
+ADD COLUMN user_id INT,
+ADD FOREIGN KEY (user_id) REFERENCES Users(user_id);
+
+UPDATE Students
+SET user_id = 1 -- Replace with the correct user_id value from the Users table
+WHERE student_id = 1; -- Replace with the appropriate student_id
+
+
+
+
