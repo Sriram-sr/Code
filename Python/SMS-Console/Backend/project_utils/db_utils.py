@@ -25,6 +25,14 @@ def get_select_query(table_name=None, header=None):
     return table
 
 
+def insert_to_table(data, table):
+    field_list = ', '.join(data.keys())
+    query = f'INSERT INTO {table} ({field_list}) VALUES {tuple(data.values())}'
+    db_cursor.execute(query)
+    db_connection.commit()
+    print('Inserted data successfully')
+
+
 def close_connection():
     db_cursor.close()
     db_connection.close()
