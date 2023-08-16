@@ -1,4 +1,6 @@
 const path = require('path');
 
-module.exports = path.dirname(require.main.filename); // This will return root directory
+exports.rootDir = path.dirname(require.main.filename); // This will return root directory
+exports.staticDir = path.join(this.rootDir, 'public');
+
 
