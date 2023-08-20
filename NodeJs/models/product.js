@@ -1,7 +1,7 @@
-const products = [];
 const utilPaths = require('../utils/path');
 const path = require('path');
 const fs = require('fs');
+const Cart = require('./cart');
 
 const filePath = path.join(utilPaths.rootDir, 'data', 'products.json');
 
@@ -10,13 +10,13 @@ const getProductsFromFile = cb => {
     if (err) {
       return cb([]);
     }
-    // console.log('Readed content before passing ', JSON.parse(readContent));
     return cb(JSON.parse(readContent));
   });
 };
 
 module.exports = class Product {
-  constructor(title, imageUrl, price, description) {
+  constructor(id, title, imageUrl, price, description) {
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.price = price;
@@ -24,13 +24,23 @@ module.exports = class Product {
   }
 
   save() {
-    this.id = Math.random().toString();
-    console.log('ID generated is ', this.id);
     getProductsFromFile(products => {
-      products.push(this);
-      fs.writeFile(filePath, JSON.stringify(products), err => {
-        console.log('Error while writing file ', err);
-      });
+      if (this.id) {
+        const existingProductIndex = products.findIndex(
+          product => product.id === this.id
+        );
+        let updatedProducts = [...products];
+        updatedProducts[existingProductIndex] = this;
+        fs.writeFile(filePath, JSON.stringify(updatedProducts), err => {
+          console.log('Error while writing file ', err);
+        });
+      } else {
+        this.id = Math.random().toString();
+        products.push(this);
+        fs.writeFile(filePath, JSON.stringify(products), err => {
+          console.log('Error while writing file ', err);
+        });
+      }
     });
   }
 
@@ -39,9 +49,21 @@ module.exports = class Product {
   }
 
   static findProductById(id, cb) {
-    getProductsFromFile((products) => {
-        const product = products.find(p => p.id == id);
-        cb(product);
+    getProductsFromFile(products => {
+      const product = products.find(p => p.id == id);
+      cb(product);
+    });
+  }
+
+  static deleteById(id) {
+    getProductsFromFile(products => {
+      const toDeleteProduct = products.find(product => product.id === id);
+      const prodPrice = toDeleteProduct.price;
+      const updatedProducts = products.filter(product => product.id !== id);
+      fs.writeFile(filePath, JSON.stringify(updatedProducts), err => {
+        console.log('Error', err);
+      });
+      Cart.deleteFromCart(id, prodPrice);
     });
   }
 };
