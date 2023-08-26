@@ -1,3 +1,3 @@
 So far what has been done in coding part is,
 
-Upto adding a cart model, before mysql database.
+Finished how to use mysql in node js with Sequelize package and now onto MongoDB.
