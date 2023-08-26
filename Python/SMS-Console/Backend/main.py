@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from project_utils.common_utils import *
 from project_utils.db_utils import DatabaseHandler
 from project_utils.macros import *
@@ -93,11 +92,41 @@ class StudentFunctionalities:
         add_student_data = get_user_inputs(fields=fields_and_details)
         add_student_data.update({USER_ID: self.user_id, ADMISSION_DATE: datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
         # db_utils.insert_to_table(data=add_student_data, table=STUDENT_TABLE)
-        print_formatted_message('Student Added Successfully')
+        log_banner('Student Added Successfully')
 
 
 class TeacherFunctionalities:
-    pass
+    """
+        A class providing functionalities specific to a teacher user.
+
+        This class encapsulates methods and attributes tailored for teacher-related actions.
+        Teachers can access and interact with their personal information and much more.
+
+        Attributes:
+            user_id (int): The unique identifier of the teacher user.
+    """
+
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+    def add_teacher_details(self):
+        """
+        Adds student details post registration.
+
+        :return: None
+        """
+        fields_and_details = {
+            FIRST_NAME: None,
+            LAST_NAME: None,
+            EMAIL: None,
+            PHONE_NUMBER: None,
+            ADDRESS: None,
+            SPECIALIZATION: None
+        }
+        add_teacher_data = get_user_inputs(fields=fields_and_details)
+        add_teacher_data.update({HIRE_DATE: datetime.now().strftime('%Y-%m-%d'), USER_ID: self.user_id, IS_ACTIVE: 1})
+        db_utils.insert_to_table(data=add_teacher_data, table=TEACHER_TABLE)
+        log_banner('Teacher Added Successfully')
 
 
 class Authentication:
@@ -117,17 +146,35 @@ class Authentication:
         }
         register_user_data = get_user_inputs(fields=fields_and_details)
         register_user_data.update({'registration_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
-        # db_utils.insert_to_table(data=register_user_data, table='users')
-        print_formatted_message('User Registered Successfully')
+        db_utils.insert_to_table(data=register_user_data, table='users')
+        log_banner('User Registered Successfully')
+        registered_user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
+                                                       where_field=USERNAME,
+                                                       target_value=register_user_data[USERNAME])
         if register_user_data[USERTYPE] == STUDENT.lower():
-            registered_user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
-                                                           where_field=USERNAME,
-                                                           target_value=register_user_data[USERNAME])
             student = StudentFunctionalities(user_id=registered_user_id)
             student.add_student_details()
+        elif register_user_data[USERTYPE] == TEACHER.lower():
+            print('Teacher and the user id is ', registered_user_id)
+            teacher = TeacherFunctionalities(user_id=registered_user_id)
+            teacher.add_teacher_details()
 
     def login(self):
-        pass
+        fields_and_details = {
+            USERNAME: None,
+            PASSWORD: None
+        }
+        login_user_data = get_user_inputs(fields=fields_and_details)
+        # try:
+        password_for_username = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=PASSWORD,
+                                                          where_field=USERNAME,
+                                                          target_value=login_user_data[USERNAME])
+        if password_for_username == login_user_data[PASSWORD]:
+            print('Authenticated')
+        else:
+            print('Enter valid Credentials')
+        # except Exception as err:
+        #     print(err)
 
 
 def start_app():

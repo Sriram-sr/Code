@@ -41,7 +41,7 @@ def show_options(*options):
     print()
 
 
-def print_formatted_message(message):
+def log_banner(message):
     """
     Displays Banner like text.
 
