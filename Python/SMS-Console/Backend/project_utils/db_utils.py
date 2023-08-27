@@ -60,7 +60,8 @@ class DatabaseHandler:
 
         :return:  Formatted table containing the retrieved data.
         """
-        self.db_cursor.execute(f'select * from {table_name}')
+        query = f'select * from {table_name}'
+        self.db_cursor.execute(query)
         all_students = self.db_cursor.fetchall()
         table = tabulate(all_students, headers=header, tablefmt='grid')
 
@@ -77,25 +78,44 @@ class DatabaseHandler:
 
         :return: The retrieved value from the specified field.
         """
-        self.db_cursor.execute(f'select {field_to_get} from {table_name} where {where_field}=\"{target_value}\"')
+        query = f'select {field_to_get} from {table_name} where {where_field}=\"{target_value}\"'
+        self.db_cursor.execute(query)
         output = self.db_cursor.fetchall()
 
         return output[0][0]
 
-    def insert_to_table(self, data, table):
+    def insert_to_table(self, data, table_name):
         """
         Insert data into a specified database table.
 
         :param data: A dictionary containing column-value pairs to insert.
-        :param table: The name of the table to insert data into.
+        :param table_name: The name of the table to insert data into.
 
         :return: None
         """
         field_list = ', '.join(data.keys())
-        query = f'INSERT INTO {table} ({field_list}) VALUES {tuple(data.values())}'
+        query = f'INSERT INTO {table_name} ({field_list}) VALUES {tuple(data.values())}'
         self.db_cursor.execute(query)
         self.db_connection.commit()
         print('Inserted data successfully')
+
+    def check_entry_existence(self, table_name=None, where_field=None, target_value=None):
+        """
+        To check if specific entry is present in a table based on some values.
+
+        :param table_name: The name of the table to retrieve data from.
+        :param where_field: The field to use in the WHERE condition.
+        :param target_value: The value to match in the WHERE condition.
+
+        :return: Int value 1/0 based on entry's existence.
+
+
+        """
+        query = f'SELECT EXISTS(SELECT 1 FROM {table_name} WHERE {where_field} = {target_value})'
+        self.db_cursor.execute(query)
+        output = self.db_cursor.fetchall()
+
+        return output[0][0]
 
     def close_connection(self):
         """

@@ -36,7 +36,7 @@ class Admin:
                            ADMISSION_DATE, NATIONALITY,
                            EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_PHONE, USER_ID]
         all_students_data = db_utils.get_select_query(table_name=self.student_table, header=students_header)
-        print(all_students_data)
+        display_in_console(all_students_data)
 
     def show_all_teachers(self):
         """
@@ -51,7 +51,7 @@ class Admin:
         teachers_header = [TEACHER_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, DEPARTMENT_ID, HIRE_DATE,
                            DEPARTMENT_ID, HIRE_DATE, SPECIALIZATION, IS_ACTIVE, USER_ID]
         all_teachers_data = db_utils.get_select_query(table_name=self.teacher_table, header=teachers_header)
-        print(all_teachers_data)
+        display_in_console(all_teachers_data)
 
 
 class StudentFunctionalities:
@@ -91,7 +91,7 @@ class StudentFunctionalities:
         }
         add_student_data = get_user_inputs(fields=fields_and_details)
         add_student_data.update({USER_ID: self.user_id, ADMISSION_DATE: datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
-        # db_utils.insert_to_table(data=add_student_data, table=STUDENT_TABLE)
+        # db_utils.insert_to_table(data=add_student_data, table_name=STUDENT_TABLE)
         log_banner('Student Added Successfully')
 
 
@@ -125,7 +125,7 @@ class TeacherFunctionalities:
         }
         add_teacher_data = get_user_inputs(fields=fields_and_details)
         add_teacher_data.update({HIRE_DATE: datetime.now().strftime('%Y-%m-%d'), USER_ID: self.user_id, IS_ACTIVE: 1})
-        db_utils.insert_to_table(data=add_teacher_data, table=TEACHER_TABLE)
+        db_utils.insert_to_table(data=add_teacher_data, table_name=TEACHER_TABLE)
         log_banner('Teacher Added Successfully')
 
 
@@ -146,7 +146,7 @@ class Authentication:
         }
         register_user_data = get_user_inputs(fields=fields_and_details)
         register_user_data.update({'registration_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
-        db_utils.insert_to_table(data=register_user_data, table='users')
+        db_utils.insert_to_table(data=register_user_data, table_name='users')
         log_banner('User Registered Successfully')
         registered_user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
                                                        where_field=USERNAME,
@@ -170,11 +170,22 @@ class Authentication:
                                                           where_field=USERNAME,
                                                           target_value=login_user_data[USERNAME])
         if password_for_username == login_user_data[PASSWORD]:
-            print('Authenticated')
+            logged_in_user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
+                                                          where_field=USERNAME,
+                                                          target_value=login_user_data[USERNAME])
+            student = db_utils.check_entry_existence(table_name=STUDENT_TABLE, target_value=logged_in_user_id,
+                                                     where_field=USER_ID)
+            if student:
+                print('Found that you are a Student')
+            teacher = db_utils.check_entry_existence(table_name=TEACHER_TABLE, target_value=logged_in_user_id,
+                                                     where_field=USER_ID)
+            if teacher:
+                print('Found that you are a Teacher')
         else:
             print('Enter valid Credentials')
-        # except Exception as err:
-        #     print(err)
+
+    def find_user_type(self):
+        pass
 
 
 def start_app():
@@ -185,24 +196,36 @@ def start_app():
     """
     db_utils.start_db_connection()
     display_welcome_msg()
-    show_options('admin', 'others')
+    show_options(message='Choose an option', options=['admin', 'others'])
     user_role = get_user_inputs(question_str='Enter your role(1/2): ', data_type='int')
 
     if user_role == 1:
         admin_instance = Admin()
-        admin_instance.show_all_teachers()
+        enter_new_line()
+        show_options(message='What would you like to do', options=['Show Teachers', 'Show Students'])
+        admin_choice = get_user_inputs(question_str='Enter your choice(1/2): ', data_type='int')
+        if admin_choice == 1:
+            admin_instance.show_all_teachers()
+        else:
+            admin_instance.show_all_students()
     elif user_role == 2:
         user_auth_instance = Authentication()
-        show_options('Register', 'Login')
+        show_options(options=['Register', 'Login'])
         user_auth_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
         if user_auth_choice == 1:
             user_auth_instance.register()
         else:
             user_auth_instance.login()
+        enter_new_line()
 
     db_utils.close_connection()
-    print('Closed DB Connection')
+    log_banner('Closed DB Connection')
 
 
 if __name__ == '__main__':
-    start_app()
+    try:
+        start_app()
+    except KeyboardInterrupt:
+        enter_new_line()
+        db_utils.close_connection()
+        log_banner('Closed DB Connection')

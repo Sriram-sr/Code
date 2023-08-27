@@ -27,15 +27,17 @@ def get_user_inputs(question_str='', data_type=None, fields=None):
     return input(question_str)
 
 
-def show_options(*options):
+def show_options(message=None, options=None):
     """
     Prints options with numbers.
 
+    :param message: A String optional for question to be displayed before showing options.
     :param options: A list of options to display.
 
     :return: None
     """
-    print("Choose an option:")
+    if message:
+        print(f'{message}: ')
     for i, option in enumerate(options, start=1):
         print(f"{i}. {option}")
     print()
@@ -65,3 +67,22 @@ def display_welcome_msg():
     """
     result = pyfiglet.figlet_format('Student Management System', font='5lineoblique')
     print(result)
+
+
+def enter_new_line():
+    """
+    Only prints a new line.
+
+    :return:
+    """
+    print()
+
+
+def display_in_console(data):
+    """
+    Just prints data onto console.
+
+    :param data:
+    :return:
+    """
+    print(data)
