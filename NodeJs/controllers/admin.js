@@ -13,16 +13,10 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const user = req.user;
-  user
-    .createProduct({
-      title: title,
-      imageUrl: imageUrl,
-      price: price,
-      description: description,
-      userId: user.id
-    })
-    .then(result => {
+  const product = new Product(title, price, imageUrl, description);
+  product
+    .save()
+    .then(() => {
       console.log('Created Product Successfully!!!');
       res.redirect('/admin/products');
     })
@@ -39,7 +33,7 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then(products => {
       res.render('admin/products', {
         pageTitle: 'All products',
