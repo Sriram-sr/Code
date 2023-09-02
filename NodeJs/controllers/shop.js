@@ -1,8 +1,8 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
+const Order = require('../models/order');
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then(products => {
       res.render('shop/index', {
         pageTitle: 'Shop',
@@ -11,12 +11,12 @@ exports.getIndex = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      console.log('Error while getting index page ', err);
     });
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then(products => {
       res.render('shop/product-list', {
         pageTitle: 'Shop',
@@ -25,7 +25,7 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      console.log('Error while getting all products page ', err);
     });
 };
 
@@ -40,39 +40,20 @@ exports.getProduct = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      console.log('Error while getting single product page ', err);
     });
-
-  //   Product.findAll({ // can use this alternate method to fetch some single record.
-  //     where: {
-  //       id: prodId,
-  //     },
-  //   })
-  //     .then(product => {
-  //       console.log(product);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  //     res.redirect('/');
 };
 
 exports.getCart = (req, res, next) => {
   req.user
-    .getCart()
-    .then(cart => {
-      return cart
-        .getProducts()
-        .then(products => {
-          res.render('shop/cart', {
-            path: '/cart',
-            pageTitle: 'Your Cart',
-            products: products,
-          });
-        })
-        .catch(err => {
-          console.log('Error while Fetching products for Cart ', err);
-        });
+    .populate('cart.items.productId')
+    .then(user => {
+      const products = user.cart.items;
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: products,
+      });
     })
     .catch(err => {
       console.log('Error while fetching cart table data', err);
@@ -81,92 +62,62 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
-  let fetchedCart;
-  let newQuantity = 1;
-  req.user
-    .getCart()
-    .then(cart => {
-      fetchedCart = cart;
-      cart
-        .getProducts({ where: { id: prodId } })
-        .then(products => {
-          let product;
-          if (products.length > 0) {
-            product = products[0];
-          }
-          if (product) {
-            const oldQuantity = product.cartItem.quantity;
-            newQuantity = oldQuantity + 1;
-            return fetchedCart.addProduct(product, {
-              through: { quantity: newQuantity },
-            });
-          }
-          return Product.findByPk(prodId)
-            .then(product => {
-              return fetchedCart.addProduct(product, {
-                through: { quantity: newQuantity },
-              });
-            })
-            .catch(err => {
-              console.log(
-                'Error while fetching products from Products table with ID ',
-                err
-              );
-            });
-        })
-        .then(() => {
-          res.redirect('/cart');
-        })
-        .catch(err => {
-          console.log('Error while fetching products for specific cart ', err);
-        });
+  Product.findById(prodId)
+    .then(product => {
+      return req.user.addToCart(product);
     })
-    .catch(err => {
-      console.log('Error while getting cart ', err);
+    .then(result => {
+      res.redirect('/cart');
     });
 };
-
-let count = 0;
 
 exports.deleteCartItem = (req, res, next) => {
-  count += 1;
   const prodId = req.body.prodId;
   req.user
-    .getCart()
-    .then(cart => {
-      cart
-        .getProducts({ where: { id: prodId } })
-        .then(products => {
-          const product = products[0];
-          product.cartItem.destroy();
-          res.redirect('/cart');
-        })
-        .catch(err => {
-          console.log('Error while getting product in the cart ', err);
-        });
+    .removeFromCart(prodId)
+    .then(result => {
+      res.redirect('/cart');
     })
     .catch(err => {
-      console.log('Error while getting Cart for the user ', err);
+      console.log('Error while deleting from Cart ', err);
     });
 };
 
-exports.createOrder = (req, res, next) => {
-  req.user.getCart().then(cart => {
-    return cart.getProducts()
-  })
-  .then(products => {
-    console.log('Products are ',products);
-  })
-  .catch(err => {
-    console.log('Error while fetching cart ', err);
-  });
-}
+exports.postOrder = (req, res, next) => {
+  req.user
+    .populate('cart.items.productId')
+    .then(user => {
+      const products = user.cart.items.map(i => {
+        return { quantity: i.quantity, product: { ...i.productId._doc } };
+      });
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user,
+        },
+        products: products,
+      });
+      return order.save();
+    })
+    .then(result => {
+      return req.user.clearCart();
+    })
+    .then(() => {
+      res.redirect('/orders');
+    })
+    .catch(err => console.log('Error caught while saving order ', err));
+};
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders',
-  });
+  Order.find({ 'user.userId': req.user._id })
+    .then(orders => {
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders: orders,
+      });
+    })
+    .catch(err => console.log('Error while getting orders ', err));
 };
 
 exports.getCheckout = (req, res, next) => {
