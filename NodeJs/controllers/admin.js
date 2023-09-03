@@ -5,6 +5,7 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -18,7 +19,7 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: req.user
+    userId: req.user,
   });
   product
     .save()
@@ -31,12 +32,13 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.find()
+  Product.find({userId: req.user._id})
     .then(products => {
       res.render('admin/products', {
         pageTitle: 'All products',
         prods: products,
         path: '/admin/products',
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch(err => {
@@ -57,6 +59,7 @@ exports.getEditProduct = (req, res, next) => {
         path: '/admin/add-product',
         editing: editMode,
         product: product,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch(err => {
@@ -70,17 +73,19 @@ exports.updateProduct = (req, res, next) => {
   const updatedTitle = updatedData.title;
   const updatedimageUrl = updatedData.imageUrl;
   const updatedPrice = updatedData.price;
-  const updatedDescription = updatedData.description;
+  const updatedDesc = updatedData.description;
   Product.findById(productId)
     .then(product => {
+      if (product.userId !== req.user._id) {
+        return res.redirect('/');
+      }
       product.title = updatedTitle;
       product.imageUrl = updatedimageUrl;
       product.price = updatedPrice;
-      product.description = updatedDescription;
-      return product.save();
-    })
-    .then(result => {
-      res.redirect('/admin/products');
+      product.description = updatedDesc;
+      return product.save().then(result => {
+        res.redirect('/admin/products');
+      });
     })
     .catch(err => {
       console.log('Error while updating Product ', err);
@@ -88,7 +93,7 @@ exports.updateProduct = (req, res, next) => {
 };
 
 exports.deleteProduct = (req, res, next) => {
-  Product.findByIdAndRemove(req.body.productId)
+  Product.findOneAndDelete({_id: req.body.productId, userId: req.user._id})
     .then(result => {
       res.redirect('/');
     })
