@@ -75,6 +75,7 @@ class StudentFunctionalities:
 
         :return: None
         """
+        log_banner('Getting Student Details')
         fields_and_details = {
             FIRST_NAME: None,
             LAST_NAME: None,
@@ -93,6 +94,12 @@ class StudentFunctionalities:
         add_student_data.update({USER_ID: self.user_id, ADMISSION_DATE: datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
         # db_utils.insert_to_table(data=add_student_data, table_name=STUDENT_TABLE)
         log_banner('Student Added Successfully')
+
+    def view_courses(self):
+        pass
+
+    def enroll_course(self):
+        pass
 
 
 class TeacherFunctionalities:
@@ -115,6 +122,7 @@ class TeacherFunctionalities:
 
         :return: None
         """
+        log_banner('Getting Teacher Details')
         fields_and_details = {
             FIRST_NAME: None,
             LAST_NAME: None,
@@ -125,13 +133,15 @@ class TeacherFunctionalities:
         }
         add_teacher_data = get_user_inputs(fields=fields_and_details)
         add_teacher_data.update({HIRE_DATE: datetime.now().strftime('%Y-%m-%d'), USER_ID: self.user_id, IS_ACTIVE: 1})
-        db_utils.insert_to_table(data=add_teacher_data, table_name=TEACHER_TABLE)
+        # db_utils.insert_to_table(data=add_teacher_data, table_name=TEACHER_TABLE)
         log_banner('Teacher Added Successfully')
 
 
 class Authentication:
     def __init__(self):
-        pass
+        self.user_id = None
+        self.student = None
+        self.teacher = None
 
     def register(self):
         """
@@ -139,6 +149,7 @@ class Authentication:
 
         :return: None
         """
+        log_banner('Getting Register Details')
         fields_and_details = {
             USERNAME: None,
             PASSWORD: None,
@@ -146,20 +157,19 @@ class Authentication:
         }
         register_user_data = get_user_inputs(fields=fields_and_details)
         register_user_data.update({'registration_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
-        db_utils.insert_to_table(data=register_user_data, table_name='users')
+        # db_utils.insert_to_table(data=register_user_data, table_name='users')
         log_banner('User Registered Successfully')
-        registered_user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
-                                                       where_field=USERNAME,
-                                                       target_value=register_user_data[USERNAME])
+        self.user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
+                                                 where_field=USERNAME,
+                                                 target_value=register_user_data[USERNAME])
+        self.create_instances()
         if register_user_data[USERTYPE] == STUDENT.lower():
-            student = StudentFunctionalities(user_id=registered_user_id)
-            student.add_student_details()
+            self.student.add_student_details()
         elif register_user_data[USERTYPE] == TEACHER.lower():
-            print('Teacher and the user id is ', registered_user_id)
-            teacher = TeacherFunctionalities(user_id=registered_user_id)
-            teacher.add_teacher_details()
+            self.teacher.add_teacher_details()
 
     def login(self):
+        log_banner('Getting Login Details')
         fields_and_details = {
             USERNAME: None,
             PASSWORD: None
@@ -170,27 +180,40 @@ class Authentication:
                                                           where_field=USERNAME,
                                                           target_value=login_user_data[USERNAME])
         if password_for_username == login_user_data[PASSWORD]:
-            logged_in_user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
-                                                          where_field=USERNAME,
-                                                          target_value=login_user_data[USERNAME])
-            student = db_utils.check_entry_existence(table_name=STUDENT_TABLE, target_value=logged_in_user_id,
-                                                     where_field=USER_ID)
-            if student:
-                print('Found that you are a Student')
-            teacher = db_utils.check_entry_existence(table_name=TEACHER_TABLE, target_value=logged_in_user_id,
-                                                     where_field=USER_ID)
-            if teacher:
-                print('Found that you are a Teacher')
+            self.user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
+                                                     where_field=USERNAME,
+                                                     target_value=login_user_data[USERNAME])
+            self.create_instances()
+            user_type = self.find_user_role()
+            if user_type == STUDENT:
+                self.student.add_student_details()
+            else:
+                self.teacher.add_teacher_details()
         else:
             print('Enter valid Credentials')
 
-    def find_user_type(self):
-        pass
+    def find_user_role(self):
+        """
+        This method finds the role of user as teacher/student.
+
+        :return: String constant student/teacher.
+        """
+        student = db_utils.check_entry_existence(table_name=STUDENT_TABLE, target_value=self.user_id,
+                                                 where_field=USER_ID)
+        if student:
+            return STUDENT
+
+        return TEACHER
+
+    def create_instances(self):
+        if not self.teacher or not self.student:
+            self.teacher = TeacherFunctionalities(self.user_id)
+            self.student = StudentFunctionalities(self.user_id)
 
 
 def start_app():
     """
-    Initialise classes based on user selection.
+    Connects to the DB and initialise classes based on user selection(admin/others).
 
     :return: None
     """

@@ -56,7 +56,9 @@ def log_banner(message):
     table.set_deco(Texttable.BORDER | Texttable.HEADER)
     table.set_cols_align(['c'])
     table.set_cols_width([80])
+    enter_new_line()
     print(table.draw())
+    enter_new_line()
 
 
 def display_welcome_msg():
