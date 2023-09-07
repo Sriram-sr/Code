@@ -51,16 +51,21 @@ class DatabaseHandler:
         """
         self.db_connection, self.db_cursor = self.connect_database()
 
-    def get_select_query(self, table_name=None, header=None):
+    def get_select_query(self, table_name=None, header=None, use_header=None):
         """
         Executes a SELECT query on the specified table and retrieves all rows of data.
 
         :param table_name: The name of the table to retrieve data from.
         :param header: A list of column headers to display in the formatted table.
+        :param use_header: Boolean field to use header as fields to retrieve.
 
         :return:  Formatted table containing the retrieved data.
         """
-        query = f'select * from {table_name}'
+        if use_header:
+            fields_str = ', '.join(header)
+        else:
+            fields_str = '*'
+        query = f'select {fields_str} from {table_name}'
         self.db_cursor.execute(query)
         all_students = self.db_cursor.fetchall()
         table = tabulate(all_students, headers=header, tablefmt='grid')

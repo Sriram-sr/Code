@@ -68,6 +68,7 @@ class StudentFunctionalities:
 
     def __init__(self, user_id):
         self.user_id = user_id
+        self.student_id = None
 
     def add_student_details(self):
         """
@@ -95,11 +96,22 @@ class StudentFunctionalities:
         # db_utils.insert_to_table(data=add_student_data, table_name=STUDENT_TABLE)
         log_banner('Student Added Successfully')
 
-    def view_courses(self):
-        pass
-
     def enroll_course(self):
-        pass
+        courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE]
+        available_courses = db_utils.get_select_query(table_name=COURSES_TABLE, header=courses_header, use_header=True)
+        display_in_console(available_courses)
+        user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
+        course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
+                                              target_value=user_selected_course_code)
+        fields_and_details = {
+            STUDENT_ID: self.student_id,
+            COURSE_ID: course_id,
+            ENROLLMENT_DATE: datetime.now().strftime('%Y-%m-%d')
+        }
+        db_utils.insert_to_table(data=fields_and_details, table_name=ENROLLMENT_TABLE)
+        log_banner('Course enrolled Successfully')
+        #  select course_id from courses where course_code='EE202'
+        # insert into courses
 
 
 class TeacherFunctionalities:
@@ -157,7 +169,7 @@ class Authentication:
         }
         register_user_data = get_user_inputs(fields=fields_and_details)
         register_user_data.update({'registration_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
-        # db_utils.insert_to_table(data=register_user_data, table_name='users')
+        db_utils.insert_to_table(data=register_user_data, table_name='users')
         log_banner('User Registered Successfully')
         self.user_id = db_utils.get_single_query(table_name=USERS_TABLE, field_to_get=USER_ID,
                                                  where_field=USERNAME,
@@ -186,7 +198,15 @@ class Authentication:
             self.create_instances()
             user_type = self.find_user_role()
             if user_type == STUDENT:
-                self.student.add_student_details()
+                self.student.student_id = db_utils.get_single_query(table_name=STUDENT_TABLE, field_to_get=STUDENT_ID,
+                                                                    where_field=USER_ID, target_value=self.user_id)
+                #  select student_id from students where user_id=26;
+                show_options(options=['Enroll a course', 'Nothing'])
+                user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
+                if user_choice == 1:
+                    self.student.enroll_course()
+                else:
+                    raise KeyboardInterrupt
             else:
                 self.teacher.add_teacher_details()
         else:

@@ -15,6 +15,8 @@ Others:
       
   2. Login
      Finds Student/Teacher
+     If student
+      Enroll course
 
 start app:
    Start Db connection
