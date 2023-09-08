@@ -1,0 +1,1 @@
+This is directory to hold all the Sql related stuffs, queries, relations, codes etc.,

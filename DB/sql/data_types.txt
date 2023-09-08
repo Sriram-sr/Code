@@ -1,0 +1,35 @@
+In MySQL, there are several data types that you can use to define the columns in your tables. Each data type is designed to store specific types of data. Here are the most common data types used in MySQL:
+
+1. **Numeric Types:**
+    - **`INT`** or **`INTEGER`**: Integer data type, used for whole numbers (e.g., 1, -5, 100).
+    - **`TINYINT`**: A very small integer (range: -128 to 127 signed or 0 to 255 unsigned).
+    - **`SMALLINT`**: A small integer (range: -32,768 to 32,767 signed or 0 to 65,535 unsigned).
+    - **`MEDIUMINT`**: A medium-sized integer (range: -8,388,608 to 8,388,607 signed or 0 to 16,777,215 unsigned).
+    - **`BIGINT`**: A large integer (range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 signed or 0 to 18,446,744,073,709,551,615 unsigned).
+    - **`FLOAT`**: Single-precision floating-point number.
+    - **`DOUBLE`** or **`REAL`**: Double-precision floating-point number (larger range and precision than **`FLOAT`**).
+    - **`DECIMAL`** or **`NUMERIC`**: Exact numeric data type with a specified precision and scale (e.g., **`DECIMAL(10,2)`**).
+2. **Character String Types:**
+    - **`CHAR`**: Fixed-length string (up to 255 characters).
+    - **`VARCHAR`**: Variable-length string (up to 65,535 characters).
+    - **`TEXT`**: Large text data (up to 65,535 characters).
+    - **`ENUM`**: Enumeration, allows you to define a list of possible values to choose from.
+    - **`SET`**: Set, allows you to define a list of possible values where multiple values can be chosen.
+3. **Date and Time Types:**
+    - **`DATE`**: Date in the format 'YYYY-MM-DD'.
+    - **`TIME`**: Time in the format 'HH:MM:SS'.
+    - **`DATETIME`**: Date and time in the format 'YYYY-MM-DD HH:MM:SS'.
+    - **`TIMESTAMP`**: Automatic timestamp that gets updated to the current date and time on insert or update.
+    - **`YEAR`**: A 2-digit or 4-digit year value.
+4. **Binary Data Types:**
+    - **`BINARY`**: Fixed-length binary data (up to 255 bytes).
+    - **`VARBINARY`**: Variable-length binary data (up to 65,535 bytes).
+    - **`BLOB`**: Large binary object (up to 65,535 bytes).
+5. **Boolean Type:**
+    - **`BOOLEAN`** or **`BOOL`**: A synonym for **`TINYINT(1)`**, used to store true/false or 0/1 values.
+6. **Other Types:**
+    - **`JSON`**: Stores JSON-formatted data (introduced in MySQL 5.7.8).
+
+These data types can be combined with various constraints and attributes like **`NOT NULL`**, **`AUTO_INCREMENT`**, **`DEFAULT`**, and more, to define the behavior of the columns and ensure data integrity.
+
+Remember that choosing the appropriate data type for each column is essential for efficient data storage and retrieval, so consider the nature of the data and its expected size when defining your table's structure.
