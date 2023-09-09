@@ -21,6 +21,16 @@ class Admin:
         self.student_table = 'students'
         self.teacher_table = 'teachers'
 
+    def base_admin_functionalities(self, auth_instance):
+        auth_instance.login()
+        enter_new_line()
+        show_options(message='What would you like to do', options=['Show Teachers', 'Show Students'])
+        admin_choice = get_user_inputs(question_str='Enter your choice(1/2): ', data_type='int')
+        if admin_choice == 1:
+            self.show_all_teachers()
+        else:
+            self.show_all_students()
+
     def show_all_students(self):
         """
         Display information about all students in the database.
@@ -241,16 +251,11 @@ def start_app():
     display_welcome_msg()
     show_options(message='Choose an option', options=['admin', 'others'])
     user_role = get_user_inputs(question_str='Enter your role(1/2): ', data_type='int')
+    temp_auth_instance = Authentication()
 
     if user_role == 1:
         admin_instance = Admin()
-        enter_new_line()
-        show_options(message='What would you like to do', options=['Show Teachers', 'Show Students'])
-        admin_choice = get_user_inputs(question_str='Enter your choice(1/2): ', data_type='int')
-        if admin_choice == 1:
-            admin_instance.show_all_teachers()
-        else:
-            admin_instance.show_all_students()
+        admin_instance.base_admin_functionalities(temp_auth_instance)
     elif user_role == 2:
         user_auth_instance = Authentication()
         show_options(options=['Register', 'Login'])

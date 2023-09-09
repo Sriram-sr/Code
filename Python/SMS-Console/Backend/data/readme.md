@@ -1,28 +1,17 @@
 This will be page to describe the completed features of this console based "Student Management System" and to find the state of the project.
 
+Working on code restructuring with helper_main py file.
+
 Flow of app:
 
-Admin:
-  1. Show Teachers
-  2. Show Students
+1. Admin
+2. Student
+3. Teacher
 
-Others:
-  1. Register
-     If Student:
-        Add Student Details
-     If Teacher:
-        Add Teacher Details
-      
-  2. Login
-     Finds Student/Teacher
-     If student
-      Enroll course
+Admin => Login => Continue with functionalities
+Student => Register/Login => Continue with functionalities
+Teacher => Register/Login => Continue with functionalities
 
-start app:
-   Start Db connection
-   checks Admin/User, calls respective functionalities.
+FEATURES_BACKLOGS:
 
-start app()
-
-Planning to make student enroll course.
-
+1. Admin should login and proceed with activities.
