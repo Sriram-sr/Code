@@ -99,20 +99,6 @@ class Authentication:
 
         App.close_app()
 
-    @staticmethod
-    def find_user_role(user_id):
-        """
-        This method finds the role of user as teacher/student.
-
-        :return: String constant student/teacher.
-        """
-        student = db_utils.check_entry_existence(table_name=STUDENT_TABLE, target_value=user_id,
-                                                 where_field=USER_ID)
-        if student:
-            return STUDENT
-
-        return TEACHER
-
 
 class Admin:
     def __init__(self):
