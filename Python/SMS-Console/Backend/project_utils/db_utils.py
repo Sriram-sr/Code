@@ -102,7 +102,6 @@ class DatabaseHandler:
         query = f'INSERT INTO {table_name} ({field_list}) VALUES {tuple(data.values())}'
         self.db_cursor.execute(query)
         self.db_connection.commit()
-        print('Inserted data successfully')
 
     def check_entry_existence(self, table_name=None, where_field=None, target_value=None):
         """

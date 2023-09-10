@@ -82,7 +82,7 @@ def enter_new_line():
 
 def display_in_console(data):
     """
-    Just prints data onto console.
+    Prints data onto console.
 
     :param data:
     :return:
