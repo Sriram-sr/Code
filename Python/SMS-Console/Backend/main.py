@@ -156,6 +156,7 @@ class Admin:
 class Teacher:
     def __init__(self):
         self.user_id = None
+        self.teacher_id = None
 
     def auth_teacher(self, auth_choice):
         """
@@ -171,6 +172,14 @@ class Teacher:
             self.user_id = Authentication.login()
             print('User ID after teacher login ', self.user_id)
         print('Continuing with other teacher functionalities')
+        self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
+                                                    where_field=USER_ID, target_value=self.user_id)
+        show_options(options=['Nothing', 'Show your details'])
+        user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
+        if user_choice == 1:
+            pass
+        elif user_choice == 2:
+            self.show_teacher_details()
 
     def add_teacher_details(self):
         """
@@ -192,6 +201,13 @@ class Teacher:
         db_utils.insert_to_table(data=add_teacher_data, table_name=TEACHER_TABLE)
         log_banner('Teacher Added Successfully')
 
+    def show_teacher_details(self):
+        teachers_header = [TEACHER_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, DEPARTMENT_ID, HIRE_DATE,
+                           DEPARTMENT_ID, HIRE_DATE, SPECIALIZATION, IS_ACTIVE, USER_ID]
+        teacher_data = db_utils.get_select_query(table_name=TEACHER_TABLE, header=teachers_header,
+                                                 where_field=TEACHER_ID, target_value=self.teacher_id)
+        display_in_console(teacher_data)
+
 
 class Student:
     def __init__(self):
@@ -212,12 +228,13 @@ class Student:
             self.user_id = Authentication.login()
         self.student_id = db_utils.get_single_query(table_name=STUDENT_TABLE, field_to_get=STUDENT_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
-        show_options(options=['Enroll a course', 'Nothing'])
+        enter_new_line()
+        show_options(options=['Enroll a course', 'Show your details'])
         user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
         if user_choice == 1:
             self.enroll_course()
-        else:
-            raise KeyboardInterrupt
+        elif user_choice == 2:
+            self.show_student_details()
 
     def add_student_details(self):
         """
@@ -260,6 +277,15 @@ class Student:
         }
         db_utils.insert_to_table(data=fields_and_details, table_name=ENROLLMENT_TABLE)
         log_banner('Course enrolled Successfully')
+
+    def show_student_details(self):
+        student_details_header = [STUDENT_ID, FIRST_NAME, LAST_NAME, DOB, GENDER, EMAIL, PHONE_NUMBER, ADDRESS,
+                                  GUARDIAN_PHONE_NUMBER,
+                                  ADMISSION_DATE, NATIONALITY,
+                                  EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_PHONE, USER_ID]
+        student_data = db_utils.get_select_query(table_name=STUDENT_TABLE, header=student_details_header,
+                                                 where_field=STUDENT_ID, target_value=self.student_id)
+        display_in_console(student_data)
 
 
 if __name__ == '__main__':

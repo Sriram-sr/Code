@@ -51,7 +51,7 @@ class DatabaseHandler:
         """
         self.db_connection, self.db_cursor = self.connect_database()
 
-    def get_select_query(self, table_name=None, header=None, use_header=None):
+    def get_select_query(self, table_name=None, header=None, use_header=None, where_field=None, target_value=None):
         """
         Executes a SELECT query on the specified table and retrieves all rows of data.
 
@@ -66,6 +66,9 @@ class DatabaseHandler:
         else:
             fields_str = '*'
         query = f'select {fields_str} from {table_name}'
+        if where_field:
+            query = query + f' where {where_field}={target_value}'
+        print('Query been executed ', query)
         self.db_cursor.execute(query)
         all_students = self.db_cursor.fetchall()
         table = tabulate(all_students, headers=header, tablefmt='grid')
