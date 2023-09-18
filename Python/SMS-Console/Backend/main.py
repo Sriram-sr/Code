@@ -229,12 +229,14 @@ class Student:
         self.student_id = db_utils.get_single_query(table_name=STUDENT_TABLE, field_to_get=STUDENT_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
         enter_new_line()
-        show_options(options=['Enroll a course', 'Show your details'])
+        show_options(options=['Enroll a course', 'Show your details', 'Show my enrollments'])
         user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
         if user_choice == 1:
             self.enroll_course()
         elif user_choice == 2:
             self.show_student_details()
+        elif user_choice == 3:
+            self.show_student_enrollments()
 
     def add_student_details(self):
         """
@@ -286,6 +288,12 @@ class Student:
         student_data = db_utils.get_select_query(table_name=STUDENT_TABLE, header=student_details_header,
                                                  where_field=STUDENT_ID, target_value=self.student_id)
         display_in_console(student_data)
+
+    def show_student_enrollments(self):
+        course_header = [COURSE_NAME, COURSE_CODE]
+        enrolled_courses = db_utils.get_joined_query(self.student_id, header=course_header)
+        enter_new_line()
+        display_in_console(enrolled_courses)
 
 
 if __name__ == '__main__':

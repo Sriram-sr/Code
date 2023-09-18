@@ -18,6 +18,7 @@ class DatabaseHandler:
             db_connection: The active database connection object.
             db_cursor: The cursor object for executing SQL queries.
     """
+
     def __init__(self):
         self.user = 'root'
         self.host = 'localhost'
@@ -68,7 +69,6 @@ class DatabaseHandler:
         query = f'select {fields_str} from {table_name}'
         if where_field:
             query = query + f' where {where_field}={target_value}'
-        print('Query been executed ', query)
         self.db_cursor.execute(query)
         all_students = self.db_cursor.fetchall()
         table = tabulate(all_students, headers=header, tablefmt='grid')
@@ -124,6 +124,19 @@ class DatabaseHandler:
 
         return output[0][0]
 
+    def get_joined_query(self, student_id, header):
+        query = f'''
+        SELECT c.course_name, c.course_code
+        FROM courses c
+        JOIN enrollments e ON c.course_id = e.course_id
+        WHERE e.student_id = {student_id};
+        '''
+        self.db_cursor.execute(query)
+        output = self.db_cursor.fetchall()
+        table = tabulate(output, headers=header, tablefmt='grid')
+
+        return table
+
     def close_connection(self):
         """
         Closes the database connection.
@@ -132,4 +145,3 @@ class DatabaseHandler:
         """
         self.db_cursor.close()
         self.db_connection.close()
-
