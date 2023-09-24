@@ -1,11 +1,11 @@
 const { Schema, default: mongoose } = require('mongoose');
 
 const userSchema = new Schema({
-  username: {
+  email: {
     type: String,
     required: true
   },
-  email: {
+  password: {
     type: String,
     required: true
   },

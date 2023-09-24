@@ -15,6 +15,7 @@ exports.getAdminProducts = (req, res, next) => {
 };
 
 exports.getAddProduct = (req, res, next) => {
+  console.log('User session info: ', req.session.isLoggedIn);
   res.render('admin/edit-product', {
     editing: false,
     pageTitle: 'Add-Product',
