@@ -59,6 +59,8 @@ class DatabaseHandler:
         :param table_name: The name of the table to retrieve data from.
         :param header: A list of column headers to display in the formatted table.
         :param use_header: Boolean field to use header as fields to retrieve.
+        :param where_field: Name of the column which is used as where filter.
+        :param target_value: Target field which used in where condition.
 
         :return:  Formatted table containing the retrieved data.
         """
@@ -70,8 +72,8 @@ class DatabaseHandler:
         if where_field:
             query = query + f' where {where_field}={target_value}'
         self.db_cursor.execute(query)
-        all_students = self.db_cursor.fetchall()
-        table = tabulate(all_students, headers=header, tablefmt='grid')
+        retrieved_data = self.db_cursor.fetchall()
+        table = tabulate(retrieved_data, headers=header, tablefmt='grid')
 
         return table
 

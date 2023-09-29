@@ -174,10 +174,10 @@ class Teacher:
         print('Continuing with other teacher functionalities')
         self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
-        show_options(options=['Nothing', 'Show your details'])
+        show_options(options=['Show courses by department', 'Show your details'])
         user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
         if user_choice == 1:
-            pass
+            self.show_courses_by_department()
         elif user_choice == 2:
             self.show_teacher_details()
 
@@ -208,6 +208,20 @@ class Teacher:
                                                  where_field=TEACHER_ID, target_value=self.teacher_id)
         display_in_console(teacher_data)
 
+    @staticmethod
+    def show_courses_by_department():
+        departments_header = [DEPARTMENT_CODE, DEPARTMENT_NAME]
+        courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE]
+        departments = db_utils.get_select_query(table_name=DEPARTMENT_TABLE, header=departments_header, use_header=True)
+        display_in_console(departments)
+        user_selected_department_code = get_user_inputs(question_str='Enter department code: ')
+        department_id = db_utils.get_single_query(table_name=DEPARTMENT_TABLE, field_to_get=DEPARTMENT_ID,
+                                                  where_field=DEPARTMENT_CODE,
+                                                  target_value=user_selected_department_code)
+        courses = db_utils.get_select_query(table_name=COURSES_TABLE, header=courses_header,
+                                            where_field=DEPARTMENT_ID, target_value=department_id, use_header=True)
+        display_in_console(courses)
+
 
 class Student:
     def __init__(self):
@@ -229,14 +243,17 @@ class Student:
         self.student_id = db_utils.get_single_query(table_name=STUDENT_TABLE, field_to_get=STUDENT_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
         enter_new_line()
-        show_options(options=['Enroll a course', 'Show your details', 'Show my enrollments'])
-        user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
+        show_options(
+            options=['Enroll a course', 'Show your details', 'Show my enrollments', 'Show courses by department'])
+        user_choice = get_user_inputs(question_str='What would you like to do(1/2/3/4): ', data_type='int')
         if user_choice == 1:
             self.enroll_course()
         elif user_choice == 2:
             self.show_student_details()
         elif user_choice == 3:
             self.show_student_enrollments()
+        elif user_choice == 4:
+            Teacher.show_courses_by_department()
 
     def add_student_details(self):
         """
