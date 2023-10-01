@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 
 exports.getAdminProducts = (req, res, next) => {
-  Product.find()
+  Product.find({ user: req.user._id })
     .then(products => {
       res.render('admin/products', {
         products: products,
@@ -68,12 +68,21 @@ exports.updateProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   Product.findById(productId)
     .then(product => {
+      if (product.user.toString() !== req.user._id.toString()) {
+        return res.redirect('/');
+      }
       product.title = updatedTitle;
       product.price = updatedPrice;
       product.description = updatedDescription;
       product.imageUrl = updatedImageUrl;
-      product.save();
-      res.redirect('/admin/products');
+      return product
+        .save()
+        .then(() => {
+          res.redirect('/admin/products');
+        })
+        .catch(err => {
+          console.log('Error while saving updated product ', err);
+        });
     })
     .catch(err => {
       console.log('Error while fetching product for editing ', err);
@@ -82,7 +91,8 @@ exports.updateProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const productId = req.body.productId;
-  Product.findByIdAndDelete(productId)
+  // Product.findByIdAndDelete(productId)
+  Product.deleteOne({_id: productId, user: req.user._id})
     .then(result => {
       res.redirect('/admin/products');
     })

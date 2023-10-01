@@ -1,0 +1,12 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <h1>Click to reset Password</h1>
+    <form action="/reset/<%- token %>" method="GET">
+        <div class="centered">
+            <button type="submit" class="btn">Reset Password</button>
+        </div>
+    </form>
+<%- include('../includes/end.ejs') %>
