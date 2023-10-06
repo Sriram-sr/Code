@@ -9,6 +9,10 @@ db_utils = DatabaseHandler()
 
 
 class App:
+    """
+    A class containing methods for starting and closing app.
+
+    """
     def start_app(self):
         """
         Initialise classes based on user selection(admin/teacher/student).
@@ -36,6 +40,11 @@ class App:
 
     @staticmethod
     def close_app():
+        """
+        Closes db connection and terminates program at any point of time.
+
+        :return: None
+        """
         log_banner('Thanks for Visiting Student Management System')
         db_utils.close_connection()
         log_banner('Closed DB Connection')
@@ -174,12 +183,14 @@ class Teacher:
         print('Continuing with other teacher functionalities')
         self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
-        show_options(options=['Show courses by department', 'Show your details'])
+        show_options(options=['Show courses by department', 'Show your details', 'Mark attendance'])
         user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
         if user_choice == 1:
             self.show_courses_by_department()
         elif user_choice == 2:
             self.show_teacher_details()
+        elif user_choice == 3:
+            self.mark_attendance()
 
     def add_teacher_details(self):
         """
@@ -221,6 +232,40 @@ class Teacher:
         courses = db_utils.get_select_query(table_name=COURSES_TABLE, header=courses_header,
                                             where_field=DEPARTMENT_ID, target_value=department_id, use_header=True)
         display_in_console(courses)
+
+    def mark_attendance(self):
+        Student.show_courses()
+        user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
+        course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
+                                              target_value=user_selected_course_code)
+        student_names = ['ID', 'StudentName']
+        enrolled_students_query = f"""
+                SELECT students.student_id, users.username FROM users
+                JOIN students ON students.user_id = users.user_id
+                JOIN enrollments ON enrollments.student_id = students.student_id
+                WHERE enrollments.course_id = {course_id}
+        """
+        enrolled_students = db_utils.execute_query(query=enrolled_students_query, header=student_names)
+        enter_new_line()
+        display_in_console(enrolled_students)
+        enter_new_line()
+        enrolled_user_id = get_user_inputs(question_str='Enter Student ID: ', data_type='int')
+        enrollment_id = db_utils.get_single_query(table_name=ENROLLMENT_TABLE, field_to_get=ENROLLMENT_ID,
+                                                  where_field=STUDENT_ID, target_value=enrolled_user_id,
+                                                  and_check=True, and_field=COURSE_ID, and_target_value=course_id)
+        status_and_info = get_user_inputs(fields={
+            STATUS: ['present', 'absent'],
+            ADDITIONAL_INFO: None
+        })
+
+        attendance_data = {
+            ENROLLMENT_ID: enrollment_id,
+            ATTENDANCE_DATE: datetime.now().strftime('%Y-%m-%d'),
+            STATUS: status_and_info[STATUS],
+            ADDITIONAL_INFO: status_and_info[ADDITIONAL_INFO],
+            TEACHER_ID: self.teacher_id
+        }
+        db_utils.insert_to_table(data=attendance_data, table_name=ATTENDANCE_TABLE)
 
 
 class Student:
@@ -282,9 +327,7 @@ class Student:
         log_banner('Student Added Successfully')
 
     def enroll_course(self):
-        courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE]
-        available_courses = db_utils.get_select_query(table_name=COURSES_TABLE, header=courses_header, use_header=True)
-        display_in_console(available_courses)
+        self.show_courses()
         user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
         course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
                                               target_value=user_selected_course_code)
@@ -308,9 +351,22 @@ class Student:
 
     def show_student_enrollments(self):
         course_header = [COURSE_NAME, COURSE_CODE]
-        enrolled_courses = db_utils.get_joined_query(self.student_id, header=course_header)
+        course_details = {
+            COURSES_TABLE: [COURSE_ID, COURSE_NAME]
+        }
+        enrolled_courses = db_utils.get_joined_query(from_table=COURSES_TABLE, join_table=ENROLLMENT_TABLE,
+                                                     common_field=COURSE_ID, where_field=STUDENT_ID,
+                                                     target_value=self.student_id, fields=course_details,
+                                                     where_table=ENROLLMENT_TABLE,
+                                                     header=course_header)
         enter_new_line()
         display_in_console(enrolled_courses)
+
+    @staticmethod
+    def show_courses():
+        courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE]
+        available_courses = db_utils.get_select_query(table_name=COURSES_TABLE, header=courses_header, use_header=True)
+        display_in_console(available_courses)
 
 
 if __name__ == '__main__':

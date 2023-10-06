@@ -39,8 +39,6 @@ class DatabaseHandler:
             password=self.password,
             database=self.database
         )
-
-        print('DB connection Took')
         cursor = connection.cursor()
         return connection, cursor
 
@@ -77,7 +75,8 @@ class DatabaseHandler:
 
         return table
 
-    def get_single_query(self, table_name=None, field_to_get=None, where_field=None, target_value=None):
+    def get_single_query(self, table_name=None, field_to_get=None, where_field=None, target_value=None, and_check=None,
+                         and_field=None, and_target_value=None):
         """
         Retrieve a single value from a database table based on a condition.
 
@@ -89,6 +88,8 @@ class DatabaseHandler:
         :return: The retrieved value from the specified field.
         """
         query = f'select {field_to_get} from {table_name} where {where_field}=\"{target_value}\"'
+        if and_check:
+            query += f' and {and_field}=\"{and_target_value}\"'
         self.db_cursor.execute(query)
         output = self.db_cursor.fetchall()
 
@@ -126,13 +127,32 @@ class DatabaseHandler:
 
         return output[0][0]
 
-    def get_joined_query(self, student_id, header):
+    def get_joined_query(self, from_table=None, fields=None, join_table=None, common_field=None, where_field=None,
+                         where_table=None,
+                         target_value=None, header=None
+                         ):
+        joined_fields = ''
+        for k, v in fields.items():
+            for val in v:
+                joined_fields += f'{k}.{val}, '
+        joined_fields = joined_fields.rstrip(', ')
         query = f'''
-        SELECT c.course_name, c.course_code
-        FROM courses c
-        JOIN enrollments e ON c.course_id = e.course_id
-        WHERE e.student_id = {student_id};
+        SELECT 
+        {joined_fields}
+        FROM
+        {from_table}
+        JOIN
+        {join_table} ON {from_table}.{common_field} = {join_table}.{common_field}
+        WHERE
+        {where_table}.{where_field} = {target_value};
         '''
+        self.db_cursor.execute(query)
+        output = self.db_cursor.fetchall()
+        table = tabulate(output, headers=header, tablefmt='grid')
+
+        return table
+
+    def execute_query(self, query, header):
         self.db_cursor.execute(query)
         output = self.db_cursor.fetchall()
         table = tabulate(output, headers=header, tablefmt='grid')
