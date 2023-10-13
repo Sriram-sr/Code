@@ -152,12 +152,21 @@ class DatabaseHandler:
 
         return table
 
-    def execute_query(self, query, header):
+    def execute_query(self, query, header, get_raw=None):
         self.db_cursor.execute(query)
         output = self.db_cursor.fetchall()
+        if get_raw:
+            return output[0]
         table = tabulate(output, headers=header, tablefmt='grid')
 
         return table
+
+    def update_query(self, table_name, fields, where_field, target_value):
+        set_clause = ', '.join([f"{key} = '{value}'" for key, value in fields.items()])
+        where_clause = f"{where_field} = '{target_value}'"
+        query = f"UPDATE {table_name} SET {set_clause} WHERE {where_clause};"
+        self.db_cursor.execute(query)
+        self.db_connection.commit()
 
     def close_connection(self):
         """

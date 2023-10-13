@@ -2,9 +2,7 @@ This will be page to describe the completed features of this console based "Stud
 Currently, it implements all functionalities with Mysql as primary database. In future this will be changed with a ORM based
 Mysql and after that will be changed to cloud deployed Mongodb connected one.
 
-Attendance mark by teacher completed.
-
-ToWorkOn: Admin features/privileges.
+Admin edit course completed.
 
 Endpoints:
 
@@ -23,4 +21,9 @@ Endpoints:
 
 # Post
 
+/course
+
+# PUT
+
+/course/:id
 

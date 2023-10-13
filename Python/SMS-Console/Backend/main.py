@@ -13,6 +13,7 @@ class App:
     A class containing methods for starting and closing app.
 
     """
+
     def start_app(self):
         """
         Initialise classes based on user selection(admin/teacher/student).
@@ -113,6 +114,7 @@ class Admin:
     def __init__(self):
         self.student_table = 'students'
         self.teacher_table = 'teachers'
+        self.courses_table = 'courses'
 
     def auth_admin(self):
         """
@@ -122,12 +124,14 @@ class Admin:
         """
         Authentication.login()
         enter_new_line()
-        show_options(message='What would you like to do', options=['Show Teachers', 'Show Students'])
-        admin_choice = get_user_inputs(question_str='Enter your choice(1/2): ', data_type='int')
+        show_options(message='What would you like to do', options=['Show Teachers', 'Show Students', 'Edit Course'])
+        admin_choice = get_user_inputs(question_str='Enter your choice(1/2/3): ', data_type='int')
         if admin_choice == 1:
             self.show_all_teachers()
-        else:
+        elif admin_choice == 2:
             self.show_all_students()
+        elif admin_choice == 3:
+            self.edit_course()
 
     def show_all_students(self):
         """
@@ -161,6 +165,43 @@ class Admin:
         all_teachers_data = db_utils.get_select_query(table_name=self.teacher_table, header=teachers_header)
         display_in_console(all_teachers_data)
 
+    def edit_course(self):
+        Teacher.show_courses_by_department()
+        user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
+        course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
+                                              target_value=user_selected_course_code)
+        course_details_header = [COURSE_NAME, COURSE_CODE, DESCRIPTION, CREDITS, START_DATE, END_DATE]
+        course_details_query = f"""
+                               SELECT 
+                               c.course_name,
+                               c.course_code,
+                               c.description,
+                               c.credits,
+                               c.start_date,
+                               c.end_date
+                               FROM
+                               courses c
+                               JOIN
+                               teachers t ON c.instructor_id = t.teacher_id
+                               JOIN
+                               users u ON t.user_id = u.user_id
+                               JOIN
+                               departments d ON c.department_id = d.department_id
+                               WHERE
+                               c.course_id = {course_id};
+                               """
+        course_details = db_utils.execute_query(query=course_details_query, header=course_details_header, get_raw=True)
+        update_data = dict()
+        for idx in range(len(course_details_header)):
+            print(f'Enter {course_details_header[idx].upper()} [ {course_details[idx]} ]')
+            new_data_field = input(f'{course_details_header[idx].upper()}: ')
+            if not new_data_field:
+                continue
+            update_data[course_details_header[idx].upper()] = new_data_field
+        db_utils.update_query(table_name=self.courses_table, fields=update_data, where_field=COURSE_ID,
+                              target_value=course_id)
+        log_banner('Updated courses successfully')
+
 
 class Teacher:
     def __init__(self):
@@ -184,7 +225,7 @@ class Teacher:
         self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
         show_options(options=['Show courses by department', 'Show your details', 'Mark attendance'])
-        user_choice = get_user_inputs(question_str='What would you like to do(1/2): ', data_type='int')
+        user_choice = get_user_inputs(question_str='What would you like to do(1/2/3): ', data_type='int')
         if user_choice == 1:
             self.show_courses_by_department()
         elif user_choice == 2:
