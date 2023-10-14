@@ -19,7 +19,7 @@ const app = express();
 
 const store = new MongoDBStore({
   uri: MONGODB_URI,
-  collection: 'sessions'
+  collection: 'sessions',
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,19 +41,22 @@ const csrfProtection = csrf();
 app.use(csrfProtection);
 app.use(flash());
 
-app.use((req, res, next) => {
-  if (!req.session.user) {
-    // To allow logged out users to continue with application
-    return next();
+app.use(async (req, res, next) => {
+  console.log(`${Date().split('GMT')[0]} ${req.method} ${req.url}`);
+
+  try {
+    if (!req.session.user) {
+      // To allow logged out users to continue with the application
+      return next();
+    }
+
+    const user = await User.findById(req.session.user._id);
+    req.user = user;
+    next();
+  } catch (err) {
+    console.log('Error while finding user with session ', err);
+    next(err);
   }
-  User.findById(req.session.user._id)
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(err => {
-      console.log('Error while finding user with session ', err);
-    });
 });
 
 app.use((req, res, next) => {
@@ -66,7 +69,6 @@ app.use(authRoutes);
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(errorController.get404);
-
 
 mongoose
   .connect(MONGODB_URI)

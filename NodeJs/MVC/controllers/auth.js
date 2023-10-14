@@ -15,7 +15,7 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     pageTitle: 'Login',
     path: '/login',
-    errorMessage: getErrorMessage(req)
+    errorMessage: getErrorMessage(req),
   });
 };
 
@@ -23,7 +23,7 @@ exports.getReset = (req, res, next) => {
   res.render('auth/reset', {
     pageTitle: 'Reset',
     path: '/reset',
-    errorMessage: getErrorMessage(req)
+    errorMessage: getErrorMessage(req),
   });
 };
 
@@ -31,28 +31,30 @@ exports.getRegister = (req, res, next) => {
   res.render('auth/register', {
     pageTitle: 'Register',
     path: '/register',
-    errorMessage: getErrorMessage(req)
+    errorMessage: getErrorMessage(req),
   });
 };
 
-exports.getNewPassword = (req, res, next) => {
-  const token = req.params.token;
-  User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } })
-    .then(user => {
-      if (!user) {
-        req.flash('error', 'No user with token Found');
-        return res.redirect('/login');
-      }
-      res.render('auth/new-password', {
-        errorMessage: getErrorMessage(req),
-        userId: user._id.toString(),
-        pageTitle: 'New Password',
-        path: '/new-password'
-      });
-    })
-    .catch(err => {
-      console.log('Error while finding user with reset token ', err);
+exports.getNewPassword = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiry: { $gt: Date.now() },
     });
+    if (!user) {
+      req.flash('error', 'No user with token Found');
+      return res.redirect('/login');
+    }
+    res.render('auth/new-password', {
+      errorMessage: getErrorMessage(req),
+      userId: user._id.toString(),
+      pageTitle: 'New Password',
+      path: '/new-password',
+    });
+  } catch (err) {
+    console.log('Error while finding user with reset token ', err);
+  }
 };
 
 exports.postRegister = (req, res, next) => {
@@ -63,7 +65,7 @@ exports.postRegister = (req, res, next) => {
     return res.status(422).render('auth/register', {
       pageTitle: 'Register',
       path: '/register',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
     });
   }
   return bcrypt
@@ -73,8 +75,8 @@ exports.postRegister = (req, res, next) => {
         email: email,
         password: hashedPassword,
         cart: {
-          items: []
-        }
+          items: [],
+        },
       });
       return user.save();
     })
@@ -87,7 +89,7 @@ exports.postRegister = (req, res, next) => {
     });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const errors = validationResult(req);
@@ -95,39 +97,36 @@ exports.postLogin = (req, res, next) => {
     return res.status(422).render('auth/login', {
       pageTitle: 'Login',
       path: '/login',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
     });
   }
-  User.findOne({ email: email })
-    .then(user => {
-      if (!user) {
-        req.flash('error', 'Invalid Username/Password');
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      req.flash('error', 'Invalid Username/Password');
+      return res.redirect('/login');
+    }
+    try {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (isMatch) {
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        req.session.save(err => {
+          if (err) {
+            console.log('Error while saving session after login ', err);
+          }
+          return res.redirect('/');
+        });
+      } else {
+        req.flash('error', 'Invalid Password');
         return res.redirect('/login');
       }
-      bcrypt
-        .compare(password, user.password)
-        .then(isMatch => {
-          if (isMatch) {
-            req.session.isLoggedIn = true;
-            req.session.user = user;
-            req.session.save(err => {
-              if (err) {
-                console.log('Error while saving session after login ', err);
-              }
-              return res.redirect('/');
-            });
-          } else {
-            req.flash('error', 'Invalid Password');
-            return res.redirect('/login');
-          }
-        })
-        .catch(err => {
-          console.log('Error while comparing passwords ', err);
-        });
-    })
-    .catch(err => {
-      console.log('Error while finding user for login ', err);
-    });
+    } catch (err) {
+      console.log('Error while comparing passwords ', err);
+    }
+  } catch (err) {
+    console.log('Error while finding user for login ', err);
+  }
 };
 
 exports.postLogout = (req, res, next) => {
@@ -160,7 +159,7 @@ exports.postReset = (req, res, next) => {
         return res.render('auth/mail', {
           token: token,
           pageTitle: 'Mail',
-          path: '/mail'
+          path: '/mail',
         });
       })
       .catch(err => {

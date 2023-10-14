@@ -1,18 +1,17 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 
-exports.getIndex = (req, res, next) => {
-  Product.find()
-    .then(products => {
-      res.render('shop/index', {
-        pageTitle: 'Shop',
-        path: '/',
-        products: products
-      });
-    })
-    .catch(err => {
-      console.log('Error while fetching products for index page ', err);
+exports.getIndex = async (req, res, next) => {
+  try {
+    const products = await Product.find();
+    res.render('shop/index', {
+      pageTitle: 'Shop',
+      path: '/',
+      products: products,
     });
+  } catch (err) {
+    console.log('Error while fetching products for index page ', err);
+  }
 };
 
 exports.getProducts = (req, res, next) => {
@@ -21,7 +20,7 @@ exports.getProducts = (req, res, next) => {
       res.render('shop/product-list', {
         path: '/products',
         pageTitle: 'Products',
-        products: products
+        products: products,
       });
     })
     .catch(err => {
@@ -36,7 +35,7 @@ exports.getProductDetails = (req, res, next) => {
       res.render('shop/product-detail', {
         product: product,
         pageTitle: 'product',
-        path: '/product'
+        path: '/product',
       });
     })
     .catch(err => {
@@ -52,7 +51,7 @@ exports.getCart = (req, res, next) => {
       res.render('shop/cart', {
         products: products,
         pageTitle: 'Your cart',
-        path: '/cart'
+        path: '/cart',
       });
     })
     .catch(err => {
@@ -66,7 +65,7 @@ exports.getOrder = (req, res, next) => {
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders: orders
+        orders: orders,
       });
     })
     .catch(err => {
@@ -120,9 +119,9 @@ exports.postOrder = (req, res, next) => {
       const order = new Order({
         user: {
           name: user.email,
-          userId: user
+          userId: user,
         },
-        products: products
+        products: products,
       });
       order
         .save()
