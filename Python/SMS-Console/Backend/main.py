@@ -166,6 +166,11 @@ class Admin:
         display_in_console(all_teachers_data)
 
     def edit_course(self):
+        """
+        Edit a course and save it in database.
+
+        :return: None
+        """
         Teacher.show_courses_by_department()
         user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
         course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
@@ -254,6 +259,11 @@ class Teacher:
         log_banner('Teacher Added Successfully')
 
     def show_teacher_details(self):
+        """
+        Shows all teachers data.
+
+        :return: None
+        """
         teachers_header = [TEACHER_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, DEPARTMENT_ID, HIRE_DATE,
                            DEPARTMENT_ID, HIRE_DATE, SPECIALIZATION, IS_ACTIVE, USER_ID]
         teacher_data = db_utils.get_select_query(table_name=TEACHER_TABLE, header=teachers_header,
@@ -262,6 +272,11 @@ class Teacher:
 
     @staticmethod
     def show_courses_by_department():
+        """
+        Shows all courses offered by a department.
+
+        :return: None
+        """
         departments_header = [DEPARTMENT_CODE, DEPARTMENT_NAME]
         courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE]
         departments = db_utils.get_select_query(table_name=DEPARTMENT_TABLE, header=departments_header, use_header=True)
@@ -275,6 +290,11 @@ class Teacher:
         display_in_console(courses)
 
     def mark_attendance(self):
+        """
+        Method to mark attendance.
+
+        :return: None
+        """
         Student.show_courses()
         user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
         course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
@@ -368,6 +388,11 @@ class Student:
         log_banner('Student Added Successfully')
 
     def enroll_course(self):
+        """
+        Method to enroll course
+
+        :return: None
+        """
         self.show_courses()
         user_selected_course_code = get_user_inputs(question_str='Enter course code: ')
         course_id = db_utils.get_single_query(table_name=COURSES_TABLE, field_to_get=COURSE_ID, where_field=COURSE_CODE,
@@ -382,6 +407,11 @@ class Student:
         log_banner('Course enrolled Successfully')
 
     def show_student_details(self):
+        """
+        Method to show single student's details.
+
+        :return: None
+        """
         student_details_header = [STUDENT_ID, FIRST_NAME, LAST_NAME, DOB, GENDER, EMAIL, PHONE_NUMBER, ADDRESS,
                                   GUARDIAN_PHONE_NUMBER,
                                   ADMISSION_DATE, NATIONALITY,
@@ -391,6 +421,11 @@ class Student:
         display_in_console(student_data)
 
     def show_student_enrollments(self):
+        """
+        Method to show courses enrolled by a student.
+
+        :return: None
+        """
         course_header = [COURSE_NAME, COURSE_CODE]
         course_details = {
             COURSES_TABLE: [COURSE_ID, COURSE_NAME]
@@ -405,6 +440,11 @@ class Student:
 
     @staticmethod
     def show_courses():
+        """
+        A static method to show available courses.
+
+        :return: None
+        """
         courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE]
         available_courses = db_utils.get_select_query(table_name=COURSES_TABLE, header=courses_header, use_header=True)
         display_in_console(available_courses)

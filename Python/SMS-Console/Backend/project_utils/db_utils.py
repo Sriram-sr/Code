@@ -84,6 +84,9 @@ class DatabaseHandler:
         :param field_to_get: The field from which to retrieve the value.
         :param where_field: The field to use in the WHERE condition.
         :param target_value: The value to match in the WHERE condition.
+        :param and_check: Bool to check and in where query.
+        :param and_field: The field after and condition.
+        :param and_target_value: The value of and_filed.
 
         :return: The retrieved value from the specified field.
         """
@@ -131,6 +134,19 @@ class DatabaseHandler:
                          where_table=None,
                          target_value=None, header=None
                          ):
+        """
+
+        :param from_table: Base table used in join query.
+        :param fields: Fields to be fetched in the query.
+        :param join_table: Join table used in the query.
+        :param common_field: Common field that has been a part of both tables.
+        :param where_field: where field in the query.
+        :param where_table: where table which is third joining table.
+        :param target_value: Target field of where field.
+        :param header: A list of column headers to display in the formatted table.
+
+        :return:  Formatted table containing the retrieved data.
+        """
         joined_fields = ''
         for k, v in fields.items():
             for val in v:
@@ -153,6 +169,14 @@ class DatabaseHandler:
         return table
 
     def execute_query(self, query, header, get_raw=None):
+        """
+
+        :param query: Query to be executed
+        :param header: A list of column headers to display in the formatted table.
+        :param get_raw: Boolean field used to return raw query output data without formatting.
+
+        :return:  Formatted table containing the retrieved data.
+        """
         self.db_cursor.execute(query)
         output = self.db_cursor.fetchall()
         if get_raw:
@@ -162,6 +186,14 @@ class DatabaseHandler:
         return table
 
     def update_query(self, table_name, fields, where_field, target_value):
+        """
+        :param table_name: A table to update fields.
+        :param fields: Fields to be updated.
+        :param where_field: The field to use in the WHERE condition.
+        :param target_value: The value to match in the WHERE condition.
+
+        :return: None
+        """
         set_clause = ', '.join([f"{key} = '{value}'" for key, value in fields.items()])
         where_clause = f"{where_field} = '{target_value}'"
         query = f"UPDATE {table_name} SET {set_clause} WHERE {where_clause};"
