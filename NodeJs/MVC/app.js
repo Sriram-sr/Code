@@ -19,7 +19,7 @@ const app = express();
 
 const store = new MongoDBStore({
   uri: MONGODB_URI,
-  collection: 'sessions',
+  collection: 'sessions'
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,10 +31,7 @@ app.use(
     secret: 'my secret',
     resave: false,
     saveUninitialized: false,
-    store: store,
-    // cookie: {
-    //   maxAge: 100000
-    // }
+    store: store
   })
 );
 const csrfProtection = csrf();

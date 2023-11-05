@@ -55,7 +55,7 @@ exports.getCart = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log('Error while products in cart ', err);
+      console.log('Error while fetching products in cart ', err);
     });
 };
 
