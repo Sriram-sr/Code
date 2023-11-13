@@ -20,10 +20,10 @@ exports.getPosts = async (req, res, next) => {
     return res.status(200).json({
       message: 'Posts retreived successfully',
       posts: posts,
-      totalCount: totalCount,
+      totalCount: totalCount
     });
   } catch (err) {
-    handleError(err, next)
+    handleError(err, next);
   }
 };
 
@@ -61,7 +61,7 @@ exports.createPost = (req, res, next) => {
     title: title,
     content: content,
     imageUrl: imageUrl,
-    creator: user,
+    creator: user
   });
   return post
     .save()
@@ -78,8 +78,8 @@ exports.createPost = (req, res, next) => {
             post: post,
             creator: {
               _id: creator.id,
-              name: creator.name,
-            },
+              name: creator.name
+            }
           });
         });
     })
@@ -100,7 +100,7 @@ exports.updatePost = (req, res, next) => {
     .then(post => {
       return res.status(200).json({
         message: 'Post updated successfully',
-        post: post,
+        post: post
       });
     })
     .catch(err => {
@@ -133,7 +133,7 @@ exports.deletePost = (req, res, next) => {
         })
         .then(() => {
           return res.status(200).json({
-            message: 'Post deleted successfully',
+            message: 'Post deleted successfully'
           });
         });
     })

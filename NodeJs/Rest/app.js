@@ -1,16 +1,16 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const authRoutes = require('./routes/auth-routes');
 const feedRoutes = require('./routes/feed-routes');
+require('dotenv').config();
 
-const MONGODB_URI =
-  'mongodb+srv://sriram:sriram@nodejsmongo.wug3keq.mongodb.net/message?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json()); // parsing incoming requests
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
@@ -38,9 +38,9 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(MONGODB_URI)
-  .then(result => {
+  .then(() => {
     console.log('Connected to Mongodb');
-    app.listen(8000);
+    app.listen(PORT);
   })
   .catch(err => {
     console.log('Error while connecting to db ', err);

@@ -13,9 +13,9 @@ const postSchema = new Schema(
       required: true
     },
     imageUrl: {
-        type: String,
-        required: true
-      },
+      type: String,
+      required: true
+    },
     creator: {
       type: Schema.Types.ObjectId,
       ref: 'User',
