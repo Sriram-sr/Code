@@ -90,3 +90,5 @@ exports.deleteTask = (req, res, next) => {
       errorHandler(err, next);
     });
 };
+
+exports.raiseNotFoundError = raiseNotFoundError;
