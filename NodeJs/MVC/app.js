@@ -11,9 +11,10 @@ const authRoutes = require('./routes/auth-routes');
 const adminRoutes = require('./routes/admin-routes');
 const shopRoutes = require('./routes/shop-routes');
 const User = require('./models/user');
+require('dotenv').config();
 
-const MONGODB_URI =
-  'mongodb+srv://sriram:sriram@nodejsmongo.wug3keq.mongodb.net/shop?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -71,7 +72,7 @@ mongoose
   .connect(MONGODB_URI)
   .then(() => {
     console.log('Connected to mongodb');
-    app.listen(3000);
+    app.listen(PORT);
   })
   .catch(err => {
     console.log('Error while connecting mongodb ', err);
