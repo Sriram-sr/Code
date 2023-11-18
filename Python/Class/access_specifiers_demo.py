@@ -17,7 +17,9 @@ class Base:
 
 
 sample_instance = Base()
-print(f'Printing from outside the class {sample_instance._protected_variable}') # Can able to access only public and protected variables.
+print(
+    f'Printing from outside the class {sample_instance._protected_variable}')
+# Can able to access only public and protected variables.
 
 
 class Child(Base):
@@ -28,5 +30,5 @@ class Child(Base):
         self.__private_method()
 
 
-child_instance = Child()
-child_instance.invoke_parent_methods()
+# child_instance = Child()
+# child_instance.invoke_parent_methods()

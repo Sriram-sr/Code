@@ -1,0 +1,82 @@
+# Compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+v-env/
+
+# Log files
+*.log
+
+# User-specific files
+.idea/
+.vscode/
+
+# Compiled binaries or libraries
+*.so
+*.dll
+
+# Byte-compiled files
+*.pyc
+
+# macOS folder attributes
+.DS_Store
+
+# Compiled LaTeX files
+*.dvi
+*.pdf
+
+# Node.js and npm
+node_modules/
+
+# Compiled TypeScript
+*.tsbuildinfo
+
+# Compiled Java classes
+*.class
+
+# Compiled Ruby
+*.rbc
+
+# Compiled C++
+*.o
+
+# Compiled .NET
+*.dll
+*.exe
+*.pdb
+*.userprefs
+
+# Compiled Java properties
+*.properties
+
+# Compiled Objective-C
+*.o
+*.d
+
+# Compiled Dynamic Libraries
+*.dylib
+
+# Compiled Static Libraries
+*.a
+
+# Compiled Mach-O
+*.so
+
+# Compiled Executables
+*.out
+
+# Compiled Kernel Modules
+*.ko
+
+# Compiled Jar Files
+*.jar
+
+# Database files
+*.sqlite
+*.db
+
+# IDE files
+*.ipynb_checkpoints/
