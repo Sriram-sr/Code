@@ -1,4 +1,5 @@
 const Place = require('../models/place');
+const User = require('../models/user');
 const {
   errorHandler,
   checkFieldsValidation
@@ -42,6 +43,7 @@ const getSinglePlace = (req, res, next) => {
 const createPlace = (req, res, next) => {
   checkFieldsValidation(req);
   const { title, description, image, address, creator } = req.body;
+  const userId = req.userId;
   const place = new Place({
     title,
     description,
@@ -51,15 +53,30 @@ const createPlace = (req, res, next) => {
       lat: 40.7484474,
       lng: -73.9871516
     },
-    creator
+    creator: userId
   });
   place
     .save()
-    .then(place => {
-      res.status(201).json({
-        message: 'Created place successfully',
-        place: place
-      });
+    .then(() => {
+      User.findById(userId)
+        .then(user => {
+          user.places.push(place);
+          return user.save();
+        })
+        .then(place => {
+          res.status(201).json({
+            message: 'Created place successfully',
+            place: place
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not save place',
+            500,
+            next,
+            err
+          )
+        );
     })
     .catch(err =>
       errorHandler('Something went wrong, could not save place', 500, next, err)
@@ -106,9 +123,24 @@ const deletePlace = (req, res, next) => {
       return place.deleteOne();
     })
     .then(() => {
-      res.status(200).json({
-        message: 'Place deleted successfully'
-      });
+      User.findById(req.userId)
+        .then(user => {
+          user.places.pull(placeId);
+          return user.save();
+        })
+        .then(() => {
+          res.status(200).json({
+            message: 'Place deleted successfully'
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not delete place',
+            500,
+            next,
+            err
+          )
+        );
     })
     .catch(err =>
       errorHandler(

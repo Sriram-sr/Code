@@ -15,10 +15,10 @@ router
   .route('/:placeId')
   .get(getSinglePlace)
   .put(updatePlace)
-  .delete(deletePlace);
+  .delete(isAuth, deletePlace);
 router
   .route('/')
   .get(isAuth, getPlaces)
-  .post(createPostValidation, createPlace);
+  .post(createPostValidation, isAuth, createPlace);
 
 module.exports = router;
