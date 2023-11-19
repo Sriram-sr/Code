@@ -33,13 +33,17 @@ Endpoints:
 
 # GET
 
-/student/id # Get student profile
-/enrollments:studentId # show student's enrollments
+/student/:studentId # Get student profile
+/enrollments/:studentId # show student's enrollments
 /courses/:deptId # Get courses based on department id.
 
 # POST
 
-/enroll/:courseid?studentid # Enroll course with course/studentId
+/enroll/:courseId?studentId # Enroll course with course/studentId
+
+# PUT
+
+/student/:studentId # Update student profile
 
 # Common (2routes)
 
