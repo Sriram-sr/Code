@@ -225,8 +225,6 @@ class Teacher:
             self.add_teacher_details()
         else:
             self.user_id = Authentication.login()
-            print('User ID after teacher login ', self.user_id)
-        print('Continuing with other teacher functionalities')
         self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
         show_options(options=['Show courses by department', 'Show your details', 'Mark attendance'])
@@ -350,7 +348,8 @@ class Student:
                                                     where_field=USER_ID, target_value=self.user_id)
         enter_new_line()
         show_options(
-            options=['Enroll a course', 'Show your details', 'Show my enrollments', 'Show courses by department'])
+            options=['Enroll a course', 'Show your details', 'Show my enrollments', 'Show courses by department',
+                     'Update profile'])
         user_choice = get_user_inputs(question_str='What would you like to do(1/2/3/4): ', data_type='int')
         if user_choice == 1:
             self.enroll_course()
@@ -360,6 +359,8 @@ class Student:
             self.show_student_enrollments()
         elif user_choice == 4:
             Teacher.show_courses_by_department()
+        elif user_choice == 5:
+            self.update_student_profile()
 
     def add_student_details(self):
         """
@@ -437,6 +438,29 @@ class Student:
                                                      header=course_header)
         enter_new_line()
         display_in_console(enrolled_courses)
+
+    def update_student_profile(self):
+        """
+        Method to update student profile information.
+
+        :return: None
+        """
+        student_details_header = [FIRST_NAME, LAST_NAME, DOB, GENDER, EMAIL, PHONE_NUMBER, ADDRESS,
+                                  GUARDIAN_PHONE_NUMBER, NATIONALITY,
+                                  EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_PHONE]
+        student_data = db_utils.get_select_query(table_name=STUDENT_TABLE, header=student_details_header,
+                                                 where_field=STUDENT_ID, target_value=self.student_id, use_header=True,
+                                                 get_raw=True)
+        update_data = dict()
+        for idx in range(len(student_details_header)):
+            print(f'Enter {student_details_header[idx].upper()} [ {student_data[idx]} ]')
+            new_data_field = input(f'{student_details_header[idx].upper()}: ')
+            if not new_data_field:
+                continue
+            update_data[student_details_header[idx].upper()] = new_data_field
+        db_utils.update_query(table_name=STUDENT_TABLE, fields=update_data, where_field=STUDENT_ID,
+                              target_value=self.student_id)
+        log_banner('Student Profile updated successfully')
 
     @staticmethod
     def show_courses():

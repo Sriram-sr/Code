@@ -1,28 +1,57 @@
 This will be page to describe the completed features of this console based "Student Management System" and to find the
 state of the project.
 
-Immediate AI to work on this project is to see what are the db learning got and build up on mysql relational database
+Immediate AI to work on this project is build up on mysql relational database
+
+To Work On: Update user profile information(Done for Student, todo for teachers).
 
 Endpoints:
 
-# Get
+# ADMIN (3 routes)
 
-/register
-/login
-/teachers # get all teachers
-/students # get all students
+# GET
 
-/teacher/id # get single teacher
-/student/id # get single student
-/enroll/:courseid?studentid # Enroll course with course/studentId
-/enrollments:studentId # show student's enrollments
-/courses/:deptId # show courses based on department id.
-
-# Post
-
-/course
+/teachers # Get All Teachers
+/students # Get All Students
 
 # PUT
 
-/course/:id
+/course/:id # Edit Course
+
+# Teacher (3 routes)
+
+# GET
+
+/courses/:deptId # Get courses based on department id.
+/teacher/id # Get profile
+
+# POST
+
+/attendance/:courseId?studentId # Mark Attendance
+
+# Student (4 routes)
+
+# GET
+
+/student/id # Get student profile
+/enrollments:studentId # show student's enrollments
+/courses/:deptId # Get courses based on department id.
+
+# POST
+
+/enroll/:courseid?studentid # Enroll course with course/studentId
+
+# Common (2routes)
+
+# POST
+
+/register # Register user
+/login # Login user
+
+
+
+
+
+
+
 
