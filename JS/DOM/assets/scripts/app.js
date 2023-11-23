@@ -15,3 +15,18 @@ const someListItem = unorderedList.querySelectorAll('.list-item');
 header.textContent = 'Complete MERN';
 header.style.color = 'red';
 header.className = 'header';
+
+const mainComponent = document.querySelector('.main-component');
+
+console.log(mainComponent.childNodes);
+console.log(mainComponent.children);
+
+const lastElement = mainComponent.lastElementChild;
+console.log(lastElement);
+
+let prevElement = unorderedList.previousElementSibling;
+let nextElement = unorderedList.nextElementSibling;
+
+console.log('Previous is ', prevElement);
+console.log('Next element to UL is ', nextElement);
+
