@@ -1,9 +1,8 @@
 This will be page to describe the completed features of this console based "Student Management System" and to find the
 state of the project.
 
-Immediate AI to work on this project is build up on mysql relational database
-
-To Work On: Update user profile information(Done for Student, todo for teachers).
+To Work On: Update user profile information(Done for Student, Done for teachers).
+Immediate AI is to build api for next route.
 
 Endpoints:
 
@@ -28,6 +27,10 @@ Endpoints:
 # POST
 
 /attendance/:courseId?studentId # Mark Attendance
+
+# PUT
+
+/student/:studentId # Update teacher profile
 
 # Student (4 routes)
 

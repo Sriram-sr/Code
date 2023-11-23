@@ -227,14 +227,16 @@ class Teacher:
             self.user_id = Authentication.login()
         self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
-        show_options(options=['Show courses by department', 'Show your details', 'Mark attendance'])
-        user_choice = get_user_inputs(question_str='What would you like to do(1/2/3): ', data_type='int')
+        show_options(options=['Show courses by department', 'Show your details', 'Mark attendance', 'Update profile'])
+        user_choice = get_user_inputs(question_str='What would you like to do(1/2/3/4): ', data_type='int')
         if user_choice == 1:
             self.show_courses_by_department()
         elif user_choice == 2:
             self.show_teacher_details()
         elif user_choice == 3:
             self.mark_attendance()
+        elif user_choice == 4:
+            self.update_teacher_profile()
 
     def add_teacher_details(self):
         """
@@ -325,6 +327,28 @@ class Teacher:
             TEACHER_ID: self.teacher_id
         }
         db_utils.insert_to_table(data=attendance_data, table_name=ATTENDANCE_TABLE)
+
+    def update_teacher_profile(self):
+        """
+        Method to update teacher profile information.
+
+        :return: None
+        """
+        teachers_details_header = [FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, ADDRESS, DEPARTMENT_ID, HIRE_DATE,
+                                   DEPARTMENT_ID, HIRE_DATE, SPECIALIZATION, IS_ACTIVE]
+        teacher_data = db_utils.get_select_query(table_name=TEACHER_TABLE, header=teachers_details_header,
+                                                 where_field=TEACHER_ID, target_value=self.teacher_id, use_header=True,
+                                                 get_raw=True)
+        update_data = dict()
+        for idx in range(len(teachers_details_header)):
+            print(f'Enter {teachers_details_header[idx].upper()} [ {teacher_data[idx]} ]')
+            new_data_field = input(f'{teachers_details_header[idx].upper()}: ')
+            if not new_data_field:
+                continue
+            update_data[teachers_details_header[idx].upper()] = new_data_field
+        db_utils.update_query(table_name=TEACHER_TABLE, fields=update_data, where_field=TEACHER_ID,
+                              target_value=self.teacher_id)
+        log_banner('Teacher Profile updated successfully')
 
 
 class Student:
