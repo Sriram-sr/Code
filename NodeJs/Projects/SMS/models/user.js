@@ -11,6 +11,8 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  resetToken: String,
+  resetTokenExpiry: Date,
   role: {
     type: String,
     enum: ['admin', 'teacher', 'student'],

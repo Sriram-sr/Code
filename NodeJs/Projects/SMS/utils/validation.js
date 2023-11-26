@@ -31,4 +31,24 @@ const validateLoginRequest = () => {
   ];
 };
 
-module.exports = { validateSignupRequest, validateLoginRequest };
+const validateEmailField = () => {
+  return body('email', 'Please provide a valid email')
+    .isEmail()
+    .normalizeEmail();
+};
+
+const validatePasswordField = () => {
+  return body(
+    'password',
+    'Password length should be more than 5 and should contain text and numbers only'
+  )
+    .trim()
+    .isLength({ min: 5 });
+};
+
+module.exports = {
+  validateSignupRequest,
+  validateLoginRequest,
+  validateEmailField,
+  validatePasswordField
+};

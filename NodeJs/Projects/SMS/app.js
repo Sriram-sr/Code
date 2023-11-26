@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const authRoutes = require('./routes/auth-routes');
 const studentRoutes = require('./routes/student-routes');
 const { MONGODB_URI, PORT } = require('./utils/env-values');
@@ -7,11 +8,7 @@ const { MONGODB_URI, PORT } = require('./utils/env-values');
 const app = express();
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-  console.log(`${Date().split('GMT')[0]} ${req.method} ${req.url}`);
-  next();
-});
+app.use(morgan('dev'));
 
 app.use(authRoutes);
 app.use(studentRoutes);
