@@ -38,7 +38,12 @@ const studentSchema = new Schema({
       type: String
     }
   },
-  nationality: { type: String }
+  nationality: { type: String },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Student', studentSchema);

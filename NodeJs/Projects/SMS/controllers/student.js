@@ -1,4 +1,5 @@
-const Student = require('../models/student');
+const Student = require('../models/Student');
+
 const {
   errorHandler,
   checkFieldsValidation
@@ -17,7 +18,8 @@ exports.getStudents = (req, res, next) => {
 };
 
 exports.createStudent = (req, res, next) => {
-  const { name, age, gender, contact, address } = req.body;
+  const { name, age, gender, contact, address, nationality } = req.body;
+  console.log('ID is ', req.userId);
   const student = new Student({
     name: name,
     age: age,
@@ -31,7 +33,9 @@ exports.createStudent = (req, res, next) => {
       city: address.street,
       state: address.state,
       zip: address.zip
-    }
+    },
+    nationality: nationality,
+    userId: req.userId
   });
   student
     .save()

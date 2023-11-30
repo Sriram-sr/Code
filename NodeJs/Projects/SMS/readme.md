@@ -1,6 +1,17 @@
 Student Management System REST API project
 
-So far auth part(register & login) only completed. Will code this by the way completing MongoDB.
+So far auth part(register & login) only completed along with Student CRUD endpoints.
+Current plan is to associate User model with Teacher/Admin/Student. Also to add profile picture, bio fields to User model.
+
+User Authentication:
+
+POST /signup: User registration.✅
+POST /login: User login.✅
+POST /forget-password: Forget Password generate token.✅
+POST /reset-password: Reset Password with received token.✅
+GET /profile: Retrieve user profile information.
+PUT /profile: Update user profile.
+GET /users: Retrieve a list of users (admin feature).
 
 Students:
 
@@ -30,13 +41,7 @@ POST /grades: Record grades and results for students in specific courses.
 GET /students/:id/courses/:id/grades: Retrieve a student's grades for a course.
 GET /courses/:id/grades: Retrieve grades for all students in a course.
 GET /students/:id/grades: Retrieve grades for a specific student.
-User Authentication:
 
-POST /register: User registration.
-POST /login: User login.
-GET /profile: Retrieve user profile information.
-PUT /profile: Update user profile.
-GET /users: Retrieve a list of users (admin feature).
 Search and Filtering:
 
 GET /students/search: Search for students based on criteria (e.g., name, enrollment date).

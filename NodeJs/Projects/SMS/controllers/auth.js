@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const User = require('../models/user');
+const User = require('../models/User');
 const { JWTSECUREKEY } = require('../utils/env-values');
 const {
   errorHandler,
@@ -122,6 +122,27 @@ exports.resetPassword = (req, res, next) => {
           });
         })
         .catch(err => errorHandler(err, next));
+    })
+    .catch(err => errorHandler(err, next));
+};
+
+exports.updateUserProfile = (req, res, next) => {
+  const { bio } = req.body;
+  User.findById(req.userId)
+    .then(user => {
+      if (!req.file) {
+        const error = new Error('No Image uploaded');
+        error.statusCode = 422;
+        throw error;
+      }
+      user.profilePicture = req.file.path;
+      user.bio = bio;
+      return user.save();
+    })
+    .then(() => {
+      res.status(200).json({
+        message: 'Profile updated successfully'
+      });
     })
     .catch(err => errorHandler(err, next));
 };

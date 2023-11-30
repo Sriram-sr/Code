@@ -17,6 +17,12 @@ const userSchema = new Schema({
     type: String,
     enum: ['admin', 'teacher', 'student'],
     default: 'student'
+  },
+  bio: {
+    type: String
+  },
+  profilePicture: {
+    type: String
   }
 });
 
