@@ -8,7 +8,14 @@ const {
   checkFieldsValidation
 } = require('../utils/error-handler');
 
-exports.signupUser = (req, res, next) => {
+const raiseUserNotFoundError = message => {
+  const errorMessage = message || 'User with this email not found';
+  const error = new Error(errorMessage);
+  error.statusCode = 422;
+  throw error;
+};
+
+const signupUser = (req, res, next) => {
   checkFieldsValidation(req);
   const { email, password, role } = req.body;
   let user;
@@ -33,16 +40,14 @@ exports.signupUser = (req, res, next) => {
     });
 };
 
-exports.loginUser = (req, res, next) => {
+const loginUser = (req, res, next) => {
   checkFieldsValidation(req);
   const { email, password } = req.body;
   let loadedUser;
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        const error = new Error('User with this email not found');
-        error.statusCode = 422;
-        throw error;
+        raiseUserNotFoundError();
       }
       loadedUser = user;
       return bcrypt.compare(password, user.password);
@@ -68,16 +73,16 @@ exports.loginUser = (req, res, next) => {
     });
 };
 
-exports.handleForgotPassword = (req, res, next) => {
+const handleForgotPassword = (req, res, next) => {
   checkFieldsValidation(req);
   const email = req.body.email;
   let token;
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        const error = new Error('User with this email not found');
-        error.statusCode = 422;
-        throw error;
+        raiseUserNotFoundError(
+          'User with token not found or token may be expired'
+        );
       }
       crypto.randomBytes(32, (err, buffer) => {
         if (err) {
@@ -96,17 +101,15 @@ exports.handleForgotPassword = (req, res, next) => {
     .catch(err => errorHandler(err, next));
 };
 
-exports.resetPassword = (req, res, next) => {
+const resetPassword = (req, res, next) => {
   checkFieldsValidation(req);
   const { password, token } = req.body;
   User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } })
     .then(user => {
       if (!user) {
-        const error = new Error(
+        raiseUserNotFoundError(
           'User with token not found or token may be expired'
         );
-        error.statusCode = 422;
-        throw error;
       }
       bcrypt
         .hash(password, 2)
@@ -126,12 +129,55 @@ exports.resetPassword = (req, res, next) => {
     .catch(err => errorHandler(err, next));
 };
 
-exports.updateUserProfile = (req, res, next) => {
+const getAllUsers = (req, res, next) => {
+  let currentUser;
+  User.find()
+    .then(users => {
+      users.map(user => {
+        if (user._id.toString() === req.userId) {
+          currentUser = user;
+        }
+      });
+      if (currentUser.role !== 'admin') {
+        console.log(currentUser);
+        const error = new Error('Only admin can view all users');
+        error.statusCode = 403;
+        throw error;
+      }
+      res.status(200).json({
+        message: 'Users fetched successfully',
+        totalUsers: users.length,
+        users: users
+      });
+    })
+    .catch(err => errorHandler(err, next));
+};
+
+const getUserProfile = (req, res, next) => {
+  User.findById(req.userId)
+    .select('email role bio profilePicture -_id')
+    .then(user => {
+      if (!user) {
+        raiseUserNotFoundError();
+      }
+      res
+        .status(200)
+        .json({ message: 'User fetched successfully', user: user });
+    })
+    .catch(err => errorHandler(err, next));
+};
+
+const updateUserProfile = (req, res, next) => {
   const { bio } = req.body;
   User.findById(req.userId)
     .then(user => {
+      if (!user) {
+        raiseUserNotFoundError();
+      }
       if (!req.file) {
-        const error = new Error('No Image uploaded');
+        const error = new Error(
+          'No Image uploaded or please check the image format'
+        );
         error.statusCode = 422;
         throw error;
       }
@@ -145,4 +191,14 @@ exports.updateUserProfile = (req, res, next) => {
       });
     })
     .catch(err => errorHandler(err, next));
+};
+
+module.exports = {
+  signupUser,
+  loginUser,
+  handleForgotPassword,
+  resetPassword,
+  getAllUsers,
+  getUserProfile,
+  updateUserProfile
 };

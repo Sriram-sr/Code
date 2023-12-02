@@ -1,7 +1,6 @@
 Student Management System REST API project
 
-So far auth part(register & login) only completed along with Student CRUD endpoints.
-Current plan is to associate User model with Teacher/Admin/Student. Also to add profile picture, bio fields to User model.
+Current plan is to associate User model with Teacher/Admin/Student.
 
 User Authentication:
 
@@ -9,9 +8,9 @@ POST /signup: User registration.✅
 POST /login: User login.✅
 POST /forget-password: Forget Password generate token.✅
 POST /reset-password: Reset Password with received token.✅
-GET /profile: Retrieve user profile information.
-PUT /profile: Update user profile.
+GET /profile: Retrieve user profile information.✅
 GET /users: Retrieve a list of users (admin feature).
+PATCH /update-profie: Updates user profile with bio and profile picture.✅
 
 Students:
 

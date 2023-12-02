@@ -17,7 +17,8 @@ const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === 'image/png' ||
     file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/webp'
   ) {
     cb(null, true);
   } else {
@@ -25,8 +26,12 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage: customImageStorage, fileFilter: fileFilter, limits: {
+const upload = multer({
+  storage: customImageStorage,
+  fileFilter: fileFilter,
+  limits: {
     fileSize: 1024 * 1024 * 5 // upto 5Mb
-} });
+  }
+});
 
 module.exports = upload;

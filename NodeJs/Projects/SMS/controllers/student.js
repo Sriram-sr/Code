@@ -19,7 +19,6 @@ exports.getStudents = (req, res, next) => {
 
 exports.createStudent = (req, res, next) => {
   const { name, age, gender, contact, address, nationality } = req.body;
-  console.log('ID is ', req.userId);
   const student = new Student({
     name: name,
     age: age,
