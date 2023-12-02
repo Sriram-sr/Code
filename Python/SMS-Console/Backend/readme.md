@@ -2,7 +2,7 @@ This will be page to describe the completed features of this console based "Stud
 state of the project.
 
 To Work On: Update user profile information(Done for Student, Done for teachers).
-Immediate AI is to build api for next route.
+Immediate AI is to build api for next route. (Add CRUD for admin to do with courses).
 
 Endpoints:
 
