@@ -8,7 +8,7 @@ const {
 } = require('../utils/error-handler');
 const { JWTSECUREKEY } = require('../utils/env-values');
 
-// @route   POST api/v1/user/signup
+// @route   POST api/v1/user/signup/
 // @desc    Signup User
 // @access  Public
 const signupUser = (req, res, next) => {
@@ -47,12 +47,11 @@ const signupUser = (req, res, next) => {
     });
 };
 
-// @route   POST api/v1/user/signin
+// @route   POST api/v1/user/signin/
 // @desc    Login User
 // @access  Public
 const loginUser = (req, res, next) => {
   checkFieldsValidation(req);
-  console.log('IT never read this line');
   const { email, password } = req.body;
   User.findOne({ email: email })
     .then(user => {
@@ -99,7 +98,7 @@ const loginUser = (req, res, next) => {
     );
 };
 
-// @route   GET api/v1/user/current
+// @route   GET api/v1/user/current/
 // @desc    Get Current Loggedin User
 // @access  Private
 const getCurrentUser = (req, res, next) => {
@@ -119,6 +118,10 @@ const getCurrentUser = (req, res, next) => {
       )
     );
 };
+
+const getUserByID = (req, res, next) => {
+  
+}
 
 module.exports = {
   signupUser,

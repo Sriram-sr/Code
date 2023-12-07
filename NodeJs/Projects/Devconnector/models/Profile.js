@@ -61,13 +61,13 @@ const profileSchema = new Schema({
         default: false,
       },
       description: {
-        type: Date,
+        type: String,
       },
     },
   ],
   education: [
     {
-      school: {
+      institution: {
         type: String,
         required: true,
       },
@@ -90,7 +90,7 @@ const profileSchema = new Schema({
         default: false,
       },
       description: {
-        type: Date,
+        type: String,
       }
     },
   ],

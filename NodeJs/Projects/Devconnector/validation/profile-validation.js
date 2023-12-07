@@ -16,8 +16,8 @@ const profileValidation = [
     .isURL()
     .withMessage('Website should be a valid url'),
   body('company', 'Please enter valid company details')
-    .exists(body('company'))
-    .isAlpha()
+    .if(body('company').exists())
+    // incomplete
 ];
 
 module.exports = profileValidation;
