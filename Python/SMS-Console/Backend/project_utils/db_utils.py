@@ -51,7 +51,7 @@ class DatabaseHandler:
         self.db_connection, self.db_cursor = self.connect_database()
 
     def get_select_query(self, table_name=None, header=None, use_header=None, where_field=None, target_value=None,
-                         get_raw=None):
+                         get_raw=None, get_map_data=None):
         """
         Executes a SELECT query on the specified table and retrieves all rows of data.
 
@@ -61,6 +61,7 @@ class DatabaseHandler:
         :param where_field: Name of the column which is used as where filter.
         :param target_value: Target field which used in where condition.
         :param get_raw: Boolean field used to return raw query output data without formatting.
+        :param get_map_data: Boolean field to return mapped raw data with the headers.
 
         :return:  Formatted table containing the retrieved data.
         """
@@ -73,6 +74,14 @@ class DatabaseHandler:
             query = query + f' where {where_field}={target_value}'
         self.db_cursor.execute(query)
         retrieved_data = self.db_cursor.fetchall()
+        if get_map_data:
+            mapped_data_list = list()
+            for row_data in retrieved_data:
+                map_data = dict()
+                for idx in range(len(header)):
+                    map_data[header[idx]] = row_data[idx]
+                mapped_data_list.append(map_data)
+            return mapped_data_list
         if get_raw:
             return retrieved_data[0]
         table = tabulate(retrieved_data, headers=header, tablefmt='grid')

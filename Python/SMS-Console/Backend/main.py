@@ -1,5 +1,6 @@
 import sys
 from datetime import datetime
+from tabulate import tabulate
 
 from project_utils.common_utils import *
 from project_utils.db_utils import DatabaseHandler
@@ -124,13 +125,18 @@ class Admin:
         """
         Authentication.login()
         enter_new_line()
-        show_options(message='What would you like to do', options=['Show Teachers', 'Show Students', 'Edit Course'])
-        admin_choice = get_user_inputs(question_str='Enter your choice(1/2/3): ', data_type='int')
+        show_options(message='What would you like to do',
+                     options=['Show Teachers', 'Show Students', 'Show Courses', 'Add Course', 'Edit Course'])
+        admin_choice = get_user_inputs(question_str='Enter your choice(1/2/3/4/5): ', data_type='int')
         if admin_choice == 1:
             self.show_all_teachers()
         elif admin_choice == 2:
             self.show_all_students()
         elif admin_choice == 3:
+            self.get_courses()
+        elif admin_choice == 4:
+            self.add_course()
+        elif admin_choice == 5:
             self.edit_course()
 
     def show_all_students(self):
@@ -164,6 +170,44 @@ class Admin:
                            DEPARTMENT_ID, HIRE_DATE, SPECIALIZATION, IS_ACTIVE, USER_ID]
         all_teachers_data = db_utils.get_select_query(table_name=self.teacher_table, header=teachers_header)
         display_in_console(all_teachers_data)
+
+    def get_courses(self):
+        """
+        Selects all courses and modifies raw ID fields from the DB and replaces with respective name fields.
+
+        :return: None
+        """
+        courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE, CREDITS, DEPARTMENT_ID, START_DATE,
+                          END_DATE, INSTRUCTOR_ID]
+        available_courses = db_utils.get_select_query(table_name=self.courses_table, header=courses_header,
+                                                      use_header=True, get_raw=True, get_map_data=True)
+        for course_data in available_courses:
+            department_id = course_data.get(DEPARTMENT_ID)
+            instructor_id = course_data.get(INSTRUCTOR_ID)
+            course_data.pop(DEPARTMENT_ID)
+            course_data.pop(INSTRUCTOR_ID)
+            department_name = db_utils.get_single_query(table_name=DEPARTMENT_TABLE, field_to_get=DEPARTMENT_NAME,
+                                                        where_field=DEPARTMENT_ID, target_value=department_id)
+            instructor_data = db_utils.get_select_query(table_name=TEACHER_TABLE, header=[FIRST_NAME, LAST_NAME],
+                                                        use_header=True, where_field=TEACHER_ID,
+                                                        target_value=instructor_id,
+                                                        get_map_data=True)[0]
+            instructor_name = f'{instructor_data[FIRST_NAME]} {instructor_data[LAST_NAME]}'
+            course_data[DEPARTMENT_NAME] = department_name
+            course_data[TEACHER_NAME] = instructor_name
+        formatted_courses = [course.values() for course in available_courses]
+        modified_courses_header = [COURSE_NAME, DESCRIPTION, COURSE_CODE, CREDITS, START_DATE,
+                                   END_DATE, DEPARTMENT_NAME, TEACHER_NAME]
+        tabulated_courses = tabulate(formatted_courses, headers=modified_courses_header, tablefmt='grid')
+        display_in_console(tabulated_courses)
+
+    def add_course(self):
+        """
+        Add a course and save it in database.
+
+        :return: None
+        """
+        pass
 
     def edit_course(self):
         """
