@@ -5,11 +5,11 @@ Current plan is to associate User model with Teacher/Admin/Student.
 User Authentication:
 
 POST /signup: User registration.✅
-POST /login: User login.✅
+POST /signin: User login.✅
 POST /forget-password: Forget Password generate token.✅
 POST /reset-password: Reset Password with received token.✅
-GET /profile: Retrieve user profile information.✅
-GET /users: Retrieve a list of users (admin feature).
+GET /current: Retrieve user profile information.✅
+GET / Retrieve a list of users (admin feature).
 PATCH /update-profie: Updates user profile with bio and profile picture.✅
 
 Students:
