@@ -1,20 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const { MONGODB_URI, PORT } = require('./utils/env-values');
 const authRoutes = require('./routes/auth-routes');
 const studentRoutes = require('./routes/student-routes');
-const { MONGODB_URI, PORT } = require('./utils/env-values');
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(morgan('dev'));
 
-app.use(authRoutes);
-app.use(studentRoutes);
+app.use('/api/v1/user', authRoutes);
+app.use('/api/v1/student', studentRoutes);
 
 app.use((error, req, res, next) => {
-  console.log(error);
+  // console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
