@@ -1,0 +1,1 @@
+This DevConnector backend covered all the major APIs. Once frontend for this resumed, will continue to work on advanced parts in this backend.
