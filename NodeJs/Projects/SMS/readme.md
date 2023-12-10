@@ -2,23 +2,40 @@ Student Management System REST API project
 
 Current plan is to associate User model with Teacher/Admin/Student.
 
-User Authentication:
+APPLICATION FLOW:
 
-POST /signup: User registration.✅
-POST /signin: User login.✅
-POST /forget-password: Forget Password generate token.✅
-POST /reset-password: Reset Password with received token.✅
-GET /current: Retrieve user profile information.✅
-GET / Retrieve a list of users (admin feature).
-PATCH /update-profie: Updates user profile with bio and profile picture.✅
+- There is a register screen on your frontend which is your landing screen.
+- Once registered will redirect to Login screen
+- Once logged in, based on user's role(admin, student, teacher) will take to respective user's homepage displaying options of those users.
 
-Students:
+Endpoints:
 
-GET /students: Retrieve a list of all students.✅
-POST /students: Create a new student.✅
-GET /students/:id: Retrieve a specific student by ID.✅
-PUT /students/:id: Update student information.✅
-DELETE /students/:id: Delete a student.✅
+# Common (6 routes)
+
+POST /api/v1/user/signup: User registration.✅
+POST /api/v1/user/signin: User login.✅
+POST /api/v1/user/forget-password: Forget Password generate token.✅
+POST /api/v1/user/reset-password: Reset Password with received token.✅
+GET /api/v1/user/current: Retrieve user profile information.✅
+PATCH /api/v1/user/update-profie: Updates user profile with bio and profile picture.✅
+
+# ADMIN (1 route)
+
+GET /api/v1/user/: Retrieve a list of users.✅
+
+# Teacher (4 routes)
+
+POST /api/v1/teacher: Create a new teacher. (Currently working)
+
+# Student (5 routes)
+
+GET /api/v1/student: Retrieve a list of all students.✅
+POST /api/v1/student: Create a new student.✅
+GET /api/v1/student/:studentId: Retrieve a specific student by ID.✅
+PUT /api/v1/student/:studentId: Update student information.✅
+DELETE /api/v1/student/:studentId: Delete a student.✅
+
+---
 
 Courses:
 
@@ -27,6 +44,7 @@ POST /courses: Create a new course.
 GET /courses/:id: Retrieve a specific course by ID.
 PUT /courses/:id: Update course information.
 DELETE /courses/:id: Delete a course.
+
 Enrollments:
 
 POST /enrollments: Enroll a student in a course.
