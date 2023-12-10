@@ -11,7 +11,7 @@ const isAuth = require('../middlewares/is-auth');
 
 const router = express.Router();
 
-router.route('/').get(getStudents).post(isAuth, createStudent);
+router.route('/').get(isAuth, getStudents).post(isAuth, createStudent);
 router
   .route('/:studentId')
   .get(getSingleStudent)

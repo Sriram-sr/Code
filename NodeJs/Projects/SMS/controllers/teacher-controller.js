@@ -1,8 +1,36 @@
+const User = require('../models/User');
 const Teacher = require('../models/Teacher');
 const {
   errorHandler,
-  checkFieldsValidation,
+  checkFieldsValidation
 } = require('../utils/error-handler');
+
+// @route   GET api/v1/teacher/
+// @desc    Gets all teachers
+// @access  Private(Only admin have permissions)
+const getTeachers = (req, res, next) => {
+  User.findById(req.userId)
+    .then(user => {
+      if (user.role !== 'admin') {
+        return errorHandler('Only admin can get all teachers', 403, next);
+      }
+      Teacher.find().then(teachers => {
+        res.status(200).json({
+          message: 'Successfully fetched teachers',
+          totalStudents: teachers.length,
+          teachers: teachers
+        });
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, Could not get teachers currently',
+        500,
+        next,
+        err
+      )
+    );
+};
 
 // @route   POST api/v1/teacher/
 // @desc    Creates teacher
@@ -19,7 +47,7 @@ const createTeacher = (req, res, next) => {
     street,
     city,
     state,
-    zip,
+    zip
   } = req.body;
 
   let address;
@@ -28,7 +56,7 @@ const createTeacher = (req, res, next) => {
       street,
       city,
       state,
-      zip,
+      zip
     };
   }
   Teacher.create({
@@ -39,12 +67,12 @@ const createTeacher = (req, res, next) => {
     specialization,
     yearsOfExperience,
     email,
-    address,
+    address
   })
     .then(teacher => {
       res.status(201).json({
         message: 'Successfully created teacher',
-        teacher: teacher,
+        teacher: teacher
       });
     })
     .catch(err =>
@@ -58,5 +86,6 @@ const createTeacher = (req, res, next) => {
 };
 
 module.exports = {
-  createTeacher,
+  getTeachers,
+  createTeacher
 };

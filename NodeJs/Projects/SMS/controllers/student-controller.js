@@ -2,19 +2,24 @@ const Student = require('../models/Student');
 const User = require('../models/User');
 const {
   errorHandler,
-  checkFieldsValidation,
+  checkFieldsValidation
 } = require('../utils/error-handler');
 
 // @route   GET api/v1/student/
 // @desc    Gets all students
-// @access  Public
+// @access  Private(Only admin have permissions)
 const getStudents = (req, res, next) => {
-  Student.find()
-    .then(students => {
-      res.status(200).json({
-        message: 'Successfully fetched students',
-        totalStudents: students.length,
-        students: students,
+  User.findById(req.userId)
+    .then(user => {
+      if (user.role !== 'admin') {
+        return errorHandler('Only admin can get all students', 403, next);
+      }
+      Student.find({ 'address.zip': 404200201 }).then(students => {
+        res.status(200).json({
+          message: 'Successfully fetched students',
+          totalStudents: students.length,
+          students: students
+        });
       });
     })
     .catch(err =>
@@ -38,23 +43,23 @@ const createStudent = (req, res, next) => {
     gender: gender,
     contact: {
       email: contact.email,
-      phone: contact.phone,
+      phone: contact.phone
     },
     address: {
       street: address.street,
       city: address.street,
       state: address.state,
-      zip: address.zip,
+      zip: address.zip
     },
     nationality: nationality,
-    userId: req.userId,
+    userId: req.userId
   });
   student
     .save()
     .then(student => {
       res.json({
         message: 'Student saved successfully',
-        student: student,
+        student: student
       });
     })
     .catch(err =>
@@ -79,7 +84,7 @@ const getSingleStudent = (req, res, next) => {
       }
       res.status(200).json({
         message: 'Student retreived successfully',
-        student: student,
+        student: student
       });
     })
     .catch(err =>
@@ -135,7 +140,7 @@ const deleteStudent = (req, res, next) => {
           })
           .then(() => {
             res.status(200).json({
-              message: 'Student deleted successfully',
+              message: 'Student deleted successfully'
             });
           })
           .catch(err =>
@@ -163,5 +168,5 @@ module.exports = {
   createStudent,
   getSingleStudent,
   updateStudent,
-  deleteStudent,
+  deleteStudent
 };

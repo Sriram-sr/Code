@@ -5,5 +5,5 @@ const validateUpdateStudent = body('name', 'Enter a valid name')
   .trim();
 
 module.exports = {
-  validateUpdateStudent,
+  validateUpdateStudent
 };

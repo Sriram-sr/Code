@@ -6,47 +6,47 @@ const teacherSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'User',
+    ref: 'User'
   },
   name: {
     type: String,
-    required: true,
+    required: true
   },
   email: String,
   mobile: {
     type: String,
-    required: true,
+    required: true
   },
   address: {
     street: {
-      type: String,
+      type: String
     },
     city: {
-      type: String,
+      type: String
     },
     state: {
-      type: String,
+      type: String
     },
     zip: {
-      type: String,
-    },
+      type: String
+    }
   },
   gender: {
     type: String,
-    required: true,
+    required: true
   },
   specialization: {
     type: String,
-    required: true,
+    required: true
   },
   joinedDate: {
     type: Date,
-    default: Date.now(),
+    default: Date.now()
   },
   yearsOfExperience: {
     type: Number,
-    required: true,
-  },
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Teacher', teacherSchema);

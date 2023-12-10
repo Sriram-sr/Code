@@ -6,13 +6,13 @@ const {
   resetPassword,
   getAllUsers,
   getUserProfile,
-  updateUserProfile,
+  updateUserProfile
 } = require('../controllers/auth-controller');
 const {
   validateSignupRequest,
   validateLoginRequest,
   validateEmailField,
-  validatePasswordField,
+  validatePasswordField
 } = require('../validation/user-validation');
 const imageParser = require('../utils/image-parser');
 const isAuth = require('../middlewares/is-auth');

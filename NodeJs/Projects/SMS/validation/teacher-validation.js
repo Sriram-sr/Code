@@ -5,6 +5,7 @@ const teacherCreateValidation = [
     .isAlpha()
     .withMessage('Name should contain only letters')
     .isLength({ min: 6, max: 30 })
+    .withMessage('Name should contain atleast 6-30 characters')
     .notEmpty()
     .withMessage('Name should not be empty'),
   body('email', 'Please enter a valid email address').isEmail(),
@@ -19,9 +20,9 @@ const teacherCreateValidation = [
   body('street').optional().notEmpty().withMessage('Street is required'),
   body('city').optional().notEmpty().withMessage('City is required'),
   body('state').optional().notEmpty().withMessage('State is required'),
-  body('zip').optional().isPostalCode('any').withMessage('Invalid ZIP code'),
+  body('zip').optional().isPostalCode('any').withMessage('Invalid ZIP code')
 ];
 
 module.exports = {
-  teacherCreateValidation,
+  teacherCreateValidation
 };

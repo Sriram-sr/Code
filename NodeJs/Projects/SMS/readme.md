@@ -1,6 +1,6 @@
 Student Management System REST API project
 
-Current plan is to associate User model with Teacher/Admin/Student.
+Next Route: Add course by admin.
 
 APPLICATION FLOW:
 
@@ -19,17 +19,20 @@ POST /api/v1/user/reset-password: Reset Password with received token.✅
 GET /api/v1/user/current: Retrieve user profile information.✅
 PATCH /api/v1/user/update-profie: Updates user profile with bio and profile picture.✅
 
-# ADMIN (1 route)
+# ADMIN (5 route)
 
 GET /api/v1/user/: Retrieve a list of users.✅
+GET /api/v1/student: Retrieve a list of all students.✅
+GET /api/v1/teacher: Retrieve a list of all teachers.✅
+GET /api/v1/department/: Retrieve list of departments.✅
+POST /api/v1/department/: Create new department.✅
 
 # Teacher (4 routes)
 
-POST /api/v1/teacher: Create a new teacher. (Currently working)
+POST /api/v1/teacher: Create a new teacher.✅
 
-# Student (5 routes)
+# Student (4 routes)
 
-GET /api/v1/student: Retrieve a list of all students.✅
 POST /api/v1/student: Create a new student.✅
 GET /api/v1/student/:studentId: Retrieve a specific student by ID.✅
 PUT /api/v1/student/:studentId: Update student information.✅
