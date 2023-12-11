@@ -30,3 +30,16 @@ let nextElement = unorderedList.nextElementSibling;
 console.log('Previous is ', prevElement);
 console.log('Next element to UL is ', nextElement);
 
+console.log('Unordered list\'s first child,');
+console.log(unorderedList.firstChild);
+
+console.log('Unordered list\'s first Element child,');
+console.log(unorderedList.firstElementChild);
+
+const section = document.querySelector('section');
+
+const tempDiv = document.createElement("div");
+tempDiv.style.backgroundColor = 'green';
+
+section.insertAdjacentHTML('beforebegin', '<h1>This header is above it</h1>');
+section.insertAdjacentHTML('beforeend', '<h3>This could be it</h3>');
