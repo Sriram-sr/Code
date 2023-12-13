@@ -10,7 +10,7 @@ APPLICATION FLOW:
 
 Endpoints:
 
-# Common (6 routes)
+# Common (7 routes)
 
 POST /api/v1/user/signup: User registration.✅
 POST /api/v1/user/signin: User login.✅
@@ -18,25 +18,28 @@ POST /api/v1/user/forget-password: Forget Password generate token.✅
 POST /api/v1/user/reset-password: Reset Password with received token.✅
 GET /api/v1/user/current: Retrieve user profile information.✅
 PATCH /api/v1/user/update-profie: Updates user profile with bio and profile picture.✅
+GET /api/v1/admin/course: Gets all courses offered.✅
 
-# ADMIN (5 route)
+# ADMIN (6 route)
 
 GET /api/v1/user/: Retrieve a list of users.✅
 GET /api/v1/student: Retrieve a list of all students.✅
 GET /api/v1/teacher: Retrieve a list of all teachers.✅
 GET /api/v1/department/: Retrieve list of departments.✅
 POST /api/v1/department/: Create new department.✅
+POST /api/v1/admin/course: Create new course.✅
 
 # Teacher (4 routes)
 
 POST /api/v1/teacher: Create a new teacher.✅
 
-# Student (4 routes)
+# Student (5 routes)
 
 POST /api/v1/student: Create a new student.✅
 GET /api/v1/student/:studentId: Retrieve a specific student by ID.✅
 PUT /api/v1/student/:studentId: Update student information.✅
 DELETE /api/v1/student/:studentId: Delete a student.✅
+PUT /api/v1/student/enroll-course: Enroll a course.✅
 
 ---
 

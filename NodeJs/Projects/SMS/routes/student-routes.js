@@ -6,12 +6,14 @@ const {
   getSingleStudent,
   updateStudent,
   deleteStudent,
+  enrollCourse
 } = require('../controllers/student-controller');
 const isAuth = require('../middlewares/is-auth');
 
 const router = express.Router();
 
 router.route('/').get(isAuth, getStudents).post(isAuth, createStudent);
+router.route('/enroll-course').put(isAuth, enrollCourse);
 router
   .route('/:studentId')
   .get(getSingleStudent)

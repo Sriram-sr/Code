@@ -1,5 +1,6 @@
-const Student = require('../models/Student');
 const User = require('../models/User');
+const Student = require('../models/Student');
+const Course = require('../models/Course');
 const {
   errorHandler,
   checkFieldsValidation
@@ -163,10 +164,64 @@ const deleteStudent = (req, res, next) => {
     );
 };
 
+// @route   PUT api/v1/student/enroll-course
+// @desc    Enrolls a course
+// @access  Private
+const enrollCourse = (req, res, next) => {
+  const courseCode = req.body.courseCode;
+  Student.findOne({ userId: req.userId })
+    .then(student => {
+      Course.findOne({ courseCode: courseCode })
+        .then(course => {
+          if (!course) {
+            return errorHandler(
+              'Cannot able to find a course with given course code',
+              422,
+              next
+            );
+          }
+          student.coursesEnrolled.unshift(course._id);
+          student
+            .save()
+            .then(updatedStudent => {
+              res.status(200).json({
+                message: 'Successfully enrolled course',
+                updatedStudent
+              });
+            })
+            .catch(err =>
+              errorHandler(
+                'Something went wrong, Could not enroll course currently',
+                500,
+                next,
+                err
+              )
+            );
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, Could not enroll course currently',
+            500,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, Could not enroll course currently',
+        500,
+        next,
+        err
+      )
+    );
+};
+
 module.exports = {
   getStudents,
   createStudent,
   getSingleStudent,
   updateStudent,
-  deleteStudent
+  deleteStudent,
+  enrollCourse
 };

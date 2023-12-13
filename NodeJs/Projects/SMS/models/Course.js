@@ -9,7 +9,9 @@ const courseSchema = new Schema(
       required: true
     },
     courseCode: {
-      type: String
+      type: String,
+      required: true,
+      unique: true
     },
     department: {
       type: Schema.Types.ObjectId,
@@ -18,12 +20,14 @@ const courseSchema = new Schema(
     },
     credits: {
       type: Number,
+      min: 1,
+      max: 5,
       required: true
     },
     ratings: {
       type: Number,
       min: 1,
-      max: 5,
+      max: 10,
       required: true
     }
   },

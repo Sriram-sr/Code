@@ -1,3 +1,4 @@
+const Course = require('../models/Course');
 const Department = require('../models/Department');
 const User = require('../models/User');
 const { errorHandler } = require('../utils/error-handler');
@@ -23,6 +24,9 @@ const isAdmin = (req, res, next) => {
     .catch(err => errorHandler('Something went wrong', 500, next, err));
 };
 
+// @route   GET api/v1/department/
+// @desc    Gets all departments
+// @access  Private(Only admin have permissions)
 const getDepartments = (req, res, next) => {
   Department.find()
     .then(departments => {
@@ -42,6 +46,9 @@ const getDepartments = (req, res, next) => {
     );
 };
 
+// @route   POST api/v1/department/
+// @desc    Creates new department
+// @access  Private(Only admin have permissions)
 const addDepartment = (req, res, next) => {
   const { departmentName, description, headOfDepartment } = req.body;
 
@@ -76,8 +83,65 @@ const addDepartment = (req, res, next) => {
     );
 };
 
+// @route   GET api/v1/course/
+// @desc    Gets all courses.
+// @access  Public
+const getCourses = (req, res, next) => {
+  Course.find()
+    .then(courses => {
+      res.status(200).json({
+        message: 'Successfully fetched courses',
+        totalCourses: courses.length,
+        courses
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, Could not get courses currently',
+        500,
+        next,
+        err
+      )
+    );
+};
+
+// @route   POST api/v1/course/
+// @desc    Creates new course.
+// @access  Private(Only admin have permissions)
+const addCourse = (req, res, next) => {
+  const { courseName, coursePrefix, departmentName, credits, ratings } =
+    req.body;
+  const courseCode = coursePrefix + generateRandomCode(3);
+  Department.findOne({ departmentName: departmentName })
+    .then(department => {
+      return Course.create({
+        courseName,
+        courseCode,
+        department: department._id,
+        credits,
+        ratings
+      });
+    })
+    .then(course => {
+      res.status(201).json({
+        message: 'Successfully created course',
+        course
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, Could not add course currently',
+        500,
+        next,
+        err
+      )
+    );
+};
+
 module.exports = {
   isAdmin,
   getDepartments,
-  addDepartment
+  addDepartment,
+  getCourses,
+  addCourse
 };

@@ -39,6 +39,12 @@ const studentSchema = new Schema({
     }
   },
   nationality: { type: String },
+  coursesEnrolled: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true
+    }
+  ],
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
