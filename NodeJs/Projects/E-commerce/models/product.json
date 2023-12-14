@@ -1,0 +1,94 @@
+[
+    {
+        "productName": "REDMI 12 Pastel Blue",
+        "price": 10999,
+        "description": "This Redmi 12 is a smartphone with various advantages. It comes with 128 GB of storage that can be expanded up to 1 TB, as well as 12 GB of RAM that helps to run the phone seamlessly",
+        "ratings": 5,
+        "images": [
+            {
+                "publicId": "",
+                "url": ""
+            }
+        ],
+        "category": "Mobiles/Tablets",
+        "seller": "Flipkart",
+        "stock": 200,
+        "numOfReviews": 1,
+        "reviews": [
+            {
+                "name": "Sriram",
+                "rating": 5,
+                "comment": "Awesome product"
+            }
+        ]
+    },
+    {
+        "productName": "BLACK LOVIES Soft Silicon Smartwatch STRAP 42 /44 MM",
+        "price": 340,
+        "description": "This strap is fit with only those model which are mentioned below in compatible with tab. not with any other watch. so please confirm your watch model no before placing order",
+        "ratings": 4,
+        "images": [
+            {
+                "publicId": "",
+                "url": ""
+            }
+        ],
+        "category": "Electronics",
+        "seller": "Flipkart",
+        "stock": 20,
+        "numOfReviews": 1,
+        "reviews": [
+            {
+                "name": "Sriram",
+                "rating": 5,
+                "comment": "Awesome product"
+            }
+        ]
+    },
+    {
+        "productName": "MOTOROLA EnvisionX 178 cm (70 inch) Ultra HD (4K) LED Smart Google TV",
+        "price": 10999,
+        "description": "Smart TV powering your smart homes",
+        "ratings": 5,
+        "images": [
+            {
+                "publicId": "",
+                "url": ""
+            }
+        ],
+        "category": "Electronics",
+        "seller": "Ebay",
+        "stock": 150,
+        "numOfReviews": 1,
+        "reviews": [
+            {
+                "name": "Sriram",
+                "rating": 5,
+                "comment": "Awesome product"
+            }
+        ]
+    },
+    {
+        "productName": "REDMI 12 Pastel Blue",
+        "price": 10999,
+        "description": "This Redmi 12 is a smartphone with various advantages. It comes with 128 GB of storage that can be expanded up to 1 TB, as well as 12 GB of RAM that helps to run the phone seamlessly",
+        "ratings": 5,
+        "images": [
+            {
+                "publicId": "",
+                "url": ""
+            }
+        ],
+        "category": "Mobiles/Tablets",
+        "seller": "Flipkart",
+        "stock": 200,
+        "numOfReviews": 1,
+        "reviews": [
+            {
+                "name": "Sriram",
+                "rating": 5,
+                "comment": "Awesome product"
+            }
+        ]
+    }
+]
