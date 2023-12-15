@@ -8,7 +8,7 @@ const getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
       res.status(200).json({
-        message: 'Sucessfully fetched products',
+        message: 'Sucessfully fetched the products',
         totalProducts: products.length,
         products
       });
@@ -23,6 +23,35 @@ const getProducts = (req, res, next) => {
     );
 };
 
+// @route   GET api/v1/product/:productId
+// @desc    Gets single product
+// @access  Public
+const getSingleProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  Product.findById(productId)
+    .then(product => {
+      if (!product) {
+        return errorHandler(
+          'No product found with provided product id',
+          404,
+          next
+        );
+      }
+      res.status(200).json({
+        message: 'Successfully fetched the product',
+        product
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get product currently',
+        500,
+        next,
+        err
+      )
+    );
+};
+
 // @route   POST api/v1/product/
 // @desc    Created new product
 // @access  Public
@@ -30,7 +59,7 @@ const addProduct = (req, res, next) => {
   Product.create(req.body)
     .then(product => {
       res.status(201).json({
-        message: 'Sucessfully created product',
+        message: 'Sucessfully created the product',
         product
       });
     })
@@ -44,7 +73,33 @@ const addProduct = (req, res, next) => {
     );
 };
 
+// @route   PATCH api/v1/product/
+// @desc    Updates the product
+// @access  Public
+const updateProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  Product.findByIdAndUpdate(productId, req.body, {
+    new: true
+  })
+    .then(updatedProduct => {
+      res.status(200).json({
+        message: 'Successfully updated product',
+        updatedProduct
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not update product currently',
+        500,
+        next,
+        err
+      )
+    );
+};
+
 module.exports = {
   getProducts,
-  addProduct
+  getSingleProduct,
+  addProduct,
+  updateProduct
 };
