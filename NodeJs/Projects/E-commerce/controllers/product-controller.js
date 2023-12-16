@@ -5,7 +5,11 @@ const { errorHandler } = require('../utils/error-handler');
 // @desc    Gets all products
 // @access  Public
 const getProducts = (req, res, next) => {
-  Product.find()
+  let findFilter = {};
+  if (req.query.name) {
+    findFilter = { productName: { $regex: req.query.name, $options: 'i' } };
+  }
+  Product.find(findFilter)
     .then(products => {
       res.status(200).json({
         message: 'Sucessfully fetched the products',
@@ -82,6 +86,13 @@ const updateProduct = (req, res, next) => {
     new: true
   })
     .then(updatedProduct => {
+      if (!updatedProduct) {
+        return errorHandler(
+          'No product found with provided product id',
+          404,
+          next
+        );
+      }
       res.status(200).json({
         message: 'Successfully updated product',
         updatedProduct
@@ -97,9 +108,50 @@ const updateProduct = (req, res, next) => {
     );
 };
 
+// @route   DELETE api/v1/product/
+// @desc    Deletes the product
+// @access  Public
+const deleteProduct = (req, res, next) => {
+  const productId = req.params.productId;
+  Product.findById(productId)
+    .then(product => {
+      if (!product) {
+        return errorHandler(
+          'No product found with provided product id',
+          404,
+          next
+        );
+      }
+      product
+        .deleteOne()
+        .then(() => {
+          res.status(200).json({
+            message: 'Successfully deleted product'
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not get product currently',
+            500,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get product currently',
+        500,
+        next,
+        err
+      )
+    );
+};
+
 module.exports = {
   getProducts,
   getSingleProduct,
   addProduct,
-  updateProduct
+  updateProduct,
+  deleteProduct
 };
