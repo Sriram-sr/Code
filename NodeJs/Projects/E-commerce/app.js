@@ -1,16 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const { MONGODB_URI, PORT } = require('./utils/env-values');
 const productRoutes = require('./routes/product-routes');
 
 const app = express();
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  next();
-});
+app.use(morgan('dev'));
 
 app.use('/api/v1/product', productRoutes);
 

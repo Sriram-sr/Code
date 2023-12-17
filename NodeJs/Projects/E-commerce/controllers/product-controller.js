@@ -5,11 +5,33 @@ const { errorHandler } = require('../utils/error-handler');
 // @desc    Gets all products
 // @access  Public
 const getProducts = (req, res, next) => {
+  const { name, price, category, page } = req.query;
+
+  // Filtering
   let findFilter = {};
-  if (req.query.name) {
-    findFilter = { productName: { $regex: req.query.name, $options: 'i' } };
+  if (name) {
+    findFilter = { productName: { $regex: name, $options: 'i' } };
   }
+  if (price) {
+    findFilter = {
+      ...findFilter,
+      price: { $gte: price.gte, $lte: price.lte }
+    };
+  }
+  if (category) {
+    findFilter = {
+      ...findFilter,
+      category: category
+    };
+  }
+
+  // Pagination
+  const currentPage = page || 1;
+  const perPage = 2;
+
   Product.find(findFilter)
+    .skip((currentPage - 1) * perPage)
+    .limit(perPage)
     .then(products => {
       res.status(200).json({
         message: 'Sucessfully fetched the products',
