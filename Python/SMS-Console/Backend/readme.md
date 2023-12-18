@@ -1,10 +1,5 @@
 Student Management System Console project
 
-Immediate AI is to build api for next route. 
-
-1. Admin create course
-2. Admin get all users.
-
 APPLICATION FLOW:
 
 * There is a register screen on your frontend which is your landing screen.

@@ -1,5 +1,6 @@
 import sys
 from datetime import datetime
+
 from tabulate import tabulate
 
 from project_utils.common_utils import *
@@ -51,6 +52,21 @@ class App:
         db_utils.close_connection()
         log_banner('Closed DB Connection')
         sys.exit(0)
+
+    @staticmethod
+    def repeat_util(fn):
+        """
+        Method used to execute user options
+
+        :return: None
+        """
+        user_wish = True
+        while user_wish:
+            fn()
+            enter_new_line()
+            choice_to_continue = get_user_inputs(question_str='Would you like to continue [y/n]: ')
+            if not choice_to_continue == 'y':
+                user_wish = False
 
 
 class Authentication:
@@ -124,20 +140,8 @@ class Admin:
         :return: None
         """
         Authentication.login()
+        App.repeat_util(self.show_admin_options)
         enter_new_line()
-        show_options(message='What would you like to do',
-                     options=['Show Teachers', 'Show Students', 'Show Courses', 'Add Course', 'Edit Course'])
-        admin_choice = get_user_inputs(question_str='Enter your choice(1/2/3/4/5): ', data_type='int')
-        if admin_choice == 1:
-            self.show_all_teachers()
-        elif admin_choice == 2:
-            self.show_all_students()
-        elif admin_choice == 3:
-            self.get_courses()
-        elif admin_choice == 4:
-            self.add_course()
-        elif admin_choice == 5:
-            self.edit_course()
 
     def show_all_students(self):
         """
@@ -155,6 +159,24 @@ class Admin:
                            EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_PHONE, USER_ID]
         all_students_data = db_utils.get_select_query(table_name=self.student_table, header=students_header)
         display_in_console(all_students_data)
+
+    def show_admin_options(self):
+        """
+        Method to show admin options
+
+        :return: None
+        """
+        show_options(message='What would you like to do',
+                     options=['Show Teachers', 'Show Students', 'Show Courses', 'Edit Course'])
+        admin_choice = get_user_inputs(question_str='Enter your choice(1/2/3/4): ', data_type='int')
+        if admin_choice == 1:
+            self.show_all_teachers()
+        elif admin_choice == 2:
+            self.show_all_students()
+        elif admin_choice == 3:
+            self.get_courses()
+        elif admin_choice == 4:
+            self.edit_course()
 
     def show_all_teachers(self):
         """
@@ -201,14 +223,6 @@ class Admin:
         tabulated_courses = tabulate(formatted_courses, headers=modified_courses_header, tablefmt='grid')
         display_in_console(tabulated_courses)
 
-    def add_course(self):
-        """
-        Add a course and save it in database.
-
-        :return: None
-        """
-        pass
-
     def edit_course(self):
         """
         Edit a course and save it in database.
@@ -221,24 +235,24 @@ class Admin:
                                               target_value=user_selected_course_code)
         course_details_header = [COURSE_NAME, COURSE_CODE, DESCRIPTION, CREDITS, START_DATE, END_DATE]
         course_details_query = f"""
-                               SELECT 
-                               c.course_name,
-                               c.course_code,
-                               c.description,
-                               c.credits,
-                               c.start_date,
-                               c.end_date
-                               FROM
-                               courses c
-                               JOIN
-                               teachers t ON c.instructor_id = t.teacher_id
-                               JOIN
-                               users u ON t.user_id = u.user_id
-                               JOIN
-                               departments d ON c.department_id = d.department_id
-                               WHERE
-                               c.course_id = {course_id};
-                               """
+                                   SELECT 
+                                   c.course_name,
+                                   c.course_code,
+                                   c.description,
+                                   c.credits,
+                                   c.start_date,
+                                   c.end_date
+                                   FROM
+                                   courses c
+                                   JOIN
+                                   teachers t ON c.instructor_id = t.teacher_id
+                                   JOIN
+                                   users u ON t.user_id = u.user_id
+                                   JOIN
+                                   departments d ON c.department_id = d.department_id
+                                   WHERE
+                                   c.course_id = {course_id};
+                                   """
         course_details = db_utils.execute_query(query=course_details_query, header=course_details_header, get_raw=True)
         update_data = dict()
         for idx in range(len(course_details_header)):
@@ -265,12 +279,20 @@ class Teacher:
         """
         if auth_choice == 1:
             self.user_id = Authentication.register(user_type=TEACHER)
-            # display_in_console('Do you want to add personal details')
+            # Teacher should add details once after registered
             self.add_teacher_details()
         else:
             self.user_id = Authentication.login()
         self.teacher_id = db_utils.get_single_query(table_name=TEACHER_TABLE, field_to_get=TEACHER_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
+        App.repeat_util(self.show_teacher_options)
+
+    def show_teacher_options(self):
+        """
+        Method to show teacher options
+
+        :return: None
+        """
         show_options(options=['Show courses by department', 'Show your details', 'Mark attendance', 'Update profile'])
         user_choice = get_user_inputs(question_str='What would you like to do(1/2/3/4): ', data_type='int')
         if user_choice == 1:
@@ -345,11 +367,11 @@ class Teacher:
                                               target_value=user_selected_course_code)
         student_names = ['ID', 'StudentName']
         enrolled_students_query = f"""
-                SELECT students.student_id, users.username FROM users
-                JOIN students ON students.user_id = users.user_id
-                JOIN enrollments ON enrollments.student_id = students.student_id
-                WHERE enrollments.course_id = {course_id}
-        """
+                    SELECT students.student_id, users.username FROM users
+                    JOIN students ON students.user_id = users.user_id
+                    JOIN enrollments ON enrollments.student_id = students.student_id
+                    WHERE enrollments.course_id = {course_id}
+            """
         enrolled_students = db_utils.execute_query(query=enrolled_students_query, header=student_names)
         enter_new_line()
         display_in_console(enrolled_students)
@@ -371,6 +393,7 @@ class Teacher:
             TEACHER_ID: self.teacher_id
         }
         db_utils.insert_to_table(data=attendance_data, table_name=ATTENDANCE_TABLE)
+        log_banner('Added attendance successfully')
 
     def update_teacher_profile(self):
         """
@@ -408,17 +431,25 @@ class Student:
         """
         if auth_choice == 1:
             self.user_id = Authentication.register(user_type=STUDENT)
-            # display_in_console('Do you want to add personal details')
+            # Student should add details once after registered
             self.add_student_details()
         else:
             self.user_id = Authentication.login()
         self.student_id = db_utils.get_single_query(table_name=STUDENT_TABLE, field_to_get=STUDENT_ID,
                                                     where_field=USER_ID, target_value=self.user_id)
+        App.repeat_util(self.show_student_options)
+
+    def show_student_options(self):
+        """
+        Method to show student options
+
+        :return: None
+        """
         enter_new_line()
         show_options(
             options=['Enroll a course', 'Show your details', 'Show my enrollments', 'Show courses by department',
                      'Update profile'])
-        user_choice = get_user_inputs(question_str='What would you like to do(1/2/3/4): ', data_type='int')
+        user_choice = get_user_inputs(question_str='What would you like to do(1/2/3/4/5): ', data_type='int')
         if user_choice == 1:
             self.enroll_course()
         elif user_choice == 2:
