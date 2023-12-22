@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const { JWTSECUREKEY, JWTTOKENEXPIRY } = require("../utils/env-values");
 
 const Schema = mongoose.Schema;
 
@@ -28,14 +30,25 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    default: 'user'
+    default: "user"
   },
   resetPasswordToken: {
     type: String
   },
-  resetPasswordExpiry: {
+  resetTokenExpiry: {
     type: Date
   }
 });
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.methods.getJwtToken = function () {
+  return jwt.sign(
+    {
+      email: this.email,
+      userId: this._id.toString()
+    },
+    JWTSECUREKEY,
+    { expiresIn: JWTTOKENEXPIRY }
+  );
+};
+
+module.exports = mongoose.model("User", userSchema);

@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
   {
+    createdUser: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     productName: {
       type: String,
       required: [true, 'Product name should be provided'],

@@ -1,10 +1,14 @@
 const Product = require('../models/Product');
-const { errorHandler } = require('../utils/error-handler');
+const {
+  errorHandler,
+  checkFieldsValidation
+} = require('../utils/error-handler');
 
 // @route   GET api/v1/product/
 // @desc    Gets all products
 // @access  Public
 const getProducts = (req, res, next) => {
+  checkFieldsValidation(req, next);
   const { name, price, category, page } = req.query;
 
   // Filtering
@@ -82,7 +86,10 @@ const getSingleProduct = (req, res, next) => {
 // @desc    Created new product
 // @access  Public
 const addProduct = (req, res, next) => {
-  Product.create(req.body)
+  const product = new Product(req.body);
+  product.createdUser = req.userId;
+  product
+    .save()
     .then(product => {
       res.status(201).json({
         message: 'Sucessfully created the product',
