@@ -100,8 +100,8 @@ const handleForgotPassword = (req, res, next) => {
     .then(user => {
       if (!user) {
         return errorHandler(
-          'User with token not found or token may be expired',
-          422,
+          'User with this email not found',
+          404,
           next
         );
       }
