@@ -143,23 +143,6 @@ class Admin:
         App.repeat_util(self.show_admin_options)
         enter_new_line()
 
-    def show_all_students(self):
-        """
-        Display information about all students in the database.
-
-        This method retrieves and displays a list of student records from the database,
-        including details such as student ID, name, date of birth, contact information, etc.
-        The information is presented in a formatted manner for easy viewing.
-
-        :return: None
-        """
-        students_header = [STUDENT_ID, FIRST_NAME, LAST_NAME, DOB, GENDER, EMAIL, PHONE_NUMBER, ADDRESS,
-                           GUARDIAN_PHONE_NUMBER,
-                           ADMISSION_DATE, NATIONALITY,
-                           EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_PHONE, USER_ID]
-        all_students_data = db_utils.get_select_query(table_name=self.student_table, header=students_header)
-        display_in_console(all_students_data)
-
     def show_admin_options(self):
         """
         Method to show admin options
@@ -177,6 +160,23 @@ class Admin:
             self.get_courses()
         elif admin_choice == 4:
             self.edit_course()
+
+    def show_all_students(self):
+        """
+        Display information about all students in the database.
+
+        This method retrieves and displays a list of student records from the database,
+        including details such as student ID, name, date of birth, contact information, etc.
+        The information is presented in a formatted manner for easy viewing.
+
+        :return: None
+        """
+        students_header = [STUDENT_ID, FIRST_NAME, LAST_NAME, DOB, GENDER, EMAIL, PHONE_NUMBER, ADDRESS,
+                           GUARDIAN_PHONE_NUMBER,
+                           ADMISSION_DATE, NATIONALITY,
+                           EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_PHONE, USER_ID]
+        all_students_data = db_utils.get_select_query(table_name=self.student_table, header=students_header)
+        display_in_console(all_students_data)
 
     def show_all_teachers(self):
         """
