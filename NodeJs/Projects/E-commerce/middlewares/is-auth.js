@@ -9,6 +9,7 @@ exports.isAuth = (req, res, next) => {
   if (!token) {
     return errorHandler("No token found in cookies", 401, next);
   }
+  let decodedToken;
   try {
     decodedToken = jwt.verify(token, JWTSECUREKEY);
   } catch (err) {
