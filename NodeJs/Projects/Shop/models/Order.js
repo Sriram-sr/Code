@@ -2,18 +2,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  resetToken: String,
-  resetTokenExpiry: Date,
-  cart: [
+const orderSchema = new Schema({
+  products: [
     {
       product: {
         type: Schema.Types.ObjectId,
@@ -25,7 +15,12 @@ const userSchema = new Schema({
         required: true
       }
     }
-  ]
+  ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Order', orderSchema);

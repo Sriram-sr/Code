@@ -16,7 +16,9 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/shop', shopRoutes);
 
 app.use((error, req, res, next) => {
-  res.status(error.statusCode).json({
+  // console.log(error);
+  const statusCode = error.statusCode || 500;
+  res.status(statusCode).json({
     message: error.message,
     data: error.data
   });
