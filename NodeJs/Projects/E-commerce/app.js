@@ -5,15 +5,18 @@ const cookieParser = require('cookie-parser');
 const { MONGODB_URI, PORT } = require('./utils/env-values');
 const userRoutes = require('./routes/user-routes');
 const productRoutes = require('./routes/product-routes');
+const orderRoutes = require('./routes/order-routes');
 
 const app = express();
 
 app.use(cookieParser());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/product', productRoutes);
+app.use('/api/v1/order', orderRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
