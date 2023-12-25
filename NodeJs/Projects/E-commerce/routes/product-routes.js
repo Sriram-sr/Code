@@ -16,11 +16,11 @@ const router = express.Router();
 router
   .route('/')
   .get(getProductsValidationRules, getProducts)
-  .post(isAuth, isAuth, isAdmin, addProduct);
+  .post(isAuth, isAdmin, addProduct);
 router
   .route('/:productId')
   .get(getSingleProduct)
-  .patch(isAuth, isAuth, isAdmin, updateProduct)
-  .delete(isAuth, isAuth, isAdmin, deleteProduct);
+  .patch(isAuth, isAdmin, updateProduct)
+  .delete(isAuth, isAdmin, deleteProduct);
 
 module.exports = router;

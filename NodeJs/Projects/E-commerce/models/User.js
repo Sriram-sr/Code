@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const { JWTSECUREKEY, JWTTOKENEXPIRY } = require("../utils/env-values");
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const { JWTSECUREKEY, JWTTOKENEXPIRY } = require('../utils/env-values');
 
 const Schema = mongoose.Schema;
 
@@ -30,7 +30,7 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    default: "user"
+    default: 'user'
   },
   resetPasswordToken: {
     type: String
@@ -51,4 +51,4 @@ userSchema.methods.getJwtToken = function () {
   );
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

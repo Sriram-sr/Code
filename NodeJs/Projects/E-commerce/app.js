@@ -8,7 +8,6 @@ const productRoutes = require('./routes/product-routes');
 
 const app = express();
 
-app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));

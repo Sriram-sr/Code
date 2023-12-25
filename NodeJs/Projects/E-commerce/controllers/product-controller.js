@@ -1,7 +1,8 @@
 const Product = require('../models/Product');
 const {
   errorHandler,
-  checkFieldsValidation
+  checkFieldsValidation,
+  HTTP_STATUS
 } = require('../utils/error-handler');
 
 // @route   GET api/v1/product/
@@ -37,7 +38,7 @@ const getProducts = (req, res, next) => {
     .skip((currentPage - 1) * perPage)
     .limit(perPage)
     .then(products => {
-      res.status(200).json({
+      res.status(HTTP_STATUS.OK).json({
         message: 'Sucessfully fetched the products',
         totalProducts: products.length,
         products
@@ -46,7 +47,7 @@ const getProducts = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not get products currently',
-        500,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
       )
@@ -63,11 +64,11 @@ const getSingleProduct = (req, res, next) => {
       if (!product) {
         return errorHandler(
           'No product found with provided product id',
-          404,
+          HTTP_STATUS.NOT_FOUND,
           next
         );
       }
-      res.status(200).json({
+      res.status(HTTP_STATUS.OK).json({
         message: 'Successfully fetched the product',
         product
       });
@@ -75,7 +76,7 @@ const getSingleProduct = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not get product currently',
-        500,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
       )
@@ -83,7 +84,7 @@ const getSingleProduct = (req, res, next) => {
 };
 
 // @route   POST api/v1/product/
-// @desc    Created new product
+// @desc    Creates new product
 // @access  Public
 const addProduct = (req, res, next) => {
   const product = new Product(req.body);
@@ -91,7 +92,7 @@ const addProduct = (req, res, next) => {
   product
     .save()
     .then(product => {
-      res.status(201).json({
+      res.status(HTTP_STATUS.CREATED).json({
         message: 'Sucessfully created the product',
         product
       });
@@ -99,7 +100,7 @@ const addProduct = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not add product currently',
-        500,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
       )
@@ -118,11 +119,11 @@ const updateProduct = (req, res, next) => {
       if (!updatedProduct) {
         return errorHandler(
           'No product found with provided product id',
-          404,
+          HTTP_STATUS.NOT_FOUND,
           next
         );
       }
-      res.status(200).json({
+      res.status(HTTP_STATUS.OK).json({
         message: 'Successfully updated product',
         updatedProduct
       });
@@ -130,7 +131,7 @@ const updateProduct = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not update product currently',
-        500,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
       )
@@ -147,21 +148,21 @@ const deleteProduct = (req, res, next) => {
       if (!product) {
         return errorHandler(
           'No product found with provided product id',
-          404,
+          HTTP_STATUS.NOT_FOUND,
           next
         );
       }
       product
         .deleteOne()
         .then(() => {
-          res.status(200).json({
+          res.status(HTTP_STATUS.OK).json({
             message: 'Successfully deleted product'
           });
         })
         .catch(err =>
           errorHandler(
             'Something went wrong, could not get product currently',
-            500,
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
             next,
             err
           )
@@ -170,7 +171,7 @@ const deleteProduct = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not get product currently',
-        500,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
       )
