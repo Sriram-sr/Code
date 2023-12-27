@@ -39,7 +39,7 @@ const User: { email: string; password: string; pin: 3 } = {
 // enum
 
 const customUser = {
-    name: 'Sriram',
+    name: 'SriramSR',
     userRole: 0
 }
 
@@ -59,6 +59,7 @@ function combinator(value1: string | number, value2: string | number, mandatoryI
     } else {
         return value1.toString() + value2.toString();
     }
+    console.log(mandatoryInput);
 }
 
 combinator(2, 3, 'bad');
@@ -87,3 +88,13 @@ function handleError(message: string, code: number): never {
 }
 
 // never type since the function never returns a value or it is void.
+
+function addition(n1: number, n2: number) {
+  if ((n1 + n2) > 0) {
+    return 'Useful';
+  }
+  return 9;
+}
+
+
+let newest = 'Unused';
