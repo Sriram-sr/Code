@@ -114,3 +114,194 @@ const additionInArrow = (a: number, b: number = 5) => {
 }
 
 const additionWithSingleArg: (num: number) => number = num => num +  10;
+
+// Class
+
+abstract class Department {
+  name: string;
+
+  constructor(n: string) {
+    this.name = n;
+  }
+  
+  describe(this: Department) {  // Type safety provided by TS 
+    console.log(`Department is ${this.name}`); 
+  }
+
+  abstract shouldHave(): void;
+}
+
+// const accounting = new Department('Accounting');
+
+// const copyAccounting  = {
+//   describe: accounting.describe
+// }
+
+// accounting.describe();
+
+// Inheritance
+
+class ITDepartment extends Department {
+  public admins: string[];
+
+  constructor(names: string[]) {
+    super('IT');
+    this.admins = names;
+  }
+
+  shouldHave(): number {
+      return 1;
+  }
+}
+
+const itDepartment = new ITDepartment(['Sri', 'admin']);
+itDepartment.describe();
+
+
+// Getters/Setters
+
+class ReportGenerator{
+  private secret: string;
+
+  get secretKey(): string  {
+    if (this.secret) {
+      return this.secret;
+    }
+    throw new Error('Something went wrong');
+  }
+
+  set secretKey(value: string) {
+    this.secret = value;
+  }
+  
+  constructor(sec:string) {
+    this.secret = sec;
+  }
+}
+
+const report = new ReportGenerator('SuperComplexSecret');
+console.log(report.secretKey);
+report.secretKey = 'PartlyAssignedValue';
+console.log(report.secretKey);
+
+// Access specifiers
+
+class Employee {
+  employeeName: string;
+  private allEmployees: string[] = [];
+
+  constructor(private readonly employeeId: number, name: string) {
+    this.employeeName = name;
+  }
+
+  addEmployee(this: Employee) {
+    this.allEmployees.push(this.employeeName);
+  }
+
+  getCurrentEmployee(this: Employee) {
+    console.log(`Currrent employee: (${this.employeeId}): ${this.employeeName}`);
+  }
+
+  getEmployees(this: Employee) {
+    console.log(`All employees: ${this.allEmployees}`);
+  }
+}
+
+const newEmployee = new Employee(2, 'Sriram');
+newEmployee.addEmployee();
+newEmployee.getCurrentEmployee();
+// secondEmployee.allEmployees.push('Proxy'); // this throws error
+
+// Singleton class
+
+class SingletonClass {
+  private static instance: SingletonClass;
+  private constructor(public id: number, private name: string) {
+
+  }
+
+  simpleMethod() {
+    console.log(`ID is ${this.id} and name is ${this.name}`);
+  }
+
+  static getInstance(): SingletonClass {
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new SingletonClass(1, 'Sriram');
+    return this.instance;
+  }
+}
+
+const singleInstance = SingletonClass.getInstance();
+const fakingAnotherInstance = SingletonClass.getInstance();
+console.log(singleInstance);
+singleInstance.simpleMethod();
+console.log(fakingAnotherInstance);
+
+// Interfaces
+
+// type 
+
+type contrastingUser = {
+  referralCode: string | number;
+  rewardPoints: number;
+}
+
+interface User {
+  email: string;
+  password: string;
+  addToCart(productId: string): void;
+}
+
+interface specialUser {
+  profilePic: string;
+  postSomething(postId: string): void;
+}
+
+const newUser: User = {
+  email: 'test@test.com',
+  password: 'tester',
+  addToCart: (productId) => {
+    console.log('Added to cart ' + productId);
+  }
+}
+
+// Interfaces with classes
+
+class AdminUser implements User, specialUser {
+  email: string;
+  password: string;
+  profilePic: string;
+
+  constructor(emailId: string, pass: string, picId: string) {
+    this.email = emailId;
+    this.password = pass;
+    this.profilePic = picId;
+  }
+
+  addToCart(productId: string): void {
+    console.log('Added to cart ' + productId);
+  }
+
+  postSomething(postId: string): void {
+      console.log(`User posted a picture with the given ${postId}`);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
