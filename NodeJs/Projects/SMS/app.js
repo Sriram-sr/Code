@@ -1,7 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const { MONGODB_URI, PORT } = require('./utils/env-values');
+const {
+  MONGODB_URI,
+  PORT,
+  InternalServerErrorCode
+} = require('./utils/env-values');
 const authRoutes = require('./routes/auth-routes');
 const adminRoutes = require('./routes/admin-routes');
 const teacherRoutes = require('./routes/teacher-routes');
@@ -20,10 +24,8 @@ app.use('/api/v1/student', studentRoutes);
 
 app.use((error, req, res, next) => {
   // console.log(error);
-  const status = error.statusCode || 500;
-  const message = error.message;
-  const data = error.data;
-  return res.status(status).json({ message: message, data: data });
+  const statusCode = error.statusCode || InternalServerErrorCode;
+  res.status(statusCode).json({ message: error.message, data: error.data });
 });
 
 mongoose

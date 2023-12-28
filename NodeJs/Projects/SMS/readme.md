@@ -1,6 +1,6 @@
 Student Management System REST API project
 
-Next Route: Add course by admin.
+Next Route: Pending decision.
 
 APPLICATION FLOW:
 
@@ -25,8 +25,8 @@ GET /api/v1/admin/course: Gets all courses offered.✅
 GET /api/v1/user/: Retrieve a list of users.✅
 GET /api/v1/student: Retrieve a list of all students.✅
 GET /api/v1/teacher: Retrieve a list of all teachers.✅
-GET /api/v1/department/: Retrieve list of departments.✅
-POST /api/v1/department/: Create new department.✅
+GET /api/v1/admin/department/: Retrieve list of departments.✅
+POST /api/v1/admin/department/: Create new department.✅
 POST /api/v1/admin/course: Create new course.✅
 
 # Teacher (4 routes)
@@ -45,11 +45,9 @@ PUT /api/v1/student/enroll-course: Enroll a course.✅
 
 Courses:
 
-GET /courses: Retrieve a list of all courses.
-POST /courses: Create a new course.
-GET /courses/:id: Retrieve a specific course by ID.
-PUT /courses/:id: Update course information.
-DELETE /courses/:id: Delete a course.
+GET /courses/:id: Retrieve a specific course by ID. (Common)
+PUT /courses/:id: Update course information. (Admin)
+DELETE /courses/:id: Delete a course. (Admin)
 
 Enrollments:
 
