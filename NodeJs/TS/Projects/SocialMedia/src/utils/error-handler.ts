@@ -1,8 +1,10 @@
-import { NextFunction } from 'express';
+import { Request, NextFunction } from 'express';
+import { validationResult } from 'express-validator';
 
-export class HttpError extends Error {
+class HttpError extends Error {
   statusCode: number;
-  
+  data: object = {};
+
   constructor(message: string, errorCode: number) {
     super(message);
     this.statusCode = errorCode;
@@ -30,6 +32,19 @@ export const HTTP_STATUS = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   CONFLICT: 409,
+  UNPROCESSABLE_ENTITY: 422,
   INTERNAL_SERVER_ERROR: 500,
   SERVICE_UNAVAILABLE: 503
+};
+
+export const checkValidationFields = (req: Request) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      'Request validation fields are incorrect',
+      HTTP_STATUS.UNPROCESSABLE_ENTITY
+    );
+    error.data = errors.array();
+    throw error;
+  }
 };
