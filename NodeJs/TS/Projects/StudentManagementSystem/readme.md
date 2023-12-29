@@ -11,3 +11,4 @@ Endpoints:
 # Common (7 routes)
 
 POST /api/v1/auth/signup: User registration.✅
+POST /api/v1/auth/signin: User login.✅
