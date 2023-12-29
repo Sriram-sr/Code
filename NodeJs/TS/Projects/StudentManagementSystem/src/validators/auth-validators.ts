@@ -32,3 +32,16 @@ export const signinRules = [
 
   body('password').notEmpty().withMessage('Password is a required field').trim()
 ];
+
+export const emailValidation = body('email')
+  .notEmpty()
+  .withMessage('Email is a required field')
+  .isEmail()
+  .withMessage('Please provide a valid email address');
+
+export const passwordValidation = body('password')
+  .notEmpty()
+  .withMessage('Password is a required field')
+  .trim()
+  .isLength({ min: 6, max: 15 })
+  .withMessage('Password value should be within 6 and 25 characters');

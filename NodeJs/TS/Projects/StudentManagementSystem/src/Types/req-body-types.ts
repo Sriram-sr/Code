@@ -11,10 +11,19 @@ export interface signinReqBody {
   password: string;
 }
 
-export interface cookieBody{
+export type cookieBody = {
   token: string;
 }
 
 export interface CustomRequest extends Request {
     userId?: string;
   }
+
+export type forgetPasswordReqBody = {
+  email: string;
+}
+
+export type resetPasswordReqBody = {
+  token: string;
+  password: string;
+}
