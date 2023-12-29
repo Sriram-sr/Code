@@ -23,7 +23,7 @@ export const signupRules = [
     .withMessage('Role should be one of user or admin only')
 ];
 
-export const signinValidationRules = [
+export const signinRules = [
   body('email')
     .notEmpty()
     .withMessage('Email is a required field')

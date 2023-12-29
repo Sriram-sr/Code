@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import { signupRules } from '../validators/auth-validators';
-import { signupUser } from '../controllers/auth-controllers';
+import { signupRules, signinRules } from '../validators/auth-validators';
+import {
+  signupUser,
+  signinUser
+} from '../controllers/auth-controllers';
 
 const router = Router();
 
 router.route('/signup').post(signupRules, signupUser);
-router.route('/signin');
+router.route('/signin').post(signinRules, signinUser);
 
 export default router;
