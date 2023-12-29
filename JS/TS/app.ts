@@ -1,3 +1,16 @@
+// In a nutshell
+
+const productName = document.getElementById(
+  "product-name"
+)! as HTMLInputElement;
+const productPrice = document.getElementById("price")! as HTMLInputElement;
+
+function superComplexAddition(value1: number, value2: number) {
+  return value1 + value2;
+}
+
+superComplexAddition(+productName.value, +productPrice.value);
+
 // Basics
 
 let mobile: any = 9971;
@@ -86,6 +99,33 @@ let printFunc: (val: string) => void;
 returnFunc = add;
 printFunc = printAlone;
 
+// Different Function Def syntaxes
+
+function plainFnSyntax(val1: number, val2: number): number {
+  return val1 + val2;
+}
+
+const plainArrowFnSyntax = (val1: number, val2: number) => {
+  return val1 + val2;
+};
+
+const differentArrowFnSyntax: (val1: number, val2: number) => number = (
+  realVal1,
+  realVal2
+) => {
+  return realVal1 + realVal2;
+};
+
+// Function predefine types
+
+type subFunction = (num1: number, num2: number) => number;
+
+let subtraction: subFunction;
+
+subtraction = (val1: number, val2: number): number => {
+  return val1 - val2;
+};
+
 // never type
 
 function handleError(message: string, code: number): never {
@@ -106,14 +146,14 @@ let newest = "Unused";
 const printStatement: (val: string) => void = (value) => console.log(value);
 
 function additionPro(a: number, b: number = 3) {
-    return a + b;
+  return a + b;
 }
 
 const additionInArrow = (a: number, b: number = 5) => {
-    return a + b;
-}
+  return a + b;
+};
 
-const additionWithSingleArg: (num: number) => number = num => num +  10;
+const additionWithSingleArg: (num: number) => number = (num) => num + 10;
 
 // Class
 
@@ -123,9 +163,10 @@ abstract class Department {
   constructor(n: string) {
     this.name = n;
   }
-  
-  describe(this: Department) {  // Type safety provided by TS 
-    console.log(`Department is ${this.name}`); 
+
+  describe(this: Department) {
+    // Type safety provided by TS
+    console.log(`Department is ${this.name}`);
   }
 
   abstract shouldHave(): void;
@@ -145,43 +186,42 @@ class ITDepartment extends Department {
   public admins: string[];
 
   constructor(names: string[]) {
-    super('IT');
+    super("IT");
     this.admins = names;
   }
 
   shouldHave(): number {
-      return 1;
+    return 1;
   }
 }
 
-const itDepartment = new ITDepartment(['Sri', 'admin']);
+const itDepartment = new ITDepartment(["Sri", "admin"]);
 itDepartment.describe();
-
 
 // Getters/Setters
 
-class ReportGenerator{
+class ReportGenerator {
   private secret: string;
 
-  get secretKey(): string  {
+  get secretKey(): string {
     if (this.secret) {
       return this.secret;
     }
-    throw new Error('Something went wrong');
+    throw new Error("Something went wrong");
   }
 
   set secretKey(value: string) {
     this.secret = value;
   }
-  
-  constructor(sec:string) {
+
+  constructor(sec: string) {
     this.secret = sec;
   }
 }
 
-const report = new ReportGenerator('SuperComplexSecret');
+const report = new ReportGenerator("SuperComplexSecret");
 console.log(report.secretKey);
-report.secretKey = 'PartlyAssignedValue';
+report.secretKey = "PartlyAssignedValue";
 console.log(report.secretKey);
 
 // Access specifiers
@@ -199,7 +239,9 @@ class Employee {
   }
 
   getCurrentEmployee(this: Employee) {
-    console.log(`Currrent employee: (${this.employeeId}): ${this.employeeName}`);
+    console.log(
+      `Currrent employee: (${this.employeeId}): ${this.employeeName}`
+    );
   }
 
   getEmployees(this: Employee) {
@@ -207,7 +249,7 @@ class Employee {
   }
 }
 
-const newEmployee = new Employee(2, 'Sriram');
+const newEmployee = new Employee(2, "Sriram");
 newEmployee.addEmployee();
 newEmployee.getCurrentEmployee();
 // secondEmployee.allEmployees.push('Proxy'); // this throws error
@@ -216,9 +258,7 @@ newEmployee.getCurrentEmployee();
 
 class SingletonClass {
   private static instance: SingletonClass;
-  private constructor(public id: number, private name: string) {
-
-  }
+  private constructor(public id: number, private name: string) {}
 
   simpleMethod() {
     console.log(`ID is ${this.id} and name is ${this.name}`);
@@ -228,7 +268,7 @@ class SingletonClass {
     if (this.instance) {
       return this.instance;
     }
-    this.instance = new SingletonClass(1, 'Sriram');
+    this.instance = new SingletonClass(1, "Sriram");
     return this.instance;
   }
 }
@@ -241,12 +281,12 @@ console.log(fakingAnotherInstance);
 
 // Interfaces
 
-// type 
+// type
 
 type contrastingUser = {
   referralCode: string | number;
   rewardPoints: number;
-}
+};
 
 interface User {
   email: string;
@@ -260,12 +300,12 @@ interface specialUser {
 }
 
 const newUser: User = {
-  email: 'test@test.com',
-  password: 'tester',
+  email: "test@test.com",
+  password: "tester",
   addToCart: (productId) => {
-    console.log('Added to cart ' + productId);
-  }
-}
+    console.log("Added to cart " + productId);
+  },
+};
 
 // Interfaces with classes
 
@@ -281,27 +321,91 @@ class AdminUser implements User, specialUser {
   }
 
   addToCart(productId: string): void {
-    console.log('Added to cart ' + productId);
+    console.log("Added to cart " + productId);
   }
 
   postSomething(postId: string): void {
-      console.log(`User posted a picture with the given ${postId}`);
+    console.log(`User posted a picture with the given ${postId}`);
   }
 }
 
+// Types can also implemented by classes
 
+type reqBody = {
+  email: string;
+  password: string;
+  generateToken: (id: string) => void;
+};
 
+class UserModal implements reqBody {
+  email: string;
+  password: string;
+  constructor() {
+    this.email = "test@test.com";
+    this.password = "supercomplex password";
+  }
 
+  generateToken(id: string): void {
+    console.log("ID is " + id);
+  }
+}
 
+// Interfaces can extend multiple other interfaces
 
+interface CafyBase {
+  infra: string;
+  version: number;
+}
 
+interface platformBase extends CafyBase {
+  topology: number;
+}
 
+class PlatformAp implements platformBase {
+  infra: string;
+  version: number;
+  topology: number;
 
+  constructor(infra: string, ver: number, topo: number) {
+    this.infra = infra;
+    this.version = ver;
+    this.topology = topo;
+  }
+}
 
+const platform = new PlatformAp("CQE Infra", 3, 1);
 
+// Interface can be used to define anonymous function type
 
+interface multiplyFn {
+  (val1: number, val2: number): number;
+}
 
+let multiplication: multiplyFn;
 
+multiplication = (val1: number, val2: number): number => {
+  return val1 * val2;
+};
 
+// Using optional fields in interfaces
 
+interface linientProto {
+  isConfigurable: boolean;
+  isAdvisable?: boolean;  // This is optional
+  isAuthorised: boolean;
+}
 
+const campDetails: linientProto = {
+  isAuthorised: false,
+  isConfigurable: true
+}
+
+class MustImplementer {
+  isAdvisable?: boolean;
+  isConfigurable: boolean;
+
+  constructor() {
+    this.isAdvisable = true;
+    this.isConfigurable = false;
+  }
+}
