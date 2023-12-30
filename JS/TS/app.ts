@@ -51,6 +51,15 @@ const User: { email: string; password: string; pin: 3 } = {
 
 // enum
 
+enum numValues {
+  ONE,
+  TWO,
+  THREE
+}
+
+const takenFromEnum: number = numValues.ONE;
+console.log(takenFromEnum);
+
 const customUser = {
   name: "SriramSR",
   userRole: 0,
@@ -409,3 +418,47 @@ class MustImplementer {
     this.isConfigurable = false;
   }
 }
+
+// Practice
+
+function additionFn(num1: number, num2: number): number {
+  return num1 + num2;
+}
+
+const subtractionFn = (num1: number, num2: number): number => {
+  return num1 - num2;
+};
+
+const multiplicationFn = function (num1: number, num2: number) {
+  return num1 * num2;
+};
+
+const divisionFn: (a: number, b: number) => number = (num1, num2) => {
+  return num1 / num2;
+};
+
+const numVar: number = 89;
+const strVar: string = "Conventional string";
+const boolVar: boolean = false;
+const numArr: number[] = [4, 5, 0];
+
+type objProtoType = {
+  _id: number;
+  userName: string;
+};
+
+const objProto: objProtoType = {
+  _id: 1,
+  userName: "Sriram",
+};
+
+const nullVar: null = null;
+
+const secureVar: readonly string[] = ["SecureKey", "JWT"];
+
+const userModel: objProtoType = {
+  _id: 2,
+  userName: "Sriram",
+};
+
+const { _id: ID } = userModel;
