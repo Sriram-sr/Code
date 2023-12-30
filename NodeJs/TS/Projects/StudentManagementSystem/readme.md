@@ -6,9 +6,22 @@ APPLICATION FLOW:
 - Once registered will redirect to Login screen
 - Once logged in, based on user's role(admin, student, teacher) will take to respective user's homepage displaying options of those users.
 
+CURRENT FLOW:
+
+So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Now Admin features to built on.
+
 Endpoints:
 
 # Common (7 routes)
 
 POST /api/v1/auth/signup: User registration.✅
 POST /api/v1/auth/signin: User login.✅
+POST /api/v1/auth/forgot-password: Forgot Password generate token.✅
+POST /api/v1/auth/reset-password: Reset Password with received token.✅
+GET /api/v1/auth/user: Retrieve user profile information.✅
+PATCH /api/v1/auth/update-profie: Updates user profile with bio and profile picture.✅
+GET /api/v1/admin/course: Gets all courses offered.✅
+
+# ADMIN (1 route)
+
+GET /api/v1/auth/all-users: Retrieve a list of users.✅

@@ -17,7 +17,8 @@ import {
   signinReqBody,
   signupReqBody,
   forgetPasswordReqBody,
-  resetPasswordReqBody
+  resetPasswordReqBody,
+  updateProfileReqBody
 } from '../Types/req-body-types';
 import User from '../models/User';
 
@@ -141,32 +142,6 @@ export const signinUser: RequestHandler = (req, res, next) => {
     );
 };
 
-// @route   GET api/v1/auth/user/
-// @desc    Gets user profile information
-// @access  Private
-export const getUserProfile: RequestHandler = (
-  req: CustomRequest,
-  res,
-  next
-) => {
-  User.findById(req.userId)
-    .select('-password')
-    .then(user => {
-      res.status(HTTP_STATUS.OK).json({
-        message: 'Successfully fetched the user profile',
-        user
-      });
-    })
-    .catch(err =>
-      errorHandler(
-        'Something went wrong, could not get user profile currently',
-        HTTP_STATUS.INTERNAL_SERVER_ERROR,
-        next,
-        err
-      )
-    );
-};
-
 // @route   POST api/v1/auth/forgot-password/
 // @desc    Generates token for resetting password
 // @access  Public
@@ -257,6 +232,98 @@ export const resetPassword: RequestHandler = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not reset password currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   GET api/v1/auth/all-users
+// @desc    Gets list of all users
+// @access  Private(Admin)
+export const getAllUsers: RequestHandler = (req, res, next) => {
+  const currentPage = req.query.page || 1;
+  const perPage = 3;
+  User.find()
+    .skip((+currentPage - 1) * perPage)
+    .limit(perPage)
+    .then(users => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully fetched users',
+        totalUsers: users.length,
+        users
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get users currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   GET api/v1/auth/user/
+// @desc    Gets user profile information
+// @access  Private
+export const getUserProfile: RequestHandler = (
+  req: CustomRequest,
+  res,
+  next
+) => {
+  User.findById(req.userId)
+    .select('-password')
+    .then(user => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully fetched the user profile',
+        user
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get user profile currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   PATCH api/v1/auth/update-profile/
+// @desc    Updates user profile
+// @access  Private
+export const updateProfile: RequestHandler = (
+  req: CustomRequest,
+  res,
+  next
+) => {
+  console.log('Reached request');
+  if (!req.file) {
+    return errorHandler(
+      'No image uploaded for profile picture',
+      HTTP_STATUS.UNPROCESSABLE_ENTITY,
+      next
+    );
+  }
+  const { bio } = req.body as updateProfileReqBody;
+  User.findByIdAndUpdate(
+    req.userId,
+    { bio: bio, profilePicture: req.file.path },
+    {
+      new: true
+    }
+  )
+    .then(updatedUser => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully updated user profile',
+        user: updateProfile
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not update profile currently',
         HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err

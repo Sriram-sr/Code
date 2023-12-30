@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { MONGODB_URI, PORT, InternalServerErrorCode } from './utils/env-values';
 import authRoutes from './routes/auth-routes';
+import adminRoutes from './routes/admin-routes';
 
 const app = express();
 
@@ -12,8 +13,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction): void => {
+  console.log(error);
   const statusCode = error.statusCode || InternalServerErrorCode;
   res.status(statusCode).json({
     message: error.message,

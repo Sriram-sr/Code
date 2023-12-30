@@ -13,17 +13,21 @@ export interface signinReqBody {
 
 export type cookieBody = {
   token: string;
-}
+};
 
 export interface CustomRequest extends Request {
-    userId?: string;
-  }
+  userId?: string;
+}
 
 export type forgetPasswordReqBody = {
   email: string;
-}
+};
 
 export type resetPasswordReqBody = {
   token: string;
   password: string;
-}
+};
+
+export type updateProfileReqBody = {
+  bio: string;
+};
