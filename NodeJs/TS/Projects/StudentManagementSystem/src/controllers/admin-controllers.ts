@@ -25,7 +25,7 @@ const generateRandomCode = (len: number): string => {
 // @route   GET api/v1/admin/course
 // @desc    Gets list of all courses
 // @access  Public
-export const getCourses: RequestHandler = (req, res, next) => {
+const getCourses: RequestHandler = (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 3;
   Course.find()
@@ -51,7 +51,7 @@ export const getCourses: RequestHandler = (req, res, next) => {
 // @route   GET api/v1/admin/department
 // @desc    Gets list of all departments
 // @access  Private(Admin)
-export const getDepartments: RequestHandler = (req, res, next) => {
+const getDepartments: RequestHandler = (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 2;
   Department.find()
@@ -76,7 +76,7 @@ export const getDepartments: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/admin/department
 // @desc    Creates new department
 // @access  Private(Admin)
-export const addDepartment: RequestHandler = (req, res, next) => {
+const addDepartment: RequestHandler = (req, res, next) => {
   checkValidationFields(req);
   const { departmentName, description, headOfDepartment } =
     req.body as addDepartmentReqBody;
@@ -115,7 +115,7 @@ export const addDepartment: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/admin/course
 // @desc    Creates a new course
 // @access  Private(Admin)
-export const addCourse: RequestHandler = (req: CustomRequest, res, next) => {
+const addCourse: RequestHandler = (req: CustomRequest, res, next) => {
   checkValidationFields(req);
   const { courseName, coursePrefix, credits, ratings } =
     req.body as addCourseReqBody;
@@ -143,3 +143,10 @@ export const addCourse: RequestHandler = (req: CustomRequest, res, next) => {
       )
     );
 };
+
+export {
+  getCourses, 
+  getDepartments,
+  addCourse,
+  addDepartment
+}

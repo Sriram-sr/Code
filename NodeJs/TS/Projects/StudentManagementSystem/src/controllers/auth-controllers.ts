@@ -30,7 +30,7 @@ type cookieOptionsType = {
 // @route   POST api/v1/auth/signup/
 // @desc    Registers a user
 // @access  Public
-export const signupUser: RequestHandler = (req, res, next) => {
+const signupUser: RequestHandler = (req, res, next) => {
   const serverErrorStr =
     'Something went wrong, could not signup user currently';
   checkValidationFields(req);
@@ -75,7 +75,7 @@ export const signupUser: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/auth/signin/
 // @desc    Log in a user
 // @access  Public
-export const signinUser: RequestHandler = (req, res, next) => {
+const signinUser: RequestHandler = (req, res, next) => {
   const serverErrorStr = 'Something went wrong, could not signin currently';
 
   checkValidationFields(req);
@@ -145,7 +145,7 @@ export const signinUser: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/auth/forgot-password/
 // @desc    Generates token for resetting password
 // @access  Public
-export const handleForgetPassword: RequestHandler = (req, res, next) => {
+const handleForgetPassword: RequestHandler = (req, res, next) => {
   const serverErrorStr =
     'Something went wrong, could not reset password currently';
 
@@ -197,7 +197,7 @@ export const handleForgetPassword: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/auth/reset-password/
 // @desc    Resets new password for the user
 // @access  Public
-export const resetPassword: RequestHandler = (req, res, next) => {
+const resetPassword: RequestHandler = (req, res, next) => {
   const { token, password } = req.body as resetPasswordReqBody;
   User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } })
     .then(user => {
@@ -242,7 +242,7 @@ export const resetPassword: RequestHandler = (req, res, next) => {
 // @route   GET api/v1/auth/all-users
 // @desc    Gets list of all users
 // @access  Private(Admin)
-export const getAllUsers: RequestHandler = (req, res, next) => {
+const getAllUsers: RequestHandler = (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 3;
   User.find()
@@ -268,11 +268,7 @@ export const getAllUsers: RequestHandler = (req, res, next) => {
 // @route   GET api/v1/auth/user/
 // @desc    Gets user profile information
 // @access  Private
-export const getUserProfile: RequestHandler = (
-  req: CustomRequest,
-  res,
-  next
-) => {
+const getUserProfile: RequestHandler = (req: CustomRequest, res, next) => {
   User.findById(req.userId)
     .select('-password')
     .then(user => {
@@ -294,11 +290,7 @@ export const getUserProfile: RequestHandler = (
 // @route   PATCH api/v1/auth/update-profile/
 // @desc    Updates user profile
 // @access  Private
-export const updateProfile: RequestHandler = (
-  req: CustomRequest,
-  res,
-  next
-) => {
+const updateProfile: RequestHandler = (req: CustomRequest, res, next) => {
   console.log('Reached request');
   if (!req.file) {
     return errorHandler(
@@ -329,4 +321,14 @@ export const updateProfile: RequestHandler = (
         err
       )
     );
+};
+
+export {
+  signupUser,
+  signinUser,
+  handleForgetPassword,
+  resetPassword,
+  getAllUsers,
+  getUserProfile,
+  updateProfile
 };
