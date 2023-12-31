@@ -73,6 +73,35 @@ const getDepartments: RequestHandler = (req, res, next) => {
     );
 };
 
+// @route   GET api/v1/admin/course/:courseId
+// @desc    Gets single course
+// @access  Public
+const getSingleCourse: RequestHandler = (req, res, next) => {
+  const courseId: string = req.params.courseId;
+  Course.findById(courseId)
+    .then(course => {
+      if (!course) {
+        return errorHandler(
+          'No course found with given course ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Sucessfully fetched course',
+        course
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get course currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
 // @route   POST api/v1/admin/department
 // @desc    Creates new department
 // @access  Private(Admin)
@@ -144,9 +173,99 @@ const addCourse: RequestHandler = (req: CustomRequest, res, next) => {
     );
 };
 
+// @route   PUT api/v1/admin/course/:courseId
+// @desc    Updates the course
+// @access  Private(Admin)
+const updateCourse: RequestHandler = (req, res, next) => {
+  checkValidationFields(req);
+  const courseId: string = req.params.courseId;
+  const { courseName, credits, ratings } = req.body as addCourseReqBody;
+
+  Course.findById(courseId)
+    .then(course => {
+      if (!course) {
+        return errorHandler(
+          'No course found with given course ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      course.courseName = courseName;
+      course.credits = credits;
+      course.ratings = ratings;
+      course
+        .save()
+        .then(course => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Successfully updated the course',
+            course
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, Could not update the course currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not update the course currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   DELETE api/v1/admin/course/:courseId
+// @desc    Deletes the course
+// @access  Private(Admin)
+const deleteCourse: RequestHandler = (req, res, next) => {
+  const courseId: string = req.params.courseId;
+  Course.findById(courseId)
+    .then(course => {
+      if (!course) {
+        return errorHandler(
+          'No course found with given course ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      course
+        .deleteOne()
+        .then(() => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Successfully deleted course'
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not get course currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get course currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
 export {
-  getCourses, 
+  getCourses,
   getDepartments,
+  getSingleCourse,
   addCourse,
+  updateCourse,
+  deleteCourse,
   addDepartment
-}
+};

@@ -41,8 +41,8 @@ export interface addDepartmentReqBody {
 
 export interface addCourseReqBody {
   courseName: string;
-  coursePrefix: string;
-  departmentName: string;
+  coursePrefix?: string;
+  departmentName?: string;
   credits: number;
   ratings: number;
 }

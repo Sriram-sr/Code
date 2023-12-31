@@ -65,3 +65,9 @@ export const addCourseRules = [
     .isFloat({ min: 1, max: 10 })
     .withMessage('Ratings should be a number between 1 and 10')
 ];
+
+export const updateCourseRules = [
+  addCourseRules[0],
+  addCourseRules[3],
+  addCourseRules[4]
+];
