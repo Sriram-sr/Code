@@ -24,4 +24,4 @@ const departmentSchema = new Schema({
   }
 });
 
-export default mongoose.model('Course', departmentSchema);
+export default mongoose.model('Department', departmentSchema);

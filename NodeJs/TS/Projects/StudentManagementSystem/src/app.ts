@@ -16,7 +16,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/admin', adminRoutes);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction): void => {
-  console.log(error);
+  // console.log(error);
   const statusCode = error.statusCode || InternalServerErrorCode;
   res.status(statusCode).json({
     message: error.message,

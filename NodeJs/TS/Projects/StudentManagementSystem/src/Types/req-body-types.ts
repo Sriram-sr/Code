@@ -17,6 +17,7 @@ export type cookieBody = {
 
 export interface CustomRequest extends Request {
   userId?: string;
+  departmentId?: string;
 }
 
 export type forgetPasswordReqBody = {
@@ -31,3 +32,17 @@ export type resetPasswordReqBody = {
 export type updateProfileReqBody = {
   bio: string;
 };
+
+export interface addDepartmentReqBody {
+  departmentName: string;
+  description: string;
+  headOfDepartment: string;
+}
+
+export interface addCourseReqBody {
+  courseName: string;
+  coursePrefix: string;
+  departmentName: string;
+  credits: number;
+  ratings: number;
+}
