@@ -1,17 +1,21 @@
-class Encapsulated:
-    def __init__(self):
-        self._post = 'Trending post'
+class DatabaseOperations:
+    def __init__(self, host, password, key):
+        self.db_host = host
+        self.password = password
+        self._secure_key = key
 
-    def get_post(self):
-        print('Get post is called automatically')
-        return self._post
+    def connect_database(self):
+        return 'Connected to database'
+    
+    def get_secure_key(self):
+        return self._secure_key
+    
+    def set_secure_key(self, new_key):
+        self._secure_key = new_key
 
-    def set_post(self, content):
-        print('Get post is called automatically')
-        self._post = content
+    secure_key = property(get_secure_key, set_secure_key)
 
-    post = property(get_post, set_post)
-
-
-instance = Encapsulated()
-print(instance.post)
+db_client = DatabaseOperations('mycloudhosteddb.com', 'supersucerepassword', 'publickey')
+# print(db_client.secure_key)
+db_client.secure_key = 'SuperComplexKey'
+# print(db_client.secure_key)
