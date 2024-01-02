@@ -58,7 +58,7 @@ class DataStorage<T> {
 }
 
 const numStorage = new DataStorage<number>();
-const textStorage = new DataStorage<number>();
+const textStorage = new DataStorage<string>();
 
 // Using built-in Partial type
 

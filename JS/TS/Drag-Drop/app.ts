@@ -7,6 +7,10 @@ interface Validatable {
   max?: number;
 }
 
+type projectType = 'active' | 'finished';
+
+// Input validator
+
 const validate = (validationInput: Validatable): boolean => {
   const value = validationInput.value;
   let isValid = true;
@@ -26,9 +30,10 @@ const validate = (validationInput: Validatable): boolean => {
   if (validationInput.max) {
     isValid = isValid && +value < validationInput.max;
   }
-  console.log(`Validated ${value} and validity is ${isValid}`);
   return isValid;
 };
+
+// Bind decorator
 
 function autoBindThis(
   _: any,
@@ -44,6 +49,43 @@ function autoBindThis(
     }
   };
 }
+
+// Projecy list class
+
+class ProjectList {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLElement;
+
+  constructor(private type: projectType) {
+    this.templateElement = document.getElementById(
+      'project-list'
+    )! as HTMLTemplateElement;
+    this.hostElement = document.getElementById('app')! as HTMLDivElement;
+
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+    this.element = importedNode.firstElementChild as HTMLFormElement;
+    this.element.id = `${this.type}-projects`;
+    this.attach();
+    this.renderContent();
+  }
+
+  private attach(this: ProjectList) {
+    this.hostElement.insertAdjacentElement('beforeend', this.element);
+  }
+
+  private renderContent(this: ProjectList) {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector('ul')!.id = listId;
+    this.element.querySelector('h2')!.textContent =
+      this.type.toUpperCase() + ' PROJECTS';
+  }
+}
+
+// Project input class
 
 class ProjectInput {
   templateElement: HTMLTemplateElement;
@@ -80,13 +122,13 @@ class ProjectInput {
     this.attach();
   }
 
-  private clearUserInputs(): void {
+  private clearUserInputs(this: ProjectInput): void {
     this.titleInputElement.value = '';
     this.descriptionInputElement.value = '';
     this.peopleInputElement.value = '';
   }
 
-  private gatherUserInput(): [string, string, number] | void {
+  private gatherUserInput(this: ProjectInput): [string, string, number] | void {
     const enteredTitle = this.titleInputElement.value;
     const enteredDescription = this.descriptionInputElement?.value;
     const enteredPeople = this.peopleInputElement?.value;
@@ -136,4 +178,6 @@ class ProjectInput {
   }
 }
 
-const firstInstance = new ProjectInput();
+const projectInput = new ProjectInput();
+const activeProjectList = new ProjectList('active');
+const finishedProjectList = new ProjectList('finished');
