@@ -33,6 +33,32 @@ export const getStudents: RequestHandler = (req, res, next) => {
     );
 };
 
+// @route   GET api/v1/student/courses
+// @desc    Gets enrolled courses of the student
+// @access  Private
+export const getEnrolledCourses: RequestHandler = (
+  req: CustomRequest,
+  res,
+  next
+) => {
+  Student.findOne({ userId: req.userId })
+    .populate('coursesEnrolled')
+    .then(student => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully fetched enrolled courses',
+        enrolledCourses: student?.coursesEnrolled
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get courses currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
 // @route   POST api/v1/student/
 // @desc    Created a student
 // @access  Private
@@ -133,6 +159,73 @@ export const enrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
               .then(updatedStudent => {
                 res.status(HTTP_STATUS.OK).json({
                   message: 'Successfully enrolled course',
+                  updatedStudent
+                });
+              })
+              .catch(err =>
+                errorHandler(
+                  serverErrorStr,
+                  HTTP_STATUS.INTERNAL_SERVER_ERROR,
+                  next,
+                  err
+                )
+              );
+          }
+        })
+        .catch(err =>
+          errorHandler(
+            serverErrorStr,
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(serverErrorStr, HTTP_STATUS.INTERNAL_SERVER_ERROR, next, err)
+    );
+};
+
+// @route   PUT api/v1/student/unenroll-course
+// @desc    Unenrolls a course
+// @access  Private
+export const unEnrollCourse: RequestHandler = (
+  req: CustomRequest,
+  res,
+  next
+) => {
+  const courseCode: string = req.body.courseCode;
+  const serverErrorStr =
+    'Something went wrong, Could not unenroll course currently';
+
+  Student.findOne({ userId: req.userId })
+    .then(student => {
+      Course.findOne({ courseCode: courseCode })
+        .then(course => {
+          if (!course) {
+            return errorHandler(
+              'Cannot able to find a course with given course code',
+              HTTP_STATUS.NOT_FOUND,
+              next
+            );
+          }
+          if (student) {
+            const preEnrolledCourses = student.coursesEnrolled;
+            const existingCourseIdx = preEnrolledCourses.indexOf(course._id);
+            if (existingCourseIdx === -1) {
+              return errorHandler(
+                'Course not yet enrolled by the student',
+                HTTP_STATUS.NOT_FOUND,
+                next
+              );
+            }
+            preEnrolledCourses.splice(existingCourseIdx, 1);
+            student.coursesEnrolled = preEnrolledCourses;
+            student
+              .save()
+              .then(updatedStudent => {
+                res.status(HTTP_STATUS.OK).json({
+                  message: 'Successfully unenrolled course',
                   updatedStudent
                 });
               })

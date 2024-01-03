@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import Course from '../models/Course';
 import {
   HTTP_STATUS,
   errorHandler,
@@ -10,7 +9,9 @@ import {
   CustomRequest,
   addCourseReqBody
 } from '../Types/req-body-types';
+import Course from '../models/Course';
 import Department from '../models/Department';
+import Student from '../models/Student';
 
 const generateRandomCode = (len: number): string => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -95,6 +96,33 @@ const getSingleCourse: RequestHandler = (req, res, next) => {
     .catch(err =>
       errorHandler(
         'Something went wrong, could not get course currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   GET api/v1/admin/course/:courseId/students
+// @desc    Gets students who enrolled in specific course
+// @access  Private(Admin)
+const getCourseEnrolledStudents: RequestHandler = (req, res, next) => {
+  const courseId: string = req.params.courseId;
+  const currentPage = req.query.page || 1;
+  const perPage = 2;
+
+  Student.find({ coursesEnrolled: courseId })
+    .skip((+currentPage - 1) * perPage)
+    .limit(perPage)
+    .then(students => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully fetched enrolled students',
+        students
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get entolled students currently',
         HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
@@ -264,6 +292,7 @@ export {
   getCourses,
   getDepartments,
   getSingleCourse,
+  getCourseEnrolledStudents,
   createCourse,
   updateCourse,
   deleteCourse,

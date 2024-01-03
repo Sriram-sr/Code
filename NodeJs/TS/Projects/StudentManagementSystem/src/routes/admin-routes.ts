@@ -10,6 +10,7 @@ import {
   getCourses,
   getSingleCourse,
   getDepartments,
+  getCourseEnrolledStudents,
   createDepartment,
   createCourse,
   updateCourse,
@@ -27,6 +28,9 @@ router
   .get(getSingleCourse)
   .put(isAuth, isAdmin, updateCourseRules, updateCourse)
   .delete(isAuth, isAdmin, deleteCourse);
+router
+  .route('/course/:courseId/students')
+  .get(isAuth, isAdmin, getCourseEnrolledStudents);
 router
   .route('/department')
   .get(isAuth, isAdmin, getDepartments)
