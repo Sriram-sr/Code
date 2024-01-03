@@ -32,6 +32,7 @@ const isAuth: RequestHandler = (req: CustomRequest, res, next) => {
     );
   }
   req.userId = decodedToken.userId;
+  console.log('ID is ' + req.userId);
   next();
 };
 

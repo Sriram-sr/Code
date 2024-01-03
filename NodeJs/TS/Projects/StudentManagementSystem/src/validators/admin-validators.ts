@@ -1,7 +1,7 @@
-import { body } from 'express-validator';
+import { body, ValidationChain } from 'express-validator';
 import Department from '../models/Department';
 
-export const addDepartmentRules = [
+export const createDepartmentRules: ValidationChain[] = [
   body('departmentName')
     .notEmpty()
     .withMessage('Department name is a required field')
@@ -9,12 +9,10 @@ export const addDepartmentRules = [
     .withMessage(
       'Department name should be atleast 5 to maximum 30 characters'
     ),
-
   body('description')
     .optional()
     .isLength({ max: 150, min: 10 })
     .withMessage('Description should be atleast 10 to maximum 150 characters'),
-
   body('headOfDepartment')
     .notEmpty()
     .withMessage('HeadOfDepartment is a required field')
@@ -24,13 +22,12 @@ export const addDepartmentRules = [
     )
 ];
 
-export const addCourseRules = [
+export const createCourseRules = [
   body('courseName')
     .notEmpty()
     .withMessage('Course name is a required field')
     .isLength({ max: 40, min: 10 })
     .withMessage('Course name should be atleast 10 to maximum 40 characters'),
-
   body('coursePrefix')
     .notEmpty()
     .withMessage('Course prefix is a required field')
@@ -38,7 +35,6 @@ export const addCourseRules = [
     .withMessage('Course prefix must be exactly 2 characters')
     .isUppercase()
     .withMessage('Course prefix must be in uppercase letters'),
-
   body('departmentName').custom(async (value, { req }) => {
     try {
       const department = await Department.findOne({ departmentName: value });
@@ -52,13 +48,11 @@ export const addCourseRules = [
       return Promise.reject('Validation failed. Please try again.');
     }
   }),
-
   body('credits')
     .notEmpty()
     .withMessage('Credits is a required field')
     .isInt({ min: 2, max: 5 })
     .withMessage('Credits should be a number between 2 and 5'),
-
   body('ratings')
     .notEmpty()
     .withMessage('Ratings is a required field')
@@ -67,7 +61,7 @@ export const addCourseRules = [
 ];
 
 export const updateCourseRules = [
-  addCourseRules[0],
-  addCourseRules[3],
-  addCourseRules[4]
+  createCourseRules[0],
+  createCourseRules[3],
+  createCourseRules[4]
 ];

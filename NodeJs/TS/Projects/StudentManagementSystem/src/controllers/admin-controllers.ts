@@ -105,7 +105,7 @@ const getSingleCourse: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/admin/department
 // @desc    Creates new department
 // @access  Private(Admin)
-const addDepartment: RequestHandler = (req, res, next) => {
+const createDepartment: RequestHandler = (req, res, next) => {
   checkValidationFields(req);
   const { departmentName, description, headOfDepartment } =
     req.body as addDepartmentReqBody;
@@ -144,7 +144,7 @@ const addDepartment: RequestHandler = (req, res, next) => {
 // @route   POST api/v1/admin/course
 // @desc    Creates a new course
 // @access  Private(Admin)
-const addCourse: RequestHandler = (req: CustomRequest, res, next) => {
+const createCourse: RequestHandler = (req: CustomRequest, res, next) => {
   checkValidationFields(req);
   const { courseName, coursePrefix, credits, ratings } =
     req.body as addCourseReqBody;
@@ -264,8 +264,8 @@ export {
   getCourses,
   getDepartments,
   getSingleCourse,
-  addCourse,
+  createCourse,
   updateCourse,
   deleteCourse,
-  addDepartment
+  createDepartment
 };

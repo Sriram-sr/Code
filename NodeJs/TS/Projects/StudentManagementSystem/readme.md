@@ -22,12 +22,22 @@ GET /api/v1/auth/user: Retrieve user profile information.✅
 PATCH /api/v1/auth/update-profie: Updates user profile with bio and profile picture.✅
 GET /api/v1/admin/course: Gets all courses offered.✅
 
-# ADMIN (7 routes)
+# ADMIN (9 routes)
 
 GET /api/v1/auth/all-users: Retrieve a list of users.✅
 GET /api/v1/admin/department/: Retrieve list of departments.✅
-POST /api/v1/admin/course/:courseId: Retrieve a single course details.✅
+GET /api/v1/teacher: Retrieve a list of all teachers.✅
+GET /api/v1/student: Retrieve a list of all students.✅
+GET /api/v1/admin/course/:courseId: Retrieve a single course details.✅
 POST /api/v1/admin/department: Create new department.✅
 POST /api/v1/admin/course: Create new course.✅
 PUT /api/v1/admin/course/:courseId: Updates the course.✅
 DELETE /api/v1/admin/course/:courseId: Deletes a course.✅
+
+# Teacher (1 route)
+
+POST /api/v1/teacher: Create a new teacher.✅
+
+# Student (1 route)
+
+POST /api/v1/student: Create a new student.✅

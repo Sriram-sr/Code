@@ -5,8 +5,8 @@ import imageParser from '../middlewares/image-parser';
 import {
   signupRules,
   signinRules,
-  emailValidation,
-  passwordValidation
+  emailRules,
+  passwordRules
 } from '../validators/auth-validators';
 import {
   signupUser,
@@ -22,8 +22,8 @@ const router = Router();
 
 router.route('/signup').post(signupRules, signupUser);
 router.route('/signin').post(signinRules, signinUser);
-router.route('/forgot-password').post(emailValidation, handleForgetPassword);
-router.route('/reset-password').post(passwordValidation, resetPassword);
+router.route('/forgot-password').post(emailRules, handleForgetPassword);
+router.route('/reset-password').post(passwordRules, resetPassword);
 router.route('/all-users').get(isAuth, isAdmin, getAllUsers);
 router.route('/user').get(isAuth, getUserProfile);
 router

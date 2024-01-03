@@ -1,12 +1,11 @@
-import { body } from 'express-validator';
+import { body, ValidationChain } from 'express-validator';
 
-export const signupRules = [
+export const signupRules: ValidationChain[] = [
   body('email')
     .notEmpty()
     .withMessage('Email is a required field')
     .isEmail()
     .withMessage('Please provide a valid email address'),
-
   body('password')
     .notEmpty()
     .withMessage('Password is a required field')
@@ -15,7 +14,6 @@ export const signupRules = [
     .withMessage('Password value should be within 6 and 25 characters')
     .isStrongPassword()
     .withMessage('Password should be strong'),
-
   body('role')
     .notEmpty()
     .withMessage('Role is a required field')
@@ -29,17 +27,16 @@ export const signinRules = [
     .withMessage('Email is a required field')
     .isEmail()
     .withMessage('Please provide a valid email address'),
-
   body('password').notEmpty().withMessage('Password is a required field').trim()
 ];
 
-export const emailValidation = body('email')
+export const emailRules = body('email')
   .notEmpty()
   .withMessage('Email is a required field')
   .isEmail()
   .withMessage('Please provide a valid email address');
 
-export const passwordValidation = body('password')
+export const passwordRules = body('password')
   .notEmpty()
   .withMessage('Password is a required field')
   .trim()
