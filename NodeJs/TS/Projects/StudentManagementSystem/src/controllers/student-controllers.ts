@@ -6,6 +6,7 @@ import {
   checkValidationFields
 } from '../utils/error-handler';
 import Student from '../models/Student';
+import Course from '../models/Course';
 
 // @route   GET api/v1/student/
 // @desc    Gets all students
@@ -91,5 +92,70 @@ export const createStudent: RequestHandler = (
         next,
         err
       )
+    );
+};
+
+// @route   PUT api/v1/student/enroll-course
+// @desc    Enrolls a course
+// @access  Private
+export const enrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
+  const courseCode: string = req.body.courseCode;
+  const serverErrorStr =
+    'Something went wrong, Could not enroll course currently';
+
+  Student.findOne({ userId: req.userId })
+    .then(student => {
+      Course.findOne({ courseCode: courseCode })
+        .then(newCourse => {
+          if (!newCourse) {
+            return errorHandler(
+              'Cannot able to find a course with given course code',
+              HTTP_STATUS.NOT_FOUND,
+              next
+            );
+          }
+          if (student) {
+            const preEnrolledCourses = student.coursesEnrolled;
+            const existingCourse = preEnrolledCourses.find(
+              course => course._id.toString() === newCourse._id.toString()
+            );
+            if (existingCourse) {
+              return errorHandler(
+                'Course already enrolled by the student',
+                HTTP_STATUS.CONFLICT,
+                next
+              );
+            }
+            preEnrolledCourses.unshift(newCourse._id);
+            student.coursesEnrolled = preEnrolledCourses;
+            student
+              .save()
+              .then(updatedStudent => {
+                res.status(HTTP_STATUS.OK).json({
+                  message: 'Successfully enrolled course',
+                  updatedStudent
+                });
+              })
+              .catch(err =>
+                errorHandler(
+                  serverErrorStr,
+                  HTTP_STATUS.INTERNAL_SERVER_ERROR,
+                  next,
+                  err
+                )
+              );
+          }
+        })
+        .catch(err =>
+          errorHandler(
+            serverErrorStr,
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(serverErrorStr, HTTP_STATUS.INTERNAL_SERVER_ERROR, next, err)
     );
 };
