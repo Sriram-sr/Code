@@ -8,7 +8,8 @@ APPLICATION FLOW:
 
 CURRENT FLOW:
 
-So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Now Admin features to built on.
+So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Admin and Student endpoints
+built(some). When you comeback have to remember that It was finished on a logical point on Jan 4, 2024 after your.... you know...
 
 Endpoints:
 
@@ -52,7 +53,6 @@ ToDo Plans
 
 Enrollments:
 
-POST /enrollments: Enroll a student in a course.
 DELETE /enrollments/:id: Remove a student from a course.
 GET /students/:id/courses: Retrieve a list of courses for a specific student.
 GET /courses/:id/students: Retrieve a list of students for a specific course.
