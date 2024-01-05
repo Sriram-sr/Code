@@ -77,7 +77,7 @@ const getDepartments: RequestHandler = (req, res, next) => {
 // @route   GET api/v1/admin/course/:courseId
 // @desc    Gets single course
 // @access  Public
-const getSingleCourse: RequestHandler = (req, res, next) => {
+const getSingleCourse: RequestHandler<{ courseId: string }> = (req, res, next) => {
   const courseId: string = req.params.courseId;
   Course.findById(courseId)
     .then(course => {
@@ -106,7 +106,7 @@ const getSingleCourse: RequestHandler = (req, res, next) => {
 // @route   GET api/v1/admin/course/:courseId/students
 // @desc    Gets students who enrolled in specific course
 // @access  Private(Admin)
-const getCourseEnrolledStudents: RequestHandler = (req, res, next) => {
+const getCourseEnrolledStudents: RequestHandler<{ courseId: string }, {}, {}> = (req, res, next) => {
   const courseId: string = req.params.courseId;
   const currentPage = req.query.page || 1;
   const perPage = 2;
@@ -206,7 +206,7 @@ const createCourse: RequestHandler = (req: CustomRequest, res, next) => {
 // @access  Private(Admin)
 const updateCourse: RequestHandler = (req, res, next) => {
   checkValidationFields(req);
-  const courseId: string = req.params.courseId;
+  const courseId = (req.params as { courseId: string }).courseId;
   const { courseName, credits, ratings } = req.body as addCourseReqBody;
 
   Course.findById(courseId)

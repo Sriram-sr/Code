@@ -291,7 +291,6 @@ const getUserProfile: RequestHandler = (req: CustomRequest, res, next) => {
 // @desc    Updates user profile
 // @access  Private
 const updateProfile: RequestHandler = (req: CustomRequest, res, next) => {
-  console.log('Reached request');
   if (!req.file) {
     return errorHandler(
       'No image uploaded for profile picture',

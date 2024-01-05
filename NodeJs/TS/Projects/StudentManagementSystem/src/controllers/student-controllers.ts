@@ -125,7 +125,7 @@ export const createStudent: RequestHandler = (
 // @desc    Enrolls a course
 // @access  Private
 export const enrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
-  const courseCode: string = req.body.courseCode;
+  const courseCode = (req.body as { courseCode: string }).courseCode;
   const serverErrorStr =
     'Something went wrong, Could not enroll course currently';
 
@@ -194,7 +194,7 @@ export const unEnrollCourse: RequestHandler = (
   res,
   next
 ) => {
-  const courseCode: string = req.body.courseCode;
+  const courseCode = (req.body as { courseCode: string }).courseCode;
   const serverErrorStr =
     'Something went wrong, Could not unenroll course currently';
 
