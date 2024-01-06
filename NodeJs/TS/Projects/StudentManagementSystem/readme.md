@@ -13,7 +13,7 @@ built(some). Cameback
 
 Endpoints:
 
-# Common (7 routes)
+# Common (8 routes)
 
 POST /api/v1/auth/signup: User registration.✅
 POST /api/v1/auth/signin: User login.✅
@@ -22,14 +22,15 @@ POST /api/v1/auth/reset-password: Reset Password with received token.✅
 GET /api/v1/auth/user: Retrieve user profile information.✅
 PATCH /api/v1/auth/update-profie: Updates user profile with bio and profile picture.✅
 GET /api/v1/admin/course: Gets all courses offered.✅
+GET /api/v1/admin/course/:courseId: Retrieve a single course details.✅
 
-# ADMIN (10 routes)
+# ADMIN (9 routes)
 
 GET /api/v1/auth/all-users: Retrieve a list of users.✅
 GET /api/v1/admin/department/: Retrieve list of departments.✅
 GET /api/v1/teacher: Retrieve a list of all teachers.✅
 GET /api/v1/student: Retrieve a list of all students.✅
-GET /api/v1/admin/course/:courseId: Retrieve a single course details.✅
+
 GET /api/v1/admin/course/:courseId/students: Retreives list of students who enrolled in a specific course.✅
 POST /api/v1/admin/department: Create new department.✅
 POST /api/v1/admin/course: Create new course.✅
