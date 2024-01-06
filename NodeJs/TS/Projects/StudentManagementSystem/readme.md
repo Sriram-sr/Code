@@ -9,7 +9,7 @@ APPLICATION FLOW:
 CURRENT FLOW:
 
 So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Admin and Student endpoints
-built(some). When you comeback have to remember that It was finished on a logical point on Jan 4, 2024 after your.... you know...
+built(some). Cameback
 
 Endpoints:
 
