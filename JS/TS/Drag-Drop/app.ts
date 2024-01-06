@@ -22,7 +22,7 @@ class ProjectState {
   private listeners: Listener[] = [];
   private static instance: ProjectState;
 
-  private constructor() {}
+  private constructor() {} // Singleton class
 
   static getInstance() {
     if (this.instance) {
