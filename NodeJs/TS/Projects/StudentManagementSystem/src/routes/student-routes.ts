@@ -19,13 +19,13 @@ router
   .route('/')
   .get(isAuth, isAdmin, getStudents)
   .post(isAuth, createStudentRules, createStudent);
+router.route('/courses').get(isAuth, getEnrolledCourses);
+router.route('/enroll-course').put(isAuth, enrollCourse);
+router.route('/unenroll-course').patch(isAuth, unEnrollCourse);
 router
   .route('/:studentId')
   .get(isAuth, getSingleStudent)
   .put(isAuth, createStudentRules, updateStudent)
   .delete(isAuth, isAdmin, deleteStudent);
-router.route('/courses').get(isAuth, getEnrolledCourses);
-router.route('/enroll-course').put(isAuth, enrollCourse);
-router.route('/unenroll-course').patch(isAuth, unEnrollCourse);
 
 export default router;

@@ -10,6 +10,10 @@ CURRENT FLOW:
 
 So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Once done, application takes to respective user's dashboard based on their role(Admin, Teacher, Student).
 
+NOTE:
+
+Currently stopping the project!
+
 Endpoints:
 
 # Common (8 routes)
@@ -53,12 +57,6 @@ PATCH /api/v1/student/unenroll-course: Unenrolls a course.✅
 
 ToDo Plans
 
-Enrollments:
-
-DELETE /enrollments/:id: Remove a student from a course.
-GET /students/:id/courses: Retrieve a list of courses for a specific student.
-GET /courses/:id/students: Retrieve a list of students for a specific course.
-
 Grades and Results:
 
 POST /grades: Record grades and results for students in specific courses.
@@ -70,25 +68,30 @@ Search and Filtering:
 
 GET /students/search: Search for students based on criteria (e.g., name, enrollment date).
 GET /courses/search: Search for courses based on criteria (e.g., subject, instructor).
+
 Attendance:
 
 POST /attendance: Record student attendance for a class.
 GET /courses/:id/attendance: Retrieve attendance records for a specific course.
+
 Events and Announcements:
 
 POST /announcements: Post an announcement.
 GET /announcements: Retrieve a list of announcements.
 GET /events: Retrieve a list of events.
+
 Profile Management:
 
 GET /students/:id/profile: Retrieve a student's profile.
 PUT /students/:id/profile: Update a student's profile.
 GET /staff/:id/profile: Retrieve staff profile.
 PUT /staff/:id/profile: Update staff profile.
+
 Statistics and Analytics:
 
 GET /statistics/students: Generate statistical reports about the student body.
 GET /statistics/courses/:id: Generate course-specific statistics and analytics.
+
 File Upload and Storage:
 
 POST /files/upload: Upload and store documents (e.g., transcripts, assignments).
