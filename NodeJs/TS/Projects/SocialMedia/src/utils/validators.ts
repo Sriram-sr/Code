@@ -1,4 +1,4 @@
-import { body, ValidationChain } from 'express-validator';
+import { body, oneOf, ValidationChain } from 'express-validator';
 import User from '../models/User';
 
 export const signupUserRules: ValidationChain[] = [
@@ -31,4 +31,20 @@ export const signupUserRules: ValidationChain[] = [
         throw new Error('Username is taken, choose a different one');
       }
     })
+];
+
+export const signinUserRules = [
+  oneOf(
+    [
+      body('email')
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+        .normalizeEmail(),
+      body('userName').exists().trim()
+    ],
+    {
+      message: 'At least userName or email should be provided'
+    }
+  ),
+  body('password').notEmpty().withMessage('Password is required')
 ];

@@ -2,12 +2,19 @@ import { RequestHandler } from 'express';
 import Post from '../models/Post';
 import { HTTP_STATUS, errorHandler } from '../utils/error-handler';
 
-export const getPosts: RequestHandler = (_, res, next) => {
+// @route   GET api/v1/post/
+// @desc    Gets all posts
+// @access  Public
+export const getPosts: RequestHandler = (req, res, next) => {
+  const currentPage = (req.query as { page: string }).page || 1;
+  const perPage = 2;
+
   Post.find()
+    .skip((+currentPage - 1) * perPage)
+    .limit(perPage)
     .then(posts => {
       res.status(HTTP_STATUS.OK).json({
         message: 'Posts retreived successfully',
-        totalCount: posts.length,
         posts: posts
       });
     })
@@ -46,4 +53,3 @@ export const getSinglePost: RequestHandler = (req, res, next) => {
       )
     );
 };
-
