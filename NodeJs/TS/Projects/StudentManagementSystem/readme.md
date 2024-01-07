@@ -8,8 +8,7 @@ APPLICATION FLOW:
 
 CURRENT FLOW:
 
-So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Admin and Student endpoints
-built(some). Cameback
+So thus far, what has been built is user(any) can login/register. They will be landed in their profile screen and prompts to update profile with bio & profile picture. Once done, application takes to respective user's dashboard based on their role(Admin, Teacher, Student).
 
 Endpoints:
 
@@ -24,26 +23,28 @@ PATCH /api/v1/auth/update-profie: Updates user profile with bio and profile pict
 GET /api/v1/admin/course: Gets all courses offered.✅
 GET /api/v1/admin/course/:courseId: Retrieve a single course details.✅
 
-# ADMIN (9 routes)
+# ADMIN (10 routes)
 
 GET /api/v1/auth/all-users: Retrieve a list of users.✅
 GET /api/v1/admin/department/: Retrieve list of departments.✅
 GET /api/v1/teacher: Retrieve a list of all teachers.✅
 GET /api/v1/student: Retrieve a list of all students.✅
-
 GET /api/v1/admin/course/:courseId/students: Retreives list of students who enrolled in a specific course.✅
 POST /api/v1/admin/department: Create new department.✅
 POST /api/v1/admin/course: Create new course.✅
 PUT /api/v1/admin/course/:courseId: Updates the course.✅
 DELETE /api/v1/admin/course/:courseId: Deletes a course.✅
+DELETE /api/v1/student/:studentId: Delete a student.✅
 
 # Teacher (1 route)
 
 POST /api/v1/teacher: Create a new teacher.✅
 
-# Student (4 routes)
+# Student (6 routes)
 
 GET /api/v1/student/courses: Retrieves courses enrolled by the student.✅
+GET /api/v1/student/:studentId: Retrieve a specific student by ID.✅
+PUT /api/v1/student/:studentId: Update student information.✅
 POST /api/v1/student: Create a new student.✅
 PUT /api/v1/student/enroll-course: Enroll a course.✅
 PATCH /api/v1/student/unenroll-course: Unenrolls a course.✅

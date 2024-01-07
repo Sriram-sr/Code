@@ -17,6 +17,7 @@ export type cookieBody = {
 
 export interface CustomRequest extends Request {
   userId?: string;
+  role?: string;
   departmentId?: string;
 }
 
@@ -33,13 +34,13 @@ export type updateProfileReqBody = {
   bio: string;
 };
 
-export interface addDepartmentReqBody {
+export interface createDepartmentReqBody {
   departmentName: string;
   description: string;
   headOfDepartment: string;
 }
 
-export interface addCourseReqBody {
+export interface createCourseReqBody {
   courseName: string;
   coursePrefix?: string;
   departmentName?: string;

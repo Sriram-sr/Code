@@ -101,7 +101,7 @@ const signinUser: RequestHandler = (req, res, next) => {
           let token = '';
           try {
             token = jwt.sign(
-              { email: email, userId: user._id.toString() },
+              { email: email, userId: user._id.toString(), role: user.role },
               JWT_SECURE_KEY,
               { expiresIn: JWT_EXPIRES_IN }
             );

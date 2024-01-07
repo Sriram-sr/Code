@@ -11,7 +11,7 @@ import Course from '../models/Course';
 // @route   GET api/v1/student/
 // @desc    Gets all students
 // @access  Private(Admin)
-export const getStudents: RequestHandler = (req, res, next) => {
+const getStudents: RequestHandler = (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = 2;
   Student.find()
@@ -33,25 +33,37 @@ export const getStudents: RequestHandler = (req, res, next) => {
     );
 };
 
-// @route   GET api/v1/student/courses
-// @desc    Gets enrolled courses of the student
+// @route   GET api/v1/student/:studentId
+// @desc    Gets single student
 // @access  Private
-export const getEnrolledCourses: RequestHandler = (
-  req: CustomRequest,
-  res,
-  next
-) => {
-  Student.findOne({ userId: req.userId })
-    .populate('coursesEnrolled')
+const getSingleStudent: RequestHandler = (req: CustomRequest, res, next) => {
+  const studentId = (req.params as { studentId: string }).studentId;
+
+  Student.findById(studentId)
+    .populate('userId')
     .then(student => {
+      if (!student) {
+        return errorHandler(
+          'Student with this ID is not found',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      if (student.userId.toString() !== req.userId && req.role !== 'admin') {
+        return errorHandler(
+          'Cannot view details of other students',
+          HTTP_STATUS.FORBIDDEN,
+          next
+        );
+      }
       res.status(HTTP_STATUS.OK).json({
-        message: 'Successfully fetched enrolled courses',
-        enrolledCourses: student?.coursesEnrolled
+        message: 'Sucessfully fetched student',
+        student
       });
     })
     .catch(err =>
       errorHandler(
-        'Something went wrong, could not get courses currently',
+        'Something went wrong, could not get student currently',
         HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err
@@ -62,11 +74,7 @@ export const getEnrolledCourses: RequestHandler = (
 // @route   POST api/v1/student/
 // @desc    Created a student
 // @access  Private
-export const createStudent: RequestHandler = (
-  req: CustomRequest,
-  res,
-  next
-) => {
+const createStudent: RequestHandler = (req: CustomRequest, res, next) => {
   checkValidationFields(req);
 
   const {
@@ -121,10 +129,129 @@ export const createStudent: RequestHandler = (
     );
 };
 
+// @route   PUT api/v1/student/:studentId
+// @desc    Updates student
+// @access  Private
+const updateStudent: RequestHandler = (req: CustomRequest, res, next) => {
+  checkValidationFields(req);
+  const studentId = (req.params as { studentId: string }).studentId;
+
+  Student.findById(studentId)
+    .populate('userId')
+    .then(student => {
+      if (!student) {
+        return errorHandler(
+          'Student with this ID is not found',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      if (
+        student.userId._id.toString() !== req.userId &&
+        req.role !== 'admin'
+      ) {
+        return errorHandler(
+          'Cannot update details of other students',
+          HTTP_STATUS.FORBIDDEN,
+          next
+        );
+      }
+      Student.findByIdAndUpdate(studentId, req.body, {
+        new: true
+      })
+        .then(updatedStudent => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Sucessfully updated student',
+            student: updatedStudent
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not update student currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not update student currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   DELETE api/v1/student/:studentId
+// @desc    Deletes student
+// @access  Private(Admin)
+const deleteStudent: RequestHandler = (req, res, next) => {
+  const studentId = (req.params as { studentId: string }).studentId;
+
+  Student.findById(studentId)
+    .populate('userId')
+    .then(student => {
+      if (!student) {
+        return errorHandler(
+          'Student with this ID is not found',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      student
+        .deleteOne()
+        .then(() => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Successfully deleted student'
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not delete student currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not delete student currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   GET api/v1/student/courses
+// @desc    Gets enrolled courses of the student
+// @access  Private
+const getEnrolledCourses: RequestHandler = (req: CustomRequest, res, next) => {
+  Student.findOne({ userId: req.userId })
+    .populate('coursesEnrolled')
+    .then(student => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully fetched enrolled courses',
+        enrolledCourses: student?.coursesEnrolled
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get courses currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
 // @route   PUT api/v1/student/enroll-course
 // @desc    Enrolls a course
 // @access  Private
-export const enrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
+const enrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
   const courseCode = (req.body as { courseCode: string }).courseCode;
   const serverErrorStr =
     'Something went wrong, Could not enroll course currently';
@@ -189,11 +316,7 @@ export const enrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
 // @route   PUT api/v1/student/unenroll-course
 // @desc    Unenrolls a course
 // @access  Private
-export const unEnrollCourse: RequestHandler = (
-  req: CustomRequest,
-  res,
-  next
-) => {
+const unEnrollCourse: RequestHandler = (req: CustomRequest, res, next) => {
   const courseCode = (req.body as { courseCode: string }).courseCode;
   const serverErrorStr =
     'Something went wrong, Could not unenroll course currently';
@@ -251,4 +374,15 @@ export const unEnrollCourse: RequestHandler = (
     .catch(err =>
       errorHandler(serverErrorStr, HTTP_STATUS.INTERNAL_SERVER_ERROR, next, err)
     );
+};
+
+export {
+  getStudents,
+  getSingleStudent,
+  getEnrolledCourses,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+  enrollCourse,
+  unEnrollCourse
 };

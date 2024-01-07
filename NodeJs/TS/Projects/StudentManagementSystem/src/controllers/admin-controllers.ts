@@ -5,9 +5,9 @@ import {
   checkValidationFields
 } from '../utils/error-handler';
 import {
-  addDepartmentReqBody,
+  createDepartmentReqBody,
   CustomRequest,
-  addCourseReqBody
+  createCourseReqBody
 } from '../Types/req-body-types';
 import Course from '../models/Course';
 import Department from '../models/Department';
@@ -77,7 +77,11 @@ const getDepartments: RequestHandler = (req, res, next) => {
 // @route   GET api/v1/admin/course/:courseId
 // @desc    Gets single course
 // @access  Public
-const getSingleCourse: RequestHandler<{ courseId: string }> = (req, res, next) => {
+const getSingleCourse: RequestHandler<{ courseId: string }> = (
+  req,
+  res,
+  next
+) => {
   const courseId: string = req.params.courseId;
   Course.findById(courseId)
     .then(course => {
@@ -106,7 +110,11 @@ const getSingleCourse: RequestHandler<{ courseId: string }> = (req, res, next) =
 // @route   GET api/v1/admin/course/:courseId/students
 // @desc    Gets students who enrolled in specific course
 // @access  Private(Admin)
-const getCourseEnrolledStudents: RequestHandler<{ courseId: string }, {}, {}> = (req, res, next) => {
+const getCourseEnrolledStudents: RequestHandler<
+  { courseId: string },
+  {},
+  {}
+> = (req, res, next) => {
   const courseId: string = req.params.courseId;
   const currentPage = req.query.page || 1;
   const perPage = 2;
@@ -136,7 +144,7 @@ const getCourseEnrolledStudents: RequestHandler<{ courseId: string }, {}, {}> = 
 const createDepartment: RequestHandler = (req, res, next) => {
   checkValidationFields(req);
   const { departmentName, description, headOfDepartment } =
-    req.body as addDepartmentReqBody;
+    req.body as createDepartmentReqBody;
 
   let codePrefix = '';
   const codePrefixesSplitted = departmentName.split(' ');
@@ -175,7 +183,7 @@ const createDepartment: RequestHandler = (req, res, next) => {
 const createCourse: RequestHandler = (req: CustomRequest, res, next) => {
   checkValidationFields(req);
   const { courseName, coursePrefix, credits, ratings } =
-    req.body as addCourseReqBody;
+    req.body as createCourseReqBody;
 
   const courseCode = coursePrefix + generateRandomCode(3);
   Course.create({
@@ -207,7 +215,7 @@ const createCourse: RequestHandler = (req: CustomRequest, res, next) => {
 const updateCourse: RequestHandler = (req, res, next) => {
   checkValidationFields(req);
   const courseId = (req.params as { courseId: string }).courseId;
-  const { courseName, credits, ratings } = req.body as addCourseReqBody;
+  const { courseName, credits, ratings } = req.body as createCourseReqBody;
 
   Course.findById(courseId)
     .then(course => {
