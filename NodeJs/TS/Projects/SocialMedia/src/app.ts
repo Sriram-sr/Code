@@ -7,13 +7,13 @@ import postRoutes from './routes/post-routes';
 
 const app = express();
 
-app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 app.use('/api/v1/post', postRoutes);
 app.use('/api/v1/auth', authRoutes);
 
-app.use((error: any, req: Request, res: Response, next: NextFunction): void => {
+app.use((error: any, _: Request, res: Response, _1: NextFunction): void => {
   const statusCode = error.statusCode || 500;
   res.status(statusCode).json({
     message: error.message,

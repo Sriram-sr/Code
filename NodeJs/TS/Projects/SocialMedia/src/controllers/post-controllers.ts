@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import Post from '../models/Post';
 import { HTTP_STATUS, errorHandler } from '../utils/error-handler';
 
-export const getPosts: RequestHandler = (req, res, next) => {
+export const getPosts: RequestHandler = (_, res, next) => {
   Post.find()
     .then(posts => {
       res.status(HTTP_STATUS.OK).json({

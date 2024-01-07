@@ -1,15 +1,34 @@
-import { body } from 'express-validator';
+import { body, ValidationChain } from 'express-validator';
+import User from '../models/User';
 
-export const signupUserRules = [
-  body('email').isEmail().withMessage('Please provide a valid email address'),
+export const signupUserRules: ValidationChain[] = [
+  body('email')
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Please provide a valid email address'),
   body('password')
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters long'),
-  body('name')
+    .notEmpty()
+    .withMessage('Password is required')
+    .isLength({ min: 6, max: 15 })
+    .withMessage('Password should be within 6-15 characters'),
+  body('userName')
     .trim()
-    .not()
-    .isEmpty()
-    .withMessage('Name is required field')
-    .isLength({ max: 20 })
-    .withMessage('Name should not exceed 20 characters')
+    .notEmpty()
+    .withMessage('userName is required')
+    .isLength({ min: 6, max: 15 })
+    .withMessage('Password should be within 6-15 characters')
+    .custom(async (value: string) => {
+      let existingUser;
+      try {
+        existingUser = await User.findOne({ userName: value });
+      } catch (err) {
+        throw new Error(
+          'Something went wrong, could not proceed with this request'
+        );
+      }
+      if (existingUser) {
+        throw new Error('Username is taken, choose a different one');
+      }
+    })
 ];

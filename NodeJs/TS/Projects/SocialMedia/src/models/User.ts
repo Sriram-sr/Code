@@ -9,9 +9,10 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  name: {
+  userName: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   status: {
     type: String,
