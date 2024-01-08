@@ -57,4 +57,4 @@ const userSchema = new Schema(
   }
 );
 
-export default mongoose.model('Product', userSchema);
+export default mongoose.model('User', userSchema);
