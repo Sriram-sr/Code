@@ -1,9 +1,13 @@
 class Base:
-    def normal_static_method():
+    @staticmethod
+    def normal_static_method(cls):
         print('This is a static method')
 
-    def class_method_demo():
+    @classmethod
+    def class_method_demo(cls):
         print('This is a class method')
 
+
 base_instance = Base()
-Base.normal_static_method()
+# base_instance.normal_static_method()
+Base.class_method_demo()
