@@ -5,7 +5,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
-const paths = require('./utils/path');
+const { staticDir } = require('./utils/path');
 const errorController = require('./controllers/error');
 const authRoutes = require('./routes/auth-routes');
 const adminRoutes = require('./routes/admin-routes');
@@ -24,7 +24,7 @@ const store = new MongoDBStore({
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(paths.staticDir));
+app.use(express.static(staticDir));
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(
