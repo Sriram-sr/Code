@@ -14,8 +14,8 @@ const userSchema = new Schema(
     role: {
       type: String,
       required: true,
-      enum: ['Admin', 'Customer'],
-      default: 'Customer'
+      enum: ['admin', 'customer'],
+      default: 'customer'
     },
     cart: [
       {
@@ -37,7 +37,7 @@ const userSchema = new Schema(
         required: true
       }
     ],
-    wishList: [
+    wishlist: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Product',
