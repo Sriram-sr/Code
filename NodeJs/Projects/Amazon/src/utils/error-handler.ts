@@ -1,5 +1,6 @@
 import { Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 
 class HttpError extends Error {
   statusCode: number;
@@ -32,6 +33,8 @@ export const errorHandler = (
 ) => {
   if (err) {
     console.log(err); // for dev
+    console.log(`err.msg is ${err.msg}`);
+    console.log(`err.stack is ${err.stack}`);
   }
   const error = new HttpError(message, errorCode);
   next(error);
@@ -45,6 +48,17 @@ export const checkValidationFields = (req: Request) => {
       HTTP_STATUS.UNPROCESSABLE_ENTITY
     );
     error.data = errors.array();
+    throw error;
+  }
+};
+
+export const validateObjectId = (objectId: string) => {
+  const isIdValid = mongoose.Types.ObjectId.isValid(objectId);
+  if (!isIdValid) {
+    const error = new HttpError(
+      'Invalid Object ID provided',
+      HTTP_STATUS.UNPROCESSABLE_ENTITY
+    );
     throw error;
   }
 };
