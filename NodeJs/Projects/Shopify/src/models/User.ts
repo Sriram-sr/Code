@@ -50,7 +50,9 @@ const userSchema = new Schema(
         ref: 'Review',
         required: true
       }
-    ]
+    ],
+    resetToken: String,
+    resetTokenExpiry: Date
   },
   {
     timestamps: true

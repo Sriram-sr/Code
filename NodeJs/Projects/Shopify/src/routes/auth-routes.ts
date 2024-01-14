@@ -1,10 +1,22 @@
 import { Router } from 'express';
-import { signupRules } from '../validation/auth-validators';
-import { signupUser } from '../controllers/auth-controllers';
+import {
+  signinReqValidator,
+  signupReqValidator,
+  emailValidator,
+  resetPasswordReqValidator
+} from '../validators/auth-validators';
+import {
+  signupUser,
+  signinUser,
+  handleForgetPassword,
+  resetPassword
+} from '../controllers/auth-controllers';
 
 const router = Router();
 
-router.route('/signup').post(signupRules, signupUser);
-// Signin route to build
+router.route('/signup').post(signupReqValidator, signupUser);
+router.route('/signin').post(signinReqValidator, signinUser);
+router.route('/forgot-password').post(emailValidator, handleForgetPassword);
+router.route('/reset-password').post(resetPasswordReqValidator, resetPassword);
 
 export default router;
