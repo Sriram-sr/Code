@@ -38,3 +38,37 @@ export const createProductValidator: ValidationChain[] = [
     .isInt({ min: 0 })
     .withMessage('Stock quantity must be a non-negative integer')
 ];
+
+export const updateProductValidator: ValidationChain[] = [
+  body('productName')
+    .optional()
+    .isLength({ max: 255 })
+    .withMessage('Product name must be at most 255 characters'),
+  body('description')
+    .optional()
+    .isLength({ max: 500 })
+    .withMessage('Description must be at most 1000 characters'),
+  body('price')
+    .optional()
+    .isNumeric()
+    .withMessage('Price must be a number')
+    .isFloat({ min: 0 })
+    .withMessage('Price must be a non-negative number'),
+  body('category')
+    .optional()
+    .isString()
+    .withMessage('Category must be a string')
+    .isIn([
+      'Mobiles',
+      'Mobile Accessories',
+      'Laptops',
+      'Desktop PCs',
+      'Computer Accessories',
+      'Computer Peripherals'
+    ])
+    .withMessage('Enter a valid category'),
+  body('stockQuantity')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage('Stock quantity must be a non-negative integer')
+];

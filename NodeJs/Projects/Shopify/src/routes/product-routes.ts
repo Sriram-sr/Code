@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import isAuth from '../middlewares/is-auth';
 import isAdmin from '../middlewares/is-admin';
-import { createProductValidator } from '../validators/product-validators';
+import {
+  createProductValidator,
+  updateProductValidator
+} from '../validators/product-validators';
 import {
   getAllProducts,
   getSingleProduct,
@@ -19,7 +22,7 @@ router
 router
   .route('/:productId')
   .get(getSingleProduct)
-  .put(isAuth, isAdmin, updateProduct)
+  .put(isAuth, isAdmin, updateProductValidator, updateProduct)
   .delete(isAuth, isAdmin, deleteProduct);
 
 export default router;

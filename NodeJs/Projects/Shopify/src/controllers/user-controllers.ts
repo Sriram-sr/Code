@@ -2,7 +2,8 @@ import { RequestHandler } from 'express';
 import {
   errorHandler,
   HTTP_STATUS,
-  validateObjectId
+  validateObjectId,
+  checkValidationFields
 } from '../utils/error-handler';
 import { customRequest } from '../types/custom-types';
 import { updateUserReqBody } from '../types/req-body-types';
@@ -11,7 +12,7 @@ import User from '../models/User';
 // @route   GET /api/v1/user/
 // @desc    Gets all users
 // @access  Private(Admin)
-export const getAllUsers: RequestHandler = (req, res, next) => {
+const getAllUsers: RequestHandler = (req, res, next) => {
   const currentPage = (req.query as { page: string }).page || 1;
   const perPage = 2;
 
@@ -37,11 +38,7 @@ export const getAllUsers: RequestHandler = (req, res, next) => {
 // @route   GET /api/v1/user/active
 // @desc    Gets currentlty logged in user
 // @access  Private
-export const getLoggedInUser: RequestHandler = (
-  req: customRequest,
-  res,
-  next
-) => {
+const getLoggedInUser: RequestHandler = (req: customRequest, res, next) => {
   User.findOne({ _id: req.userId })
     .then(user => {
       res.status(HTTP_STATUS.OK).json({
@@ -62,7 +59,7 @@ export const getLoggedInUser: RequestHandler = (
 // @route   GET /api/v1/user/:userId
 // @desc    Gets single user
 // @access  Private
-export const getSingleUser: RequestHandler = (req, res, next) => {
+const getSingleUser: RequestHandler = (req, res, next) => {
   const userId = (req.params as { userId: string }).userId;
   validateObjectId(userId);
 
@@ -93,8 +90,16 @@ export const getSingleUser: RequestHandler = (req, res, next) => {
 // @route   PUT /api/v1/user/:userId
 // @desc    Updates user
 // @access  Private
-export const updateUser: RequestHandler = (req, res, next) => {
+const updateUser: RequestHandler = (req: customRequest, res, next) => {
+  checkValidationFields(req);
   const userId = (req.params as { userId: string }).userId;
+  if (req.userId !== userId) {
+    return errorHandler(
+      "Cannot update other user's details",
+      HTTP_STATUS.FORBIDDEN,
+      next
+    );
+  }
   validateObjectId(userId);
   const { email, mobile, gender } = req.body as updateUserReqBody;
   const personalDetails = {
@@ -143,8 +148,15 @@ export const updateUser: RequestHandler = (req, res, next) => {
 // @route   DELETE /api/v1/user/:userId
 // @desc    Deletes a user account
 // @access  Private
-export const deleteUser: RequestHandler = (req, res, next) => {
+const deleteUser: RequestHandler = (req: customRequest, res, next) => {
   const userId = (req.params as { userId: string }).userId;
+  if (req.userId !== userId) {
+    return errorHandler(
+      "Cannot delete other user's details",
+      HTTP_STATUS.FORBIDDEN,
+      next
+    );
+  }
   validateObjectId(userId);
 
   User.findById(userId)
@@ -180,4 +192,48 @@ export const deleteUser: RequestHandler = (req, res, next) => {
         err
       )
     );
+};
+
+// @route   PATCH /api/v1/user/update-profile/
+// @desc    Updates profile picture
+// @access  Private
+const updateProfilePic: RequestHandler = (req: customRequest, res, next) => {
+  if (!req.file) {
+    return errorHandler(
+      'No image uploaded for profile picture',
+      HTTP_STATUS.UNPROCESSABLE_ENTITY,
+      next
+    );
+  }
+
+  User.findById(req.userId)
+    .then(user => {
+      if (user) {
+        user.profilePicture = req.file?.path;
+      }
+      return user?.save();
+    })
+    .then(updatedUser => {
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully updated profile',
+        updatedUser
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not update profile currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+export {
+  getAllUsers,
+  getLoggedInUser,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+  updateProfilePic
 };

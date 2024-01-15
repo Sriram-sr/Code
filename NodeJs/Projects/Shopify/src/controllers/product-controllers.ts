@@ -107,7 +107,12 @@ export const createProduct: RequestHandler = (
 // @route   PUT /api/v1/product/:productId
 // @desc    Updates product
 // @access  Private(Admin)
-export const updateProduct: RequestHandler = (req, res, next) => {
+export const updateProduct: RequestHandler = (
+  req: customRequest,
+  res,
+  next
+) => {
+  checkValidationFields(req);
   const productId = (req.params as { productId: string }).productId;
   validateObjectId(productId);
   const updateFields = req.body as createProductReqBody;
@@ -118,6 +123,13 @@ export const updateProduct: RequestHandler = (req, res, next) => {
         return errorHandler(
           'No product found with this ID',
           HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      if (product.createdUser.toString() !== req.userId) {
+        return errorHandler(
+          'Cannot edit product created by others',
+          HTTP_STATUS.FORBIDDEN,
           next
         );
       }
@@ -150,7 +162,11 @@ export const updateProduct: RequestHandler = (req, res, next) => {
 // @route   DELETE /api/v1/product/:productId
 // @desc    Deletes a product
 // @access  Private(Admin)
-export const deleteProduct: RequestHandler = (req, res, next) => {
+export const deleteProduct: RequestHandler = (
+  req: customRequest,
+  res,
+  next
+) => {
   const productId = (req.params as { productId: string }).productId;
   validateObjectId(productId);
 
@@ -160,6 +176,13 @@ export const deleteProduct: RequestHandler = (req, res, next) => {
         return errorHandler(
           'No product found with this ID',
           HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      if (product.createdUser.toString() !== req.userId) {
+        return errorHandler(
+          'Cannot delete product created by others',
+          HTTP_STATUS.FORBIDDEN,
           next
         );
       }

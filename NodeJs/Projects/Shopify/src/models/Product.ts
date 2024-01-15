@@ -34,6 +34,13 @@ const productSchema = new Schema(
       type: String,
       required: true
     },
+    likedUsers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      }
+    ],
     createdUser: {
       type: Schema.Types.ObjectId,
       ref: 'User',

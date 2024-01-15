@@ -37,3 +37,20 @@ export const resetPasswordReqValidator: ValidationChain[] = [
     .withMessage('Token must be exactly 64 characters'),
   passwordValidator
 ];
+
+export const updateUserValidator: ValidationChain[] = [
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Enter a valid email address')
+    .normalizeEmail(),
+  body('mobile')
+    .optional()
+    .matches(/^\d{10}$/)
+    .withMessage('Mobile number should be exactly 10 digits'),
+  body('gender')
+    .optional()
+    .trim()
+    .isIn(['male', 'female', 'others'])
+    .withMessage('Invalid value for gender')
+];
