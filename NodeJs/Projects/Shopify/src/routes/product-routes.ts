@@ -4,7 +4,10 @@ import isAdmin from '../middlewares/is-admin';
 import { createProductValidator } from '../validators/product-validators';
 import {
   getAllProducts,
-  createProduct
+  getSingleProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct
 } from '../controllers/product-controllers';
 
 const router = Router();
@@ -13,5 +16,10 @@ router
   .route('/')
   .get(getAllProducts)
   .post(isAuth, isAdmin, createProductValidator, createProduct);
+router
+  .route('/:productId')
+  .get(getSingleProduct)
+  .put(isAuth, isAdmin, updateProduct)
+  .delete(isAuth, isAdmin, deleteProduct);
 
 export default router;

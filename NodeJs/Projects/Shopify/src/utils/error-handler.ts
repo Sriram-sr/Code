@@ -1,5 +1,6 @@
 import { Request, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 
 export enum HTTP_STATUS {
   OK = 200,
@@ -45,6 +46,17 @@ export const checkValidationFields = (req: Request) => {
       HTTP_STATUS.UNPROCESSABLE_ENTITY
     );
     error.data = errors.array();
+    throw error;
+  }
+};
+
+export const validateObjectId = (objectId: string) => {
+  const isIdValid = mongoose.Types.ObjectId.isValid(objectId);
+  if (!isIdValid) {
+    const error = new HttpError(
+      'Invalid Object ID provided',
+      HTTP_STATUS.UNPROCESSABLE_ENTITY
+    );
     throw error;
   }
 };

@@ -5,9 +5,15 @@ export interface signupReqBody {
 }
 
 export interface createProductReqBody {
-  productName: string;
-  description: string;
-  price: number;
-  category: string;
-  stockQuantity: number;
+  productName?: string;
+  description?: string;
+  price?: number;
+  category?: string;
+  stockQuantity?: number;
+}
+
+export interface updateUserReqBody {
+  email?: string;
+  mobile?: string;
+  gender?: 'male' | 'female' | 'others';
 }

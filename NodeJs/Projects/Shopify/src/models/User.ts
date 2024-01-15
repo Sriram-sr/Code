@@ -11,6 +11,14 @@ const userSchema = new Schema(
       required: true
     },
     profilePicture: String,
+    personalDetails: {
+      email: String,
+      mobile: String,
+      gender: {
+        type: String,
+        enum: ['male', 'female', 'others']
+      }
+    },
     role: {
       type: String,
       required: true,
