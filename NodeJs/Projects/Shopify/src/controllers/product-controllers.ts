@@ -8,6 +8,7 @@ import {
   validateObjectId
 } from '../utils/error-handler';
 import Product from '../models/Product';
+import { Types } from 'mongoose';
 
 // @route   GET /api/v1/product/
 // @desc    Gets all products
@@ -205,6 +206,118 @@ export const deleteProduct: RequestHandler = (
     .catch(err =>
       errorHandler(
         'Something went wrong, could not delete product currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   POST /api/v1/product/like/:productId
+// @desc    Likes a product
+// @access  Private
+export const likeProduct: RequestHandler = (req: customRequest, res, next) => {
+  const productId = (req.params as { productId: string }).productId;
+  validateObjectId(productId);
+
+  Product.findById(productId)
+    .then(product => {
+      if (!product) {
+        return errorHandler(
+          'No product found with this ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      const existingLikeEntry = product.likedUsers.find(
+        likedUser => likedUser._id.toString() === req.userId
+      );
+      if (existingLikeEntry) {
+        return errorHandler(
+          'User already liked this product',
+          HTTP_STATUS.BAD_REQUEST,
+          next
+        );
+      }
+      product.likedUsers.unshift(new Types.ObjectId(req.userId));
+      product
+        .save()
+        .then(likedProduct => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Successfully liked product',
+            likedProduct
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not like product currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not like product currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route   POST /api/v1/product/unlike/:productId
+// @desc    Unlikes a product
+// @access  Private
+export const unlikeProduct: RequestHandler = (
+  req: customRequest,
+  res,
+  next
+) => {
+  const productId = (req.params as { productId: string }).productId;
+  validateObjectId(productId);
+
+  Product.findById(productId)
+    .then(product => {
+      if (!product) {
+        return errorHandler(
+          'No product found with this ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      const existingLikeEntryIdx = product.likedUsers.findIndex(
+        likedUser => likedUser._id.toString() === req.userId
+      );
+      if (!(existingLikeEntryIdx >= 0)) {
+        return errorHandler(
+          'User not liked the product already to unlike',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      product.likedUsers.splice(existingLikeEntryIdx, 1);
+      product
+        .save()
+        .then(unlikedProduct => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Successfully unliked product',
+            unlikedProduct
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not unlike product currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not unlike product currently',
         HTTP_STATUS.INTERNAL_SERVER_ERROR,
         next,
         err

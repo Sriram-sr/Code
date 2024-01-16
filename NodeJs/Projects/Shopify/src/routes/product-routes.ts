@@ -10,7 +10,9 @@ import {
   getSingleProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  likeProduct,
+  unlikeProduct
 } from '../controllers/product-controllers';
 
 const router = Router();
@@ -24,5 +26,7 @@ router
   .get(getSingleProduct)
   .put(isAuth, isAdmin, updateProductValidator, updateProduct)
   .delete(isAuth, isAdmin, deleteProduct);
+router.route('/like/:productId').post(isAuth, likeProduct);
+router.route('/unlike/:productId').post(isAuth, unlikeProduct);
 
 export default router;
