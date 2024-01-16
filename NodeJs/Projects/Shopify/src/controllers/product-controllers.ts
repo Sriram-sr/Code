@@ -213,6 +213,49 @@ export const deleteProduct: RequestHandler = (
     );
 };
 
+// @route   GET /api/v1/product/likes
+// @desc    Gets likes for a product
+// @access  Private
+export const getProductLikes: RequestHandler = (req, res, next) => {
+  const productId = (req.params as { productId: string }).productId;
+  const currentPage = (req.query as { page: string }).page || 1;
+  const perPage = 2;
+  validateObjectId(productId);
+
+  Product.findById(productId)
+    .populate('likedUsers')
+    .then(product => {
+      if (!product) {
+        return errorHandler(
+          'No product found with this ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      let likedUsers;
+      if (product.likedUsers.length <= perPage) {
+        likedUsers = product.likedUsers;
+      } else {
+        likedUsers = product.likedUsers
+          .slice((+currentPage - 1) * perPage)
+          .slice(0, perPage);
+      }
+
+      res.status(HTTP_STATUS.OK).json({
+        message: 'Successfully fetched likes',
+        likedUsers
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not unlike product currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
 // @route   POST /api/v1/product/like/:productId
 // @desc    Likes a product
 // @access  Private
@@ -267,7 +310,7 @@ export const likeProduct: RequestHandler = (req: customRequest, res, next) => {
     );
 };
 
-// @route   POST /api/v1/product/unlike/:productId
+// @route   DELETE /api/v1/product/unlike/:productId
 // @desc    Unlikes a product
 // @access  Private
 export const unlikeProduct: RequestHandler = (
