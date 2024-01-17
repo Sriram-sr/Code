@@ -1,11 +1,13 @@
 class Base:
+    single_key = 'SecureKey'
+
     @staticmethod
-    def normal_static_method(cls):
+    def normal_static_method():
         print('This is a static method')
 
     @classmethod
     def class_method_demo(cls):
-        print('This is a class method')
+        print(f'Accessing class variable {cls.single_key}')
 
 
 base_instance = Base()
