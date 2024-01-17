@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { Document } from 'mongoose';
+import { Types, Document } from 'mongoose';
 import {
   checkValidationFields,
   validateObjectId,
@@ -288,5 +288,113 @@ export const deleteReview: RequestHandler = (req: customRequest, res, next) => {
     })
     .catch(err =>
       errorHandler(serverErrorStr, HTTP_STATUS.INTERNAL_SERVER_ERROR, next, err)
+    );
+};
+
+// @route  POST /api/v1/review/like/:reviewId
+// @desc   Likes a review
+// @access Private
+export const likeReview: RequestHandler = (req: customRequest, res, next) => {
+  const reviewId = (req.params as { reviewId: string }).reviewId;
+  validateObjectId(reviewId);
+
+  Review.findById(reviewId)
+    .then(review => {
+      if (!review) {
+        return errorHandler(
+          'No review foudn with this ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      const existingLike = review.likes.find(
+        like => like._id.toString() === req.userId
+      );
+      if (existingLike) {
+        return errorHandler(
+          'User liked this review already',
+          HTTP_STATUS.CONFLICT,
+          next
+        );
+      }
+      review.likes.unshift(new Types.ObjectId(req.userId));
+      review
+        .save()
+        .then(review => {
+          res.status(HTTP_STATUS.CREATED).json({
+            message: 'Successfully liked the review',
+            review
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not like the review currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not like the review currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
+// @route  POST /api/v1/review/unlike/:reviewId
+// @desc   Unlikes a review
+// @access Private
+export const unlikeReview: RequestHandler = (req: customRequest, res, next) => {
+  const reviewId = (req.params as { reviewId: string }).reviewId;
+  validateObjectId(reviewId);
+
+  Review.findById(reviewId)
+    .then(review => {
+      if (!review) {
+        return errorHandler(
+          'No review foudn with this ID',
+          HTTP_STATUS.NOT_FOUND,
+          next
+        );
+      }
+      const existingLikeIdx = review.likes.findIndex(
+        like => like._id.toString() === req.userId
+      );
+      if (!(existingLikeIdx >= 0)) {
+        return errorHandler(
+          'User does not liked this review already to unlike',
+          HTTP_STATUS.BAD_REQUEST,
+          next
+        );
+      }
+      review.likes.splice(existingLikeIdx, 1);
+      review
+        .save()
+        .then(review => {
+          res.status(HTTP_STATUS.OK).json({
+            message: 'Successfully unliked the review',
+            review
+          });
+        })
+        .catch(err =>
+          errorHandler(
+            'Something went wrong, could not unlike the review currently',
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not unlike the review currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
     );
 };

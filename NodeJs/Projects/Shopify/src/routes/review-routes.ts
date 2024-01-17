@@ -6,7 +6,9 @@ import {
   postReview,
   getSingleReview,
   updateReview,
-  deleteReview
+  deleteReview,
+  likeReview,
+  unlikeReview
 } from '../controllers/review-controllers';
 
 const router = Router();
@@ -44,5 +46,7 @@ router
   .get(isAuth, getSingleReview)
   .put(isAuth, updateReviewValidator, updateReview)
   .delete(isAuth, deleteReview);
+router.route('/like/:reviewId').post(isAuth, likeReview);
+router.route('/unlike/:reviewId').post(isAuth, unlikeReview);
 
 export default router;

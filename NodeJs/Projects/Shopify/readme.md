@@ -45,8 +45,8 @@ POST /api/v1/review/:productId: Submits review for a product.✅
 GET /api/v1/review/product/:reviewId: Gets single review.✅
 PUT /api/v1/review/product/:reviewId: Edits review of a product.✅
 DELETE /api/v1/review/product/:reviewId: Deletes review of a product.✅
-POST /api/v1/review/like: Likes a review of a product.
-DELETE /api/v1/review/unlike: Unlikes a review of a product.
+POST /api/v1/review/like/:reviewId: Likes a review of a product.✅
+DELETE /api/v1/review/unlike/:reviewId: Unlikes a review of a product.✅
 
 Get Average Product Rating:
 Endpoint: GET /api/products/:productId/average-rating
