@@ -11,6 +11,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductLikes,
   likeProduct,
   unlikeProduct
 } from '../controllers/product-controllers';
@@ -26,7 +27,8 @@ router
   .get(getSingleProduct)
   .put(isAuth, isAdmin, updateProductValidator, updateProduct)
   .delete(isAuth, isAdmin, deleteProduct);
+router.route('/likes/:productId').get(isAuth, getProductLikes);
 router.route('/like/:productId').post(isAuth, likeProduct);
-router.route('/unlike/:productId').post(isAuth, unlikeProduct);
+router.route('/unlike/:productId').delete(isAuth, unlikeProduct);
 
 export default router;
