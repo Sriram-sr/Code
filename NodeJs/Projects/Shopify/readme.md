@@ -26,10 +26,9 @@ GET /api/v1/product/:productId: Gets single product.✅
 POST /api/v1/product/: Create new product.✅
 PUT /api/v1/product/:productId: Updates a product.✅
 DELETE /api/v1/product/:productId: Deletes a product.✅
-GET /api/v1/product/likes/:productId: Gets liked users of a product.
+GET /api/v1/product/likes/:productId: Gets liked users of a product.✅
 POST /api/v1/product/like/:productId: Likes a product.✅
 DELETE /api/v1/product/like/:productId: Unlikes a product.✅
-// Get all likes to work on...
 
 Wishlist:
 
@@ -37,5 +36,3 @@ GET /api/v1/wishlist/: Gets user's all wishlisted products.✅
 POST /api/v1/wishlist/:productId: Adds a product to users's wishlist.✅
 DELETE /api/v1/wishlist/:productId: Removes a product from users's wishlist.✅
 PATCH /api/v1/wishlist/clear: Clears all products from user's wishlist.✅
-
-// Like for product is a seperate functionality.
