@@ -87,6 +87,8 @@ export const createProduct: RequestHandler = (
     category,
     stockQuantity,
     imageUrl: 'www.imagesindiarandom.com',
+    likedUsers: [],
+    reviews: [],
     createdUser: req.userId
   })
     .then(product => {

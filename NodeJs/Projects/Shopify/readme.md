@@ -18,6 +18,7 @@ GET /api/v1/user/:userId: Gets single user.✅
 PUT /api/v1/user/:userId: Updates a user.✅
 DELETE /api/v1/user/:userId: Deletes a user.✅
 PATCH /api/v1/user/update-profile: Updates profile picture.✅
+GET /api/v1/user/product-reviews: Retrieve all reviews submitted by a specific user.
 
 Product:
 
@@ -36,3 +37,18 @@ GET /api/v1/wishlist/: Gets user's all wishlisted products.✅
 POST /api/v1/wishlist/:productId: Adds a product to users's wishlist.✅
 DELETE /api/v1/wishlist/:productId: Removes a product from users's wishlist.✅
 PATCH /api/v1/wishlist/clear: Clears all products from user's wishlist.✅
+
+Review:
+
+GET /api/v1/review/:productId: Gets reviews for a product.✅
+POST /api/v1/review/:productId: Submits review for a product.✅
+GET /api/v1/review/product/:reviewId: Gets single review.✅
+PUT /api/v1/review/product/:reviewId: Edits review of a product.✅
+DELETE /api/v1/review/product/:reviewId: Deletes review of a product.✅
+POST /api/v1/review/like: Likes a review of a product.
+DELETE /api/v1/review/unlike: Unlikes a review of a product.
+
+Get Average Product Rating:
+Endpoint: GET /api/products/:productId/average-rating
+Filter Reviews by Rating:
+Endpoint: GET /api/v1/review/:productId?rating=4

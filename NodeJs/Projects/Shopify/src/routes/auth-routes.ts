@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
-  signinReqValidator,
   signupReqValidator,
+  signinReqValidator,
   emailValidator,
   resetPasswordReqValidator
 } from '../validators/auth-validators';
