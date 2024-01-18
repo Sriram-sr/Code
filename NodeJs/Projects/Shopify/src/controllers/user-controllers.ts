@@ -229,6 +229,47 @@ const updateProfilePic: RequestHandler = (req: customRequest, res, next) => {
     );
 };
 
+// @route   GET /api/v1/user/product-reviews
+// @desc    Gets reviews by the user
+// @access  Private
+export const getProductReviews: RequestHandler = (
+  req: customRequest,
+  res,
+  next
+) => {
+  console.log('Correct route!');
+  const currentPage = (req.query as { page: string }).page || 1;
+  const perPage = 2;
+
+  User.findById(req.userId)
+    .populate({
+      path: 'reviews',
+      populate: [
+        {
+          path: 'product',
+          model: 'Product',
+          select: 'productName -_id'
+        }
+      ]
+    })
+    .skip((+currentPage - 1) * perPage)
+    .limit(perPage)
+    .then(user => {
+      res.status(HTTP_STATUS.OK).json({
+        message: "Successfully fetched User's reviews",
+        reviews: user?.reviews
+      });
+    })
+    .catch(err =>
+      errorHandler(
+        'Something went wrong, could not get reviews currently',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR,
+        next,
+        err
+      )
+    );
+};
+
 export {
   getAllUsers,
   getLoggedInUser,

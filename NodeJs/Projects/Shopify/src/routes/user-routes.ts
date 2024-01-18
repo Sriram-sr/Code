@@ -9,7 +9,8 @@ import {
   getSingleUser,
   updateUser,
   deleteUser,
-  updateProfilePic
+  updateProfilePic,
+  getProductReviews
 } from '../controllers/user-controllers';
 
 const router = Router();
@@ -24,5 +25,6 @@ router
   .get(isAuth, getSingleUser)
   .put(isAuth, updateUserValidator, updateUser)
   .delete(isAuth, deleteUser);
+router.route('/product-reviews').get(isAuth, getProductReviews);
 
 export default router;
