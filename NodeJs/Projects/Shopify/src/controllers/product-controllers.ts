@@ -45,6 +45,8 @@ export const getSingleProduct: RequestHandler = (req, res, next) => {
   validateObjectId(productId);
 
   Product.findById(productId)
+    .populate('reviews')
+    .lean()
     .then(product => {
       if (!product) {
         return errorHandler(
@@ -53,9 +55,14 @@ export const getSingleProduct: RequestHandler = (req, res, next) => {
           next
         );
       }
+      product.averageRating =
+        product.reviews?.reduce((sum, review) => review.rating + sum, 0) /
+          product.reviews?.length || 0;
+      const { reviews, ...customProduct } = product;
+
       res.status(HTTP_STATUS.OK).json({
         message: 'Successfully fetched product',
-        product
+        product: customProduct
       });
     })
     .catch(err =>

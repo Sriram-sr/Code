@@ -18,7 +18,7 @@ GET /api/v1/user/:userId: Gets single user.✅
 PUT /api/v1/user/:userId: Updates a user.✅
 DELETE /api/v1/user/:userId: Deletes a user.✅
 PATCH /api/v1/user/update-profile: Updates profile picture.✅
-GET /api/v1/user/product-reviews: Retrieve all reviews submitted by a specific user.
+GET /api/v1/user/product-reviews: Retrieve all reviews submitted by a specific user.✅
 
 Product:
 
@@ -49,6 +49,6 @@ POST /api/v1/review/like/:reviewId: Likes a review of a product.✅
 DELETE /api/v1/review/unlike/:reviewId: Unlikes a review of a product.✅
 
 Get Average Product Rating:
-Endpoint: GET /api/products/:productId/average-rating
+Endpoint: GET /api/products/:productId/average-rating. Done without new route
 Filter Reviews by Rating:
 Endpoint: GET /api/v1/review/:productId?rating=4

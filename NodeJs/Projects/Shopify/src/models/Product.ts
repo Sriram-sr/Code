@@ -1,6 +1,20 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
+import { Review } from './Review';
 
-const productSchema = new Schema(
+interface Product {
+  productName: string;
+  description: string;
+  price: number;
+  category: string;
+  stockQuantity: number;
+  imageUrl: string;
+  likedUsers: Types.ObjectId[];
+  reviews: Review[];
+  createdUser: Types.ObjectId;
+  averageRating?: number;
+}
+
+const productSchema = new Schema<Product>(
   {
     productName: {
       type: String,
@@ -59,4 +73,4 @@ const productSchema = new Schema(
   }
 );
 
-export default mongoose.model('Product', productSchema);
+export default mongoose.model<Product>('Product', productSchema);

@@ -237,7 +237,6 @@ export const getProductReviews: RequestHandler = (
   res,
   next
 ) => {
-  console.log('Correct route!');
   const currentPage = (req.query as { page: string }).page || 1;
   const perPage = 2;
 
@@ -252,12 +251,18 @@ export const getProductReviews: RequestHandler = (
         }
       ]
     })
-    .skip((+currentPage - 1) * perPage)
-    .limit(perPage)
     .then(user => {
+      let userReviews;
+      if (user?.reviews?.length! <= perPage) {
+        userReviews = user?.reviews;
+      } else {
+        userReviews = user?.reviews
+          .slice((+currentPage - 1) * perPage)
+          .slice(0, perPage);
+      }
       res.status(HTTP_STATUS.OK).json({
         message: "Successfully fetched User's reviews",
-        reviews: user?.reviews
+        reviews: userReviews
       });
     })
     .catch(err =>
