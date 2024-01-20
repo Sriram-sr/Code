@@ -1,7 +1,7 @@
-import mongoose, { Schema, Types } from 'mongoose';
-import { Review } from './Review';
+import mongoose, { Schema, Types, Document } from 'mongoose';
+import { ReviewProto } from './Review';
 
-interface Product {
+interface ProductProto extends Document {
   productName: string;
   description: string;
   price: number;
@@ -9,12 +9,12 @@ interface Product {
   stockQuantity: number;
   imageUrl: string;
   likedUsers: Types.ObjectId[];
-  reviews: Review[];
-  createdUser: Types.ObjectId;
+  reviews: ReviewProto[];
+  createdUser: Types.ObjectId | null;
   averageRating?: number;
 }
 
-const productSchema = new Schema<Product>(
+const productSchema = new Schema<ProductProto>(
   {
     productName: {
       type: String,
@@ -64,8 +64,7 @@ const productSchema = new Schema<Product>(
     ],
     createdUser: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
+      ref: 'User'
     }
   },
   {
@@ -73,4 +72,4 @@ const productSchema = new Schema<Product>(
   }
 );
 
-export default mongoose.model<Product>('Product', productSchema);
+export default mongoose.model<ProductProto>('Product', productSchema);

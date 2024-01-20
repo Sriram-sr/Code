@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types, Document } from 'mongoose';
 
-export interface Review extends Document {
+export interface ReviewProto extends Document {
   product: Types.ObjectId;
   rating: number;
   comment: string;
@@ -8,7 +8,7 @@ export interface Review extends Document {
   user: Types.ObjectId;
 }
 
-const reviewSchema = new Schema<Review>(
+const reviewSchema = new Schema<ReviewProto>(
   {
     product: {
       type: Schema.Types.ObjectId,
@@ -43,4 +43,4 @@ const reviewSchema = new Schema<Review>(
   }
 );
 
-export default mongoose.model<Review>('Review', reviewSchema);
+export default mongoose.model<ReviewProto>('Review', reviewSchema);

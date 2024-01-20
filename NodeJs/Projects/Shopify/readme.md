@@ -48,7 +48,5 @@ DELETE /api/v1/review/product/:reviewId: Deletes review of a product.✅
 POST /api/v1/review/like/:reviewId: Likes a review of a product.✅
 DELETE /api/v1/review/unlike/:reviewId: Unlikes a review of a product.✅
 
-Get Average Product Rating:
-Endpoint: GET /api/products/:productId/average-rating. Done without new route
 Filter Reviews by Rating:
 Endpoint: GET /api/v1/review/:productId?rating=4

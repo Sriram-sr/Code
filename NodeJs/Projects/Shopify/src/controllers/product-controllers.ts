@@ -136,7 +136,7 @@ export const updateProduct: RequestHandler = (
           next
         );
       }
-      if (product.createdUser.toString() !== req.userId) {
+      if (product.createdUser?.toString() !== req.userId) {
         return errorHandler(
           'Cannot edit product created by others',
           HTTP_STATUS.FORBIDDEN,
@@ -189,7 +189,7 @@ export const deleteProduct: RequestHandler = (
           next
         );
       }
-      if (product.createdUser.toString() !== req.userId) {
+      if (product.createdUser?.toString() !== req.userId) {
         return errorHandler(
           'Cannot delete product created by others',
           HTTP_STATUS.FORBIDDEN,

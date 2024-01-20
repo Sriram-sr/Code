@@ -8,6 +8,7 @@ import {
 import { customRequest } from '../types/custom-types';
 import { updateUserReqBody } from '../types/req-body-types';
 import User from '../models/User';
+import Product from '../models/Product';
 
 // @route   GET /api/v1/user/
 // @desc    Gets all users
@@ -149,7 +150,10 @@ const updateUser: RequestHandler = (req: customRequest, res, next) => {
 // @desc    Deletes a user account
 // @access  Private
 const deleteUser: RequestHandler = (req: customRequest, res, next) => {
+  const serverErrorStr =
+    'Something went wrong, could not delete user account currently';
   const userId = (req.params as { userId: string }).userId;
+  validateObjectId(userId);
   if (req.userId !== userId) {
     return errorHandler(
       "Cannot delete other user's details",
@@ -157,7 +161,6 @@ const deleteUser: RequestHandler = (req: customRequest, res, next) => {
       next
     );
   }
-  validateObjectId(userId);
 
   User.findById(userId)
     .then(user => {
@@ -168,6 +171,30 @@ const deleteUser: RequestHandler = (req: customRequest, res, next) => {
           next
         );
       }
+      Product.find({ createdUser: req.userId })
+        .then(products => {
+          try {
+            products.forEach(async product => {
+              product.createdUser = null;
+              await product.save();
+            });
+          } catch (err) {
+            return errorHandler(
+              serverErrorStr,
+              HTTP_STATUS.INTERNAL_SERVER_ERROR,
+              next,
+              err
+            );
+          }
+        })
+        .catch(err =>
+          errorHandler(
+            serverErrorStr,
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            next,
+            err
+          )
+        );
       user
         .deleteOne()
         .then(() => {
@@ -177,7 +204,7 @@ const deleteUser: RequestHandler = (req: customRequest, res, next) => {
         })
         .catch(err =>
           errorHandler(
-            'Something went wrong, could not delete user account currently',
+            serverErrorStr,
             HTTP_STATUS.INTERNAL_SERVER_ERROR,
             next,
             err
@@ -185,12 +212,7 @@ const deleteUser: RequestHandler = (req: customRequest, res, next) => {
         );
     })
     .catch(err =>
-      errorHandler(
-        'Something went wrong, could not delete user account currently',
-        HTTP_STATUS.INTERNAL_SERVER_ERROR,
-        next,
-        err
-      )
+      errorHandler(serverErrorStr, HTTP_STATUS.INTERNAL_SERVER_ERROR, next, err)
     );
 };
 
