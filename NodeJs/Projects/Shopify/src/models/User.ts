@@ -1,6 +1,24 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Types, Document, Schema } from 'mongoose';
 
-const userSchema = new Schema(
+interface UserProto extends Document {
+  email: string;
+  password: string;
+  profilePicture?: string;
+  personalDetails: {
+    email?: string;
+    mobile?: string;
+    gender?: 'male' | 'female' | 'others';
+  };
+  role: string;
+  cart: { product: Types.ObjectId; quantity: number; price: number }[];
+  orders: Types.ObjectId[];
+  wishlist: Types.ObjectId[];
+  reviews: Types.ObjectId[];
+  resetToken: string | undefined;
+  resetTokenExpiry: Date | undefined;
+}
+
+const userSchema = new Schema<UserProto>(
   {
     email: {
       type: String,
@@ -35,6 +53,10 @@ const userSchema = new Schema(
         quantity: {
           type: Number,
           required: true
+        },
+        price: {
+          type: Number,
+          required: true
         }
       }
     ],
@@ -67,4 +89,4 @@ const userSchema = new Schema(
   }
 );
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model<UserProto>('User', userSchema);

@@ -29,7 +29,7 @@ PUT /api/v1/product/:productId: Updates a product.✅
 DELETE /api/v1/product/:productId: Deletes a product.✅
 GET /api/v1/product/likes/:productId: Gets liked users of a product.✅
 POST /api/v1/product/like/:productId: Likes a product.✅
-DELETE /api/v1/product/like/:productId: Unlikes a product.✅
+DELETE /api/v1/product/unlike/:productId: Unlikes a product.✅
 
 Wishlist:
 
@@ -47,6 +47,13 @@ PUT /api/v1/review/product/:reviewId: Edits review of a product.✅
 DELETE /api/v1/review/product/:reviewId: Deletes review of a product.✅
 POST /api/v1/review/like/:reviewId: Likes a review of a product.✅
 DELETE /api/v1/review/unlike/:reviewId: Unlikes a review of a product.✅
+
+Cart:
+
+GET /api/v1/cart: Gets products in cart.✅
+POST /api/v1/cart/:productId: Adds product to cart.✅
+DELETE /api/v1/cart/:productId: Deletes product from cart.✅
+DELETE /api/v1/cart/clear: Clears all products from cart.✅
 
 Filter Reviews by Rating:
 Endpoint: GET /api/v1/review/:productId?rating=4

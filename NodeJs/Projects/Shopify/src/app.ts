@@ -7,6 +7,7 @@ import userRoutes from './routes/user-routes';
 import productRoutes from './routes/product-routes';
 import wishlistRoutes from './routes/wishlist-routes';
 import reviewRoutes from './routes/review-routes';
+import cartRoutes from './routes/cart-routes';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/wishlist', wishlistRoutes);
 app.use('/api/v1/review', reviewRoutes);
+app.use('/api/v1/cart', cartRoutes);
 
 app.use((error: any, _: Request, res: Response, _1: NextFunction): void => {
   // console.log(error);
