@@ -21,8 +21,8 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Products
- *   description: API endpoints for managing products
+ *   name: Product
+ *   description: Endpoints for managing products
  */
 
 /**
@@ -83,7 +83,7 @@ const router = Router();
  *     summary: Get all products
  *     description: Retrieve a list of all products.
  *     tags:
- *       - Products
+ *       - Product
  *     responses:
  *       '200':
  *         description: A list of products.
@@ -93,7 +93,7 @@ const router = Router();
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Products
+ *       - Product
  *     requestBody:
  *       required: true
  *       content:
@@ -108,7 +108,6 @@ const router = Router();
  *       '403':
  *         $ref: '#/components/responses/ForbiddenError'
  */
-
 router
   .route('/')
   .get(getAllProducts)
@@ -121,7 +120,7 @@ router
  *     summary: Get a single product by ID
  *     description: Retrieve detailed information about a specific product.
  *     tags:
- *       - Products
+ *       - Product
  *     parameters:
  *       - in: path
  *         name: productId
@@ -139,7 +138,7 @@ router
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Products
+ *       - Product
  *     parameters:
  *       - in: path
  *         name: productId
@@ -167,7 +166,7 @@ router
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Products
+ *       - Product
  *     parameters:
  *       - in: path
  *         name: productId
@@ -184,7 +183,6 @@ router
  *       '404':
  *         $ref: '#/components/responses/NotFoundError'
  */
-
 router
   .route('/:productId')
   .get(getSingleProduct)
@@ -200,7 +198,7 @@ router
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Products
+ *       - Product
  *     parameters:
  *       - in: path
  *         name: productId
@@ -215,7 +213,6 @@ router
  *       '404':
  *         $ref: '#/components/responses/NotFoundError'
  */
-
 router.get('/likes/:productId', isAuth, getProductLikes);
 
 /**
@@ -227,7 +224,7 @@ router.get('/likes/:productId', isAuth, getProductLikes);
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Products
+ *       - Product
  *     parameters:
  *       - in: path
  *         name: productId
@@ -242,7 +239,6 @@ router.get('/likes/:productId', isAuth, getProductLikes);
  *       '404':
  *         $ref: '#/components/responses/NotFoundError'
  */
-
 router.post('/like/:productId', isAuth, likeProduct);
 
 /**
@@ -254,7 +250,7 @@ router.post('/like/:productId', isAuth, likeProduct);
  *     security:
  *       - bearerAuth: []
  *     tags:
- *       - Products
+ *       - Product
  *     parameters:
  *       - in: path
  *         name: productId
@@ -269,7 +265,6 @@ router.post('/like/:productId', isAuth, likeProduct);
  *       '404':
  *         $ref: '#/components/responses/NotFoundError'
  */
-
 router.delete('/unlike/:productId', isAuth, unlikeProduct);
 
 export default router;
