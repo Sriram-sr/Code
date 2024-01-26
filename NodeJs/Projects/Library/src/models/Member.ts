@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import { TransactionProto } from './Transaction';
 import { UserProto } from './User';
 
-interface Address {
+export interface Address {
   street: string;
   city: string;
   state: string;
@@ -10,13 +10,13 @@ interface Address {
   country: string;
 }
 
-interface MemberProto {
+export interface MemberProto {
   memberName: string;
   email?: string;
   address: Address;
   mobile: string;
-  transactions: TransactionProto[];
-  userId: UserProto;
+  transactions?: TransactionProto[];
+  userId?: UserProto;
 }
 
 const memberSchema = new Schema<MemberProto>({

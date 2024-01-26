@@ -1,11 +1,13 @@
 import mongoose, { Schema } from 'mongoose';
+import { UserProto } from './User';
 
-interface BookProto {
+export interface BookProto {
   title: string;
   author: string;
   genre: string;
   isbnNumber: number;
-  status: string;
+  status?: string;
+  createdUser?: UserProto;
 }
 
 export const bookGenres = [
@@ -47,6 +49,11 @@ const bookSchema = new Schema<BookProto>({
     type: String,
     required: true,
     enum: ['available', 'unavailable']
+  },
+  createdUser: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 

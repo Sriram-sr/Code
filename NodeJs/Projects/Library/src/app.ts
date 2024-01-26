@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import { InternalServerErrorCode } from './utils/env-values';
 import { MONGODB_URI, PORT } from './utils/env-values';
 import authRoutes from './routes/auth-routes';
+import memberRoutes from './routes/member-routes';
+import bookRoutes from './routes/book-routes';
 
 const app = express();
 
@@ -12,6 +14,8 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/member', memberRoutes);
+app.use('/api/v1/book', bookRoutes);
 
 app.use((error: any, _: Request, res: Response, _1: NextFunction) => {
   const statusCode = error.statusCode || InternalServerErrorCode;

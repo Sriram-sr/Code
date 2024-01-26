@@ -32,8 +32,6 @@ export const errorHandler = (
 ) => {
   if (err) {
     console.log(err);
-    console.log('Logging error stack for Dev...');
-    console.log(err.stack);
   }
   const error = new HttpError(message, statusCode);
   next(error);
