@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import { TransactionProto } from './Transaction';
 import { UserProto } from './User';
 
@@ -10,7 +10,7 @@ export interface Address {
   country: string;
 }
 
-export interface MemberProto {
+export interface MemberProto extends Document{
   memberName: string;
   email?: string;
   address: Address;

@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-export interface UserProto {
+export interface UserProto extends Document{
   username: string;
   email: string;
   password: string;

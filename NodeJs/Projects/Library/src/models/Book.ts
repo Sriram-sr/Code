@@ -1,7 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import { UserProto } from './User';
 
-export interface BookProto {
+export interface BookProto extends Document{
   title: string;
   author: string;
   genre: string;

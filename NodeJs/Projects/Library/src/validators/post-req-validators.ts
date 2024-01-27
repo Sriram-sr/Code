@@ -1,4 +1,4 @@
-import { ValidationChain, body } from 'express-validator';
+import { ValidationChain, body, param } from 'express-validator';
 import { bookGenres } from '../models/Book';
 
 export const createMemberValidator: ValidationChain[] = [
@@ -57,3 +57,7 @@ export const createBookValidator: ValidationChain[] = [
     .isLength({ min: 4, max: 4 })
     .withMessage('Isbn number should be exactly 4 in length')
 ];
+
+export const borrowReturnValidator: ValidationChain[] = [
+  param('bookId').isMongoId().withMessage('Enter a valid Book ID')
+]

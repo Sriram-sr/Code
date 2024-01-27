@@ -1,6 +1,6 @@
-import mongoose, { Schema, Types} from 'mongoose';
+import mongoose, { Document, Schema, Types} from 'mongoose';
 
-export interface TransactionProto {
+export interface TransactionProto extends Document {
     bookId: Types.ObjectId;
     memberId: Types.ObjectId;
     borrowDate: Date;

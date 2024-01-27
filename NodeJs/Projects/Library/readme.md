@@ -15,5 +15,5 @@ POST /api/v1/book: Creates a book.✅
 
 Transaction:
 
-POST /api/v1/transactions/borrow/:bookId: Borrows a book.
-POST /api/v1/transactions/return/:bookId: Returns a book.
+POST /api/v1/book/borrow/:bookId: Borrows a book.✅
+POST /api/v1/book/return/:bookId: Returns a book.✅
