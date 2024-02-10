@@ -3,14 +3,14 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
   margin: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 .main-header {
-  background: #2ddf5c;
-  padding: 10px;
   width: 100%;
+  background: #2ddf5c;
+  padding: 8px 16px;
 }
 
 .main-header > div {
@@ -19,16 +19,16 @@ body {
 }
 
 .main-header__brand {
-  color: #0e4f1f;
   text-decoration: none;
+  color: #0e4f1f;
   font-weight: bold;
   font-size: 25px;
 }
 
 .main-nav {
   display: inline-block;
+  width: calc(100% - 86px);
   text-align: right;
-  width: calc(100% - 88px);
   vertical-align: middle;
 }
 
@@ -40,63 +40,78 @@ body {
 
 .main-nav__item {
   display: inline-block;
-  padding: 0 16px;
+  margin: 0 16px;
+  font-weight: bold;
 }
 
-.main-nav__item a {
+.main-nav__item > a {
   text-decoration: none;
   color: #0e4f1f;
-  font-weight: bold;
   padding: 3px 0;
 }
 
-.main-nav__item a:hover,
-.main-nav__item a:active {
+.main-nav__item > a:hover,
+.main-nav__item > a:active {
   color: white;
   border-bottom: 5px solid white;
 }
 
-.main-nav__item--cta a{
+.main-nav__item--cta > a {
   color: white;
   background: #ff1b68;
   padding: 8px 16px;
   border-radius: 8px;
 }
 
-.main-nav__item--cta a:hover,
-.main-nav__item--cta a:active {
+.main-nav__item--cta > a:hover {
   color: #ff1b68;
   background: white;
   border: none;
 }
 
 #product-overview {
-  background: url('freedom.jpg');
-  width: 100%;
-  height: 500px;
+  background: url("freedom.jpg");
   padding: 10px;
+  height: 528px;
 }
 
 #product-overview h1 {
-  color: white;
-  font-family: 'Anton', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
+/* h1 {
+  color: white;
+  font-family: "Anton", sans-serif;
+} */
+
 .section-title {
-  color: #2ddf5c;
   text-align: center;
+  color: #2ddf5c;
 }
 
 .plan {
   background: #d5ffdc;
   text-align: center;
-  display: inline-block;
-  width: 30%;
   padding: 16px;
   margin: 8px;
+  display: inline-block;
+  width: 30%;
   vertical-align: middle;
 }
 
 .plan--highlighted {
   background: #19b84c;
+  box-shadow: 2px 2px 2px 2px rgb(0,0,0,0.5);
+}
+
+.plan__annotation {
+  background: white;
+  color: #19b84c;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px 2px rgb(0,0,0, 0.5);
+}
+
+.plan__features {
+  list-style: none;
 }
