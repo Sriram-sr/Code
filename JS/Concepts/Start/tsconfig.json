@@ -12,7 +12,7 @@
     "target": "ES2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "lib": [
       "dom",
-      "ES2016",
+      "ES2022",
       "dom.iterable",
       "scripthost"
     ], /* Specify a set of bundled library declaration files that describe the target runtime environment. */
