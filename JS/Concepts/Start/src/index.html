@@ -9,10 +9,31 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/styles/app.css" />
     <script src="../dist/assets/scripts/app.js" defer></script>
+    <style>
+        .red-bg {
+            background-color: red;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        .invisible {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-
+    <div>
+        <h1>Child of sibling to below unordered list</h1>
+    </div>
+    <ul id="ul-list" class="red-bg  ">
+        <li>First</li>
+        <li class="list-item">Second</li>
+        <li class="list-item">Third</li>
+    </ul>
+    <button>Toggle Visibility</button>
 </body>
 
 </html>
