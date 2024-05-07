@@ -63,7 +63,6 @@ class ProductList {
   constructor() {}
 
   render() {
-    const renderHook = document.getElementById('app');
     const prodList = document.createElement('ul');
     prodList.className = 'product-list';
     for (const product of this.products) {
@@ -71,9 +70,46 @@ class ProductList {
       const productElement = productItem.render();
       prodList.appendChild(productElement);
     }
-    renderHook?.appendChild(prodList);
+    return prodList;
   }
 }
 
-const productList = new ProductList();
-productList.render();
+class ShoppingCart {
+  items: any[] = [];
+
+  render() {
+    const cartElement = document.createElement('section');
+    cartElement.innerHTML = `
+      <h2>Total: \$${0}</h2>
+      <button>Order Now!</button>
+    `;
+    cartElement.className = 'cart';
+    return cartElement;
+  }
+}
+
+class Shop {
+  render() {
+    const renderHook = document.getElementById('app');
+    const shoppingCart = new ShoppingCart();
+    const cartElement = shoppingCart.render();
+    const productList = new ProductList();
+    const productListElement = productList.render();
+
+    renderHook?.appendChild(cartElement);
+    renderHook?.appendChild(productListElement);
+  }
+}
+
+const shop = new Shop();
+shop.render();
+
+// static
+
+class App {
+  static cart: string;
+
+  static init() {
+    this.cart = 'cart';
+  }
+}
