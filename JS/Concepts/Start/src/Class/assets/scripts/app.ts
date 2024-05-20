@@ -113,3 +113,46 @@ class App {
     this.cart = 'cart';
   }
 }
+
+class GetterExample {
+  userName = 'Sriram';
+
+  get getUser() {
+    console.log('Executing getter method');
+    return this.userName;
+  }
+
+  set setUserName(name: string) {
+    this.userName = name;
+  }
+}
+
+const instance = new GetterExample();
+console.log(instance.getUser);
+
+class Parent {
+  #safeProp: string;
+  firstProp: string;
+
+  constructor() {
+    this.#safeProp = 'Safest';
+    this.firstProp = 'Prop 1';
+  }
+
+  displayProp() {
+    console.log(this.#safeProp);
+    console.log(this.firstProp);
+  }
+}
+
+class Children extends Parent {
+  useParentProp() {
+    // console.log(this.#safeProp); // Not possible
+    this.displayProp();
+  }
+}
+
+const childInstance = new Children();
+childInstance.useParentProp();
+
+console.log(childInstance instanceof Parent); // true
