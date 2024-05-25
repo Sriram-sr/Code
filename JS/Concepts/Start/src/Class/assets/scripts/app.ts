@@ -156,3 +156,21 @@ const childInstance = new Children();
 childInstance.useParentProp();
 
 console.log(childInstance instanceof Parent); // true
+
+// Closures
+
+let multiplier = 10;
+
+const configureFunction = (val: number) => {
+  const referredMultiplier = multiplier;
+  function helperFunction(amount: number) {
+    console.log(`Val of multiplier is ${referredMultiplier}`); // Will hold the updated value
+    return val * amount * multiplier;
+  }
+
+  return helperFunction;
+};
+
+const configuredHandler = configureFunction(9);
+multiplier = 800;
+console.log(configuredHandler(20));
