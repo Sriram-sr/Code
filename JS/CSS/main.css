@@ -1,88 +1,14 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Montserrat", sans-serif;
-}
-
-.main-header {
-  width: 100%;
-  background: #2ddf5c;
-  padding: 8px 16px;
-}
-
-.main-header > div {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.main-header__brand {
-  text-decoration: none;
-  color: #0e4f1f;
-  font-weight: bold;
-  font-size: 25px;
-}
-
-.main-nav {
-  display: inline-block;
-  width: calc(100% - 86px);
-  text-align: right;
-  vertical-align: middle;
-}
-
-.main-nav__items {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.main-nav__item {
-  display: inline-block;
-  margin: 0 16px;
-  font-weight: bold;
-}
-
-.main-nav__item > a {
-  text-decoration: none;
-  color: #0e4f1f;
-  padding: 3px 0;
-}
-
-.main-nav__item > a:hover,
-.main-nav__item > a:active {
-  color: white;
-  border-bottom: 5px solid white;
-}
-
-.main-nav__item--cta > a {
-  color: white;
-  background: #ff1b68;
-  padding: 8px 16px;
-  border-radius: 8px;
-}
-
-.main-nav__item--cta > a:hover {
-  color: #ff1b68;
-  background: white;
-  border: none;
-}
-
 #product-overview {
   background: url("freedom.jpg");
+  width: 100%;
   padding: 10px;
   height: 528px;
 }
 
 #product-overview h1 {
-  font-family: "Montserrat", sans-serif;
-}
-
-/* h1 {
   color: white;
   font-family: "Anton", sans-serif;
-} */
+}
 
 .section-title {
   text-align: center;
@@ -101,7 +27,7 @@ body {
 
 .plan--highlighted {
   background: #19b84c;
-  box-shadow: 2px 2px 2px 2px rgb(0,0,0,0.5);
+  box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
 }
 
 .plan__annotation {
@@ -109,9 +35,70 @@ body {
   color: #19b84c;
   padding: 8px;
   border-radius: 8px;
-  box-shadow: 2px 2px 2px 2px rgb(0,0,0, 0.5);
+  box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+}
+
+.plan__title {
+  color: #0e4f1f;
+}
+
+.plan__price {
+  color: #8a8a8a;
+}
+
+.plan--highlighted .plan__title {
+  color: white;
+}
+
+.plan--highlighted .plan__price {
+  color: #0e4f1f;
 }
 
 .plan__features {
   list-style: none;
 }
+
+.plan__feature {
+  margin: 8px 0;
+}
+
+#key-features {
+  background: #ff1b68;
+  margin-top: 80px;
+  padding: 16px;
+}
+
+#key-features .section-title {
+  color: white;
+  margin: 32px;
+}
+
+.key-feature__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.key-feature {
+  display: inline-block;
+  width: 30%;
+  vertical-align: top;
+}
+
+.key-feature__image {
+  background-color: #ffcede;
+  width: 128px;
+  height: 128px;
+  border: 2px solid #424242;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.key-feature__description {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
