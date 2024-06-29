@@ -20,6 +20,24 @@ def swap_first_last(array):
 input_list = [12, 35, 9, 56, 24]
 # print(swap_first_last(input_list))
 first, *rest, last = input_list
-print(first)
-print(rest)
-print(last)
+
+
+# Python Program to Swap Two Elements in a List
+
+
+def swap_elements(array, pos1, pos2):
+    try:
+        temp = array[pos1 - 1]
+        array[pos1 - 1] = array[pos2 - 1]
+        array[pos2 - 1] = temp
+    except IndexError as err:
+        print(err)
+        return 'Enter valid positions'
+
+    return array
+
+
+input_list = [23, 65, 19, 90]
+position_1 = 1
+position_2 = 4
+print(swap_elements(input_list, position_1, position_2))
