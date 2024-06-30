@@ -40,4 +40,26 @@ def swap_elements(array, pos1, pos2):
 input_list = [23, 65, 19, 90]
 position_1 = 1
 position_2 = 4
-print(swap_elements(input_list, position_1, position_2))
+# print(swap_elements(input_list, position_1, position_2))
+
+# Find Maximum of two numbers in Python
+
+
+def get_max_number(num1, num2):
+    try:
+        if num1 > num2:
+            return f'{num1} is greater'
+        elif num2 > num1:
+            return f'{num2} is greater'
+        else:
+            return 'Both numbers are equal'
+    except TypeError as err:
+        return 'Enter valid numbers'
+
+
+# print(get_max_number(900, 900))
+
+array = [1, 2, 3]
+print(f'Array before clearing {array}')
+array *= 0
+print(f'Array after clearing {array}')
