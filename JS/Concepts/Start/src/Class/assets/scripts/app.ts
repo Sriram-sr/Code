@@ -174,3 +174,30 @@ const configureFunction = (val: number) => {
 const configuredHandler = configureFunction(9);
 multiplier = 800;
 console.log(configuredHandler(20));
+
+// Promises
+
+console.log('Before set timeout');
+
+function setTimer(duration: number) {
+  const promise = new Promise((resolve, reject) => {
+    try {
+      setTimeout(() => {
+        resolve('Inside the set time out handler');
+      }, duration);
+    } catch (err) {
+      reject(err);
+    }
+  });
+  return promise;
+}
+
+setTimer(2000)
+  .then(data => {
+    console.log(data);
+  })
+  .catch(err => {
+    console.log('Error while calling custom setTimeout method ', err);
+  });
+
+console.log('Clearly after the timeout');

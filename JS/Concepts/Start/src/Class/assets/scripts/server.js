@@ -14,8 +14,8 @@ Person.prototype.printAge = function () {
 };
 
 const firstPerson = new Person();
-console.log(firstPerson.__proto__ === Person.prototype); // true
-console.dir(Person);
+// console.log(firstPerson.__proto__ === Person.prototype); // true
+// console.dir(Person);
 
 // Recursion
 
@@ -62,3 +62,35 @@ function getFriendsList(person) {
 }
 
 console.log(getFriendsList(myself));
+
+console.log('Before set timeout');
+
+function setTimer(duration) {
+  const promise = new Promise((resolve, reject) => {
+    try {
+      setTimeout(() => {
+        resolve('Inside the set time out handler');
+      }, duration);
+    } catch (err) {
+      reject(err);
+    }
+  });
+  return promise;
+}
+
+setTimer(2000)
+  .then(data => {
+    return data;
+  })
+  .then(typeData => {
+    console.log(`In the second then block ${typeData}`);
+  })
+  .catch(err => {
+    console.log('Error while calling custom setTimeout method ', err);
+  });
+
+console.log('Clearly after the timeout');
+
+function greet() {
+  console.log('Clicked');
+}
