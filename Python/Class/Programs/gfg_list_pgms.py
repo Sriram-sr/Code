@@ -40,10 +40,11 @@ def swap_elements(array, pos1, pos2):
 input_list = [23, 65, 19, 90]
 position_1 = 1
 position_2 = 4
+
+
 # print(swap_elements(input_list, position_1, position_2))
 
 # Find Maximum of two numbers in Python
-
 
 def get_max_number(num1, num2):
     try:
@@ -59,7 +60,36 @@ def get_max_number(num1, num2):
 
 # print(get_max_number(900, 900))
 
-array = [1, 2, 3]
-print(f'Array before clearing {array}')
-array *= 0
-print(f'Array after clearing {array}')
+
+# Reversing a List in Python
+
+def get_reversed_array(array):
+    # reversed_array = array[::-1]
+
+    # approach 2
+    # reversed_array = []
+    # for idx in range(len(array) - 1, -1, -1):
+    #     reversed_array.append(array[idx])
+    #
+    # return reversed_array
+
+    # approach 3
+    first_idx = 0
+    last_idx = len(array) - 1
+
+    while first_idx < last_idx:
+        temp = array[first_idx]
+        array[first_idx] = array[last_idx]
+        array[last_idx] = temp
+        first_idx += 1
+        last_idx -= 1
+        
+    return array
+
+
+print(get_reversed_array([1, 8, 5, 18, 12, 2]))
+
+
+
+
+
