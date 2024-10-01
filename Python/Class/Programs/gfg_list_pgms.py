@@ -83,13 +83,30 @@ def get_reversed_array(array):
         array[last_idx] = temp
         first_idx += 1
         last_idx -= 1
-        
+
     return array
 
 
-print(get_reversed_array([1, 8, 5, 18, 12, 2]))
+# print(get_reversed_array([1, 8, 5, 18, 12, 2]))
+
+array = [15, 6, 7, 10, 12, 20, 10, 28, 10]
+to_find = 10
+
+count = len([ele for ele in array if ele == to_find])
+print(count)
 
 
+# Sum of number digits in List
 
 
+def get_number_sum(test_list):
+    # sum_list = [sum(int(char) for char in str(ele)) for ele in test_list]
 
+    # approach 2
+    sum_list = list(map(lambda ele: sum(int(char) for char in str(ele)), test_list))
+
+    return sum_list
+
+
+test_list = [12, 67, 98, 34]
+print(get_number_sum(test_list))
