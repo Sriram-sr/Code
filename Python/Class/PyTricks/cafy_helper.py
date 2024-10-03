@@ -332,8 +332,6 @@ def decorator_method():
 # print(sample_array)
 # scoping_method()
 
-import re
-
 sh_int_output = """
 HundredGigE0/0/0/2             unassigned      Shutdown        Down     default 
 FourHundredGigE0/0/0/3         unassigned      Shutdown        Down     default 
