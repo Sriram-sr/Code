@@ -331,3 +331,69 @@ def decorator_method():
 # print(copied_array_returned)
 # print(sample_array)
 # scoping_method()
+
+import re
+
+sh_int_output = """
+HundredGigE0/0/0/2             unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/3         unassigned      Shutdown        Down     default 
+FortyGigE0/0/0/4               unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/5         unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/6         unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/7             unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/10            unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/11        unassigned      Shutdown        Down     default 
+FortyGigE0/0/0/13              unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/14        unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/15            unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/17            unassigned      Shutdown        Down     default 
+FortyGigE0/0/0/21              unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/23            unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/24            unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/25            unassigned      Shutdown        Down     default 
+FortyGigE0/0/0/29              unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/30            unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/31            unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/0           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/1           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/2           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/3           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/4           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/5           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/6           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/0/7           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/0           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/1           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/2           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/3           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/4           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/5           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/6           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/8/7           unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/12/0          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/12/1          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/16/0          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/16/1          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/16/2          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/16/3          unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/18/0      unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/18/1      unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/20/0          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/20/1          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/20/2          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/22/0          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/22/1          unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/26/0      unassigned      Shutdown        Down     default 
+FourHundredGigE0/0/0/26/1      unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/28/0          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/28/1          unassigned      Shutdown        Down     default 
+HundredGigE0/0/0/28/2          unassigned      Shutdown        Down     default 
+MgmtEth0/RP0/CPU0/0            55.28.22.14     Up              Up       default
+"""
+
+all_interfaces = re.findall(r'[A-Za-z]+\d\/\d\/\d/\d+\/?\d?', sh_int_output)
+
+for intf in all_interfaces:
+    print(f'int {intf}')
+    print('no shut')
+print('commit')
