@@ -93,11 +93,12 @@ array = [15, 6, 7, 10, 12, 20, 10, 28, 10]
 to_find = 10
 
 count = len([ele for ele in array if ele == to_find])
-print(count)
+
+
+# print(count)
 
 
 # Sum of number digits in List
-
 
 def get_number_sum(test_list):
     # sum_list = [sum(int(char) for char in str(ele)) for ele in test_list]
@@ -109,4 +110,35 @@ def get_number_sum(test_list):
 
 
 test_list = [12, 67, 98, 34]
-print(get_number_sum(test_list))
+
+
+# print(get_number_sum(test_list))
+
+
+# Natural Numbers Summation
+
+def get_natural_numbers_sum(end_value):
+    total = 0
+    start_value = 1
+    for val in range(start_value, end_value + 1):
+        total += val
+
+    return total
+
+
+natural_number = 5
+# print(get_natural_numbers_sum(natural_number))
+
+
+def get_prime_numbers(range_val):
+    if range_val < 2:
+        raise Exception('Enter a valid range')
+    for val in range(2, range_val + 1):
+        for divider in range(2, val):
+            if val % divider == 0:
+                break
+        else:
+            print(val)
+
+
+get_prime_numbers(2)
