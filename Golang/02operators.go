@@ -13,6 +13,11 @@ func getIncerementedAge(age int) (incrementedAge int) {
 	return
 }
 
+// Variadic Functions
+func getAnyNumbers(nums ...int) {
+	fmt.Println(nums)
+}
+
 func main() {
 	var number int = 32
 	var bigNumber int = 64
@@ -36,4 +41,7 @@ func main() {
 
 	describePerson("Sriram", 24, true)
 	fmt.Println(getIncerementedAge(24))
+
+	var numbers = []int{1, 3, 5}
+	getAnyNumbers(numbers...)
 }
