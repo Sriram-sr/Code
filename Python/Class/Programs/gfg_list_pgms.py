@@ -141,4 +141,27 @@ def get_prime_numbers(range_val):
             print(val)
 
 
-get_prime_numbers(2)
+# get_prime_numbers(2)
+
+# Find union and intersection of two lists
+
+def get_union_and_intersection(array1, array2):
+    union_list = []
+    intersection_list = []
+
+    for ele in array2:
+        if ele not in array1:
+            union_list.append(ele)
+        if ele in array1:
+            intersection_list.append(ele)
+    union_list += array1
+
+    return {
+        'Union': union_list,
+        'Intersection': intersection_list
+    }
+
+
+array_1 = [1, 2, 3, 5]
+array_2 = [7, 9, 3]
+print(get_union_and_intersection(array_1, array_2))
