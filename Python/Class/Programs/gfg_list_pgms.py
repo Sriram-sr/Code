@@ -164,4 +164,27 @@ def get_union_and_intersection(array1, array2):
 
 array_1 = [1, 2, 3, 5]
 array_2 = [7, 9, 3]
-print(get_union_and_intersection(array_1, array_2))
+# print(get_union_and_intersection(array_1, array_2))
+
+# Program to find second-largest number in a list
+
+
+def find_second_largest(numbers):
+    if len(numbers) < 2:
+        return None
+    def get_max_number(array):
+        max_num = float('-inf')
+        for num in array:
+            if num > max_num:
+                max_num = num
+        return max_num
+
+    first_largest = get_max_number(numbers)
+    numbers.remove(first_largest)
+    second_largest = get_max_number(numbers)
+
+    return second_largest
+
+
+numbers = [10, 20, 4, 145, 99]
+print(find_second_largest(numbers))
