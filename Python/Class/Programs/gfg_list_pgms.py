@@ -172,6 +172,7 @@ array_2 = [7, 9, 3]
 def find_second_largest(numbers):
     if len(numbers) < 2:
         return None
+
     def get_max_number(array):
         max_num = float('-inf')
         for num in array:
@@ -188,3 +189,16 @@ def find_second_largest(numbers):
 
 numbers = [10, 20, 4, 145, 99]
 print(find_second_largest(numbers))
+
+
+# Reverse Words in a Given String
+
+def reverse_words(text):
+    text = text.strip()
+    words = text.split(' ')
+
+    return ' '.join(words[::-1])
+
+
+text =" geeks quiz practice code"
+print(reverse_words(text))
