@@ -188,7 +188,7 @@ def find_second_largest(numbers):
 
 
 numbers = [10, 20, 4, 145, 99]
-print(find_second_largest(numbers))
+# print(find_second_largest(numbers))
 
 
 # Reverse Words in a Given String
@@ -201,4 +201,14 @@ def reverse_words(text):
 
 
 text =" geeks quiz practice code"
-print(reverse_words(text))
+# print(reverse_words(text))
+
+
+#  program to print even length words in a string
+
+text = "This is a python languages"
+words = text.split(' ')
+
+for word in words:
+    if len(word) % 2 == 0:
+        print(word)
