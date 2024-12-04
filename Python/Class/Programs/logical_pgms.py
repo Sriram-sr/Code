@@ -25,4 +25,22 @@ def get_nth_fibonacci_num(pos):
     return fibbo_list[pos - 1]
 
 
-print(get_nth_fibonacci_num(10))
+def get_nth_fibonacci(pos):
+    first_num, second_num = 0, 1
+
+    if pos < 1:
+        return 'Enter a valid position'
+
+    if pos == 1:
+        return first_num
+    if pos == 2:
+        return second_num
+
+    for _ in range(3, pos + 1):
+        first_num, second_num = second_num, first_num + second_num
+
+    return second_num
+
+
+print(get_nth_fibonacci_num(40))
+print(get_nth_fibonacci(40))
