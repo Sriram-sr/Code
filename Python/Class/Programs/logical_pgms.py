@@ -74,11 +74,58 @@ def find_factorial(num):
 
 
 def get_recursive_factorial(num):
-    if num == 1:
-        return 1
-
-    return num * get_recursive_factorial(num - 1)
+    return 1 if (num == 1) else num * get_recursive_factorial(num - 1)
 
 
-print(find_factorial(5))
+# print(find_factorial(5))
 print(get_recursive_factorial(5))
+
+
+# Find Maximum Element in a List
+
+def find_max_number(array):
+    if len(array) == 0:
+        return None
+
+    max_num = array[0]
+    for num in array:
+        if num > max_num:
+            max_num = num
+
+    return max_num
+
+
+# print(find_max_number([2, 6, 9, -1, 8, -10, 7]))
+
+
+# sort without inbuilt methods
+
+def bubble_sort_array(array):
+    for i in range(len(array)):
+        for j in range(0, len(array)-i-1):
+            if array[j] > array[j+1]:
+                array[j], array[j+1] = array[j+1], array[j]
+
+    return array
+
+
+# print(bubble_sort_array([5, 8, 1, 9, 11, 2, -3]))
+
+
+# Check for Anagrams
+
+def are_anagrams(str1, str2):
+    str1 = str1.lower()
+    str2 = str2.lower()
+    for char in str1:
+        if char in str2 and str2.count(char) >= str1.count(char):
+            pass
+        else:
+            print(char)
+            return False
+
+    return True
+
+
+# print(are_anagrams("Anagram", "Nag a Ram"))
+
