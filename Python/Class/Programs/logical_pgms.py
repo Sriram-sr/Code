@@ -102,9 +102,9 @@ def find_max_number(array):
 
 def bubble_sort_array(array):
     for i in range(len(array)):
-        for j in range(0, len(array)-i-1):
-            if array[j] > array[j+1]:
-                array[j], array[j+1] = array[j+1], array[j]
+        for j in range(0, len(array) - i - 1):
+            if array[j] > array[j + 1]:
+                array[j], array[j + 1] = array[j + 1], array[j]
 
     return array
 
@@ -126,6 +126,27 @@ def are_anagrams(str1, str2):
 
     return True
 
-
 # print(are_anagrams("Anagram", "Nag a Ram"))
 
+# Sum of digits
+
+def get_sum_of_digits(number):
+    total = 0
+
+    while number > 0:
+        digit = number % 10
+        total += digit
+        number //= 10
+
+    # Approach 2
+
+    # for digit in str(number):
+    #     total += int(digit)
+
+    return total
+
+    # Approach 3
+
+    # return sum((int(char) for char in str(number)))
+
+print(get_sum_of_digits(987))
