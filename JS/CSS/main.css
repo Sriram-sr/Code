@@ -3,7 +3,7 @@
 }
 
 body {
-  font-family: 'Montserrat', 'sans-serif';
+  font-family: "Montserrat", "sans-serif";
   margin: 0;
 }
 
@@ -13,7 +13,7 @@ body {
   padding: 8px 16px;
 }
 
-.main-header > div {
+.main-header>div {
   display: inline-block;
   vertical-align: middle;
 }
@@ -56,15 +56,29 @@ body {
   border-bottom: 5px solid white;
 }
 
-#product-overview {
+.main-nav__item--cta a {
+  color: white;
   background: #ff1b68;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.main-nav__item--cta a:hover,
+.main-nav__item--cta a:active {
+  color: #ff1b68;
+  background: white;
+  border: none;
+}
+
+#product-overview {
+  background: url("freedom.jpg");
   width: 100%;
   height: 528px;
   padding: 10px;
 }
 
 #product-overview h1 {
-  font-family: 'Anton', 'sans-serif';
+  font-family: "Anton", "sans-serif";
   color: white;
 }
 
