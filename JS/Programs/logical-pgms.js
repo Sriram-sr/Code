@@ -22,3 +22,18 @@ function isLeapyear(year) {
 }
 
 console.log(isLeapyear(2024));
+
+// Reverse a string
+
+function reverseString(str) {
+  let reversedText = '';
+
+  for (let char of str) {
+    reversedText = char + reversedText;
+  }
+
+  return reversedText;
+}
+
+console.log(reverseString('hello'));
+
