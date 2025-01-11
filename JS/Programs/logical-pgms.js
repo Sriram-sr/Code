@@ -37,3 +37,14 @@ function reverseString(str) {
 
 console.log(reverseString('hello'));
 
+// Approach 2
+
+function reverseString(str) {
+  let reversedText = '';
+
+  for (let idx = str.length - 1; idx >= 0; idx--) {
+    reversedText += str[idx];
+  }
+
+  return reversedText;
+}
