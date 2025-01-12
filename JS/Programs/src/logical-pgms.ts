@@ -1,6 +1,6 @@
 // Leap year
 
-function isLeapYear(year) {
+function isLeapYear(year: number): boolean {
   if (year % 4 === 0) {
     if (year % 100 === 0) {
       if (year % 400 !== 0) {
@@ -17,15 +17,13 @@ console.log(isLeapYear(1992));
 
 // Approach 2
 
-function isLeapyear(year) {
+function isLeapyear(year: number): boolean {
   return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
 }
 
-console.log(isLeapyear(2024));
-
 // Reverse a string
 
-function reverseString(str) {
+function reverseString(str: string): string {
   let reversedText = '';
 
   for (let char of str) {
@@ -35,11 +33,9 @@ function reverseString(str) {
   return reversedText;
 }
 
-console.log(reverseString('hello'));
-
 // Approach 2
 
-function reverseString(str) {
+function reversesString(str: string): string {
   let reversedText = '';
 
   for (let idx = str.length - 1; idx >= 0; idx--) {
@@ -48,3 +44,5 @@ function reverseString(str) {
 
   return reversedText;
 }
+
+console.log(reversesString('hello'));
