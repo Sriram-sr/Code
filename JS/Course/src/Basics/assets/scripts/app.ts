@@ -41,6 +41,15 @@ function writeToLog(
 
 function calculateResult(operatorType: string): void {
   const enteredNumber = getUserInput();
+  if (
+    (operatorType !== 'ADD' &&
+      operatorType !== 'SUB' &&
+      operatorType !== 'MUL' &&
+      operatorType !== 'DIV') ||
+    !enteredNumber
+  ) {
+    return;
+  }
   const previousResult = currentResult;
   let mathOperator: string;
   if (operatorType === 'ADD') {
