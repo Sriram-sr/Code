@@ -54,3 +54,48 @@ function reverseString(str: string): string {
 }
 
 console.log(reverseString('hello'));
+
+/**
+ * Program: Maximum Number in an Array
+ *
+ */
+
+function findMaxNumber(numbers: Array<number>): number {
+  // let maxNumber = numbers[0];
+
+  // for (let number of numbers) {
+  //   if (number > maxNumber) {
+  //     maxNumber = number;
+  //   }
+  // }
+
+  // Approach 2
+  let maxNumber = numbers.reduce((maxNum, currNum) =>
+    Math.max(maxNum, currNum)
+  );
+
+  return maxNumber;
+}
+
+console.log(findMaxNumber([5, 2, 9, 1, 5]));
+
+/**
+ * Program: FizzBuzz
+ *
+ */
+
+function fizzBuzz(): void {
+  for (let count = 1; count <= 100; count++) {
+    if (count % 3 === 0) {
+      console.log('Fizz');
+    } else if (count % 5 === 0) {
+      console.log('Buzz');
+    } else if (count % 3 === 0 && count % 5 === 0) {
+      console.log('FizzBuzz');
+    } else {
+      console.log(count);
+    }
+  }
+}
+
+// fizzBuzz();
