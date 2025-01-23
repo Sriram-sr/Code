@@ -107,12 +107,7 @@ function endRound(): void {
 }
 
 function attackMonster(mode: string): void {
-  let maxDamage;
-  if (mode === MODE_ATTACK) {
-    maxDamage = ATTACK_VALUE;
-  } else {
-    maxDamage = STRONG_ATTACK_VALUE;
-  }
+  const maxDamage = mode === MODE_ATTACK ? ATTACK_VALUE : STRONG_ATTACK_VALUE;
   const monsterDamage = dealMonsterDamage(maxDamage);
   currentMonsterHealth -= monsterDamage;
   endRound();
