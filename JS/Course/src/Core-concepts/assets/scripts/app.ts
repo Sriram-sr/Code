@@ -20,10 +20,17 @@ interface LogEntryProto {
 }
 
 const enteredValue = prompt('Enter the Max life for you and the monster');
-let chosenMaxLife = parseInt(enteredValue ? enteredValue : '100');
-if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
+let chosenMaxLife: number;
+try {
+  chosenMaxLife = parseInt(enteredValue ? enteredValue : '100');
+  if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
+    throw { message: 'Invalid user input, not a number!' };
+  }
+} catch (err) {
+  console.log(err);
   chosenMaxLife = 100;
 }
+
 let currentMonsterHealth = chosenMaxLife;
 let currentPlayerHealth = chosenMaxLife;
 let hasBonusLife = true;
