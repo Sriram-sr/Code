@@ -11,7 +11,7 @@ const RESULT_COMPUTER_WINS = 'COMPUTER_WINS';
 
 let isGameRunning = false;
 
-const getPlayerChoice = function () {
+const getPlayerChoice = () => {
   const selection = prompt('Rock, Paper or Scissors?', '')?.toLowerCase();
   if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
     alert('Invalid choice! We chose Rock for you!');
@@ -20,7 +20,7 @@ const getPlayerChoice = function () {
   return selection;
 };
 
-const getComputerChoice = function () {
+const getComputerChoice = () => {
   const randomValue = Math.random();
   if (randomValue < 0.34) {
     return ROCK;
@@ -31,8 +31,7 @@ const getComputerChoice = function () {
   }
 };
 
-const getWinner = function (cChoice: string, pChoice: string) {
-  console.log(`Computer chose ${cChoice}`);
+const getWinner = (cChoice: string, pChoice: string) => {
   if (cChoice === pChoice) {
     return RESULT_DRAW;
   } else if (
@@ -46,7 +45,7 @@ const getWinner = function (cChoice: string, pChoice: string) {
   }
 };
 
-startGameBtn.addEventListener('click', function () {
+startGameBtn.addEventListener('click', () => {
   if (isGameRunning) {
     return;
   }
@@ -54,5 +53,8 @@ startGameBtn.addEventListener('click', function () {
   const computerChoice = getComputerChoice();
   const playerChoice = getPlayerChoice();
   const winner = getWinner(computerChoice, playerChoice);
-  console.log(winner);
+  alert(
+    `You picked ${playerChoice}, computer picked ${computerChoice} and ${winner}`
+  );
+  isGameRunning = false;
 });
