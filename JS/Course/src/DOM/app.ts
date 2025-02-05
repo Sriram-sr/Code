@@ -12,6 +12,8 @@ const lastListItem = document.querySelector(
 const inputElement = document.querySelector('input') as HTMLInputElement;
 const titleElement = document.querySelector('title') as HTMLTitleElement;
 const unorderedList = document.querySelector('ul') as HTMLUListElement;
+const sectionElement = document.querySelector('section') as HTMLElement;
+const button = document.querySelector('button') as HTMLButtonElement;
 
 h1Element.textContent = 'New text content!';
 h1Element.className = 'dynamic-inserted-class';
@@ -20,7 +22,6 @@ h1Element.style.backgroundColor = '#ff1b68';
 titleElement.textContent = 'Assignment solved!';
 
 inputElement.setAttribute('input', 'Modified using attribute');
-console.log(inputElement.getAttribute('input'));
 
 const ulListChildren = unorderedList.children;
 const ulListChildNodes = unorderedList.childNodes;
@@ -33,4 +34,7 @@ const listParent = firstListItemElement?.parentNode;
 const body = firstListItemElement?.closest('body'); // Closest descendant upwards is body for ul
 const h1ElementBySibling = unorderedList.previousElementSibling; // previousSibling will return text node
 const inputElementBySibling = unorderedList.nextElementSibling;
-console.log(inputElementBySibling);
+
+button?.addEventListener('click', () => {
+  sectionElement.classList.toggle('invisible');
+});

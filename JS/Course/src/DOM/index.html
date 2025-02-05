@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DOM Manipulation</title>
     <script src="../../dist/DOM/app.js" defer></script>
+    <style>
+      .red-bg {
+        background-color: red;
+        color: white;
+      }
+
+      .visible {
+        display: block;
+      }
+
+      .invisible {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <h1 id="main-title">Dive into the DOM!</h1>
@@ -13,12 +27,13 @@
       <li class="list-item">Item 2</li>
       <li class="list-item">Item 3</li>
     </ul>
-    <section>
+    <input type="text" value="Setup in code!" />
+    <section class="red-bg visible">
       <ul>
         <li>Special list item 1</li>
         <li>Special list item 2</li>
       </ul>
     </section>
-    <input type="text" value="Setup in code!" />
+    <button>Toggle Visibility</button>
   </body>
 </html>
