@@ -27,5 +27,10 @@ const ulListChildNodes = unorderedList.childNodes;
 const firstListItem = unorderedList.firstChild; // this will be a text node
 const firstListItemElement = unorderedList.firstElementChild;
 
-console.log(firstListItem);
-console.log(firstListItemElement);
+// Traversing using existing elements
+
+const listParent = firstListItemElement?.parentNode;
+const body = firstListItemElement?.closest('body'); // Closest descendant upwards is body for ul
+const h1ElementBySibling = unorderedList.previousElementSibling; // previousSibling will return text node
+const inputElementBySibling = unorderedList.nextElementSibling;
+console.log(inputElementBySibling);
