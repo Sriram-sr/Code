@@ -15,6 +15,7 @@ const unorderedList = document.querySelector('ul') as HTMLUListElement;
 const sectionElement = document.querySelector('section') as HTMLElement;
 const button = document.querySelector('button') as HTMLButtonElement;
 const specialList = document.querySelector('.special-list') as HTMLUListElement;
+const cricketList = document.querySelector('.list-item--cricket');
 
 h1Element.textContent = 'New text content!';
 h1Element.className = 'dynamic-inserted-class';
@@ -42,13 +43,48 @@ button?.addEventListener('click', () => {
 
 // Creating new Html elements
 
-// specialList.innerHTML = '<h1>Modified the list with H1'; // Replaces the entire list content with H1
+// specialList.innerHTML = '<h1>Modified the list with H1</h1>'; // Replaces the entire list content with H1
 const lastSpecialListItem = specialList.lastElementChild;
 lastSpecialListItem?.insertAdjacentHTML(
   'afterend',
-  '<li>Before special last item</li>'
+  '<li>Special last item</li>'
 );
-const dynamicListItem = document.createElement('li') as HTMLLIElement;
+const dynamicListItem = document.createElement('li');
 
 specialList.appendChild(dynamicListItem);
 dynamicListItem.textContent = 'Dynamically added list item';
+specialList.append('Some random string...'); // Can append an element node or any text node
+
+const prependListItem = document.createElement('li');
+prependListItem.textContent = 'This list item is inserted via prepend method';
+specialList.prepend(prependListItem);
+
+const beforeListItem = document.createElement('li');
+beforeListItem.textContent = 'This list item is inserted via before method';
+specialList.lastElementChild?.before(beforeListItem);
+
+specialList.firstElementChild?.after(beforeListItem); // Same above list item object will be moved
+
+specialList.firstElementChild?.replaceWith(dynamicListItem);
+
+// Inserting new elements
+
+const newListItem = document.createElement('li');
+newListItem.textContent = 'Life';
+cricketList?.insertAdjacentElement('afterend', newListItem);
+
+const copiedList = cricketList?.cloneNode(true); // true indicated deep clone of child descendants as well
+
+// Queryselector Vs getElementBy*
+
+const liveNodeList = document.querySelectorAll(
+  '.final-list__item'
+) as NodeListOf<HTMLLIElement>;
+const nonLiveNodeList = document.getElementsByClassName(
+  'final-list__item'
+) as HTMLCollectionOf<HTMLLIElement>;
+
+cricketList?.appendChild(dynamicListItem);
+
+console.log(liveNodeList);
+console.log(nonLiveNodeList);
