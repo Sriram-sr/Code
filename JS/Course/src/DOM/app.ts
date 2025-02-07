@@ -16,6 +16,7 @@ const sectionElement = document.querySelector('section') as HTMLElement;
 const button = document.querySelector('button') as HTMLButtonElement;
 const specialList = document.querySelector('.special-list') as HTMLUListElement;
 const cricketList = document.querySelector('.list-item--cricket');
+const finalList = document.querySelector('.final-list') as HTMLUListElement;
 
 h1Element.textContent = 'New text content!';
 h1Element.className = 'dynamic-inserted-class';
@@ -77,14 +78,14 @@ const copiedList = cricketList?.cloneNode(true); // true indicated deep clone of
 
 // Queryselector Vs getElementBy*
 
-const liveNodeList = document.querySelectorAll(
-  '.final-list__item'
-) as NodeListOf<HTMLLIElement>;
-const nonLiveNodeList = document.getElementsByClassName(
-  'final-list__item'
-) as HTMLCollectionOf<HTMLLIElement>;
+const liveNodeList = finalList.querySelectorAll(
+  'li'
+) as NodeListOf<HTMLLIElement>; // This won't have the latest updated items
+const nonLiveNodeList = finalList.getElementsByTagName(
+  'li'
+) as HTMLCollectionOf<HTMLLIElement>; // This list will be updated with latest updated items
 
-cricketList?.appendChild(dynamicListItem);
+finalList.append(dynamicListItem);
 
-console.log(liveNodeList);
-console.log(nonLiveNodeList);
+console.log(liveNodeList); 
+console.log(nonLiveNodeList); 
