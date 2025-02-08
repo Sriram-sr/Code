@@ -87,5 +87,6 @@ const nonLiveNodeList = finalList.getElementsByTagName(
 
 finalList.append(dynamicListItem);
 
-console.log(liveNodeList); 
-console.log(nonLiveNodeList); 
+// finalList.remove(); 
+
+finalList.parentElement?.removeChild(finalList); // Better browser support than above remove method
