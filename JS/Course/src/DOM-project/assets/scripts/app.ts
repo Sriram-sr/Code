@@ -37,9 +37,9 @@ const showMovieModal: () => void = () => {
 };
 
 const clearMovieInputs: () => void = () => {
-  for (const userInput of userInputs) {
-    userInput.value = '';
-  }
+  for (let idx = 0; idx < userInputs.length; idx++) {
+    userInputs[idx].value = '';
+  } // Cannot use for of loop since userInput is a NodeList and not array
 };
 
 const backdropClickHandler: () => void = () => {
