@@ -21,3 +21,21 @@ const indexOfTwoFromReverse = numbers.lastIndexOf(2);
 const foundValue = numbers.find((number, _idx, _allNumbers) => {
   return number == 9;
 });
+
+// numbers.forEach(number => {
+//   console.log(number);
+// });
+const updatedNumbers = numbers.map(number => number * 0.1);
+
+const prices = [9.88, 7.11, 5.32, 6.22, 13.56];
+console.log(
+  prices.sort((a, b) => {
+    if (a > b) {
+      return 1;
+    } else if (a === b) {
+      return 0;
+    } else {
+      return -1;
+    }
+  })
+);
