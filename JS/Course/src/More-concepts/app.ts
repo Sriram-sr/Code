@@ -39,3 +39,16 @@ console.log(
     }
   })
 );
+
+const filteredPrices = prices.filter(price => price < 6.5);
+
+const sumOfPrices = prices.reduce((prevNum, currNum, _idx, _prices) => {
+  return prevNum + currNum;
+}, 0);
+
+const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
+
+const fruitCount = fruits.reduce((acc, fruit) => {
+  acc[fruit] = (acc[fruit] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
