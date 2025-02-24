@@ -52,3 +52,22 @@ const fruitCount = fruits.reduce((acc, fruit) => {
   acc[fruit] = (acc[fruit] || 0) + 1;
   return acc;
 }, {} as Record<string, number>);
+
+const nameFragments = ['Max', 'Schrwaz'];
+const fullname = nameFragments.join('');
+
+const persons = [
+  { name: 'Sriram', age: 24 },
+  { name: 'Vijay', age: 25 }
+];
+const copiedPersons = [...persons];
+const realNestedCopiedPersons = persons.map(person => ({ ...person }));
+persons.push({ name: 'Harish', age: 26 });
+copiedPersons[1].age = 100;
+
+const [firstFruit, secondFruit, ...otherFruits] = fruits;
+
+// Set methods
+
+const userIds = new Set([1, 2, 3, 4, 5]);
+console.log(userIds);
