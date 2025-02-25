@@ -62,7 +62,7 @@ const persons = [
 ];
 const copiedPersons = [...persons];
 const realNestedCopiedPersons = persons.map(person => ({ ...person }));
-persons.push({ name: 'Harish', age: 26 });
+persons.push({ name: 'Harish', age: 27 });
 copiedPersons[1].age = 100;
 
 const [firstFruit, secondFruit, ...otherFruits] = fruits;
@@ -71,3 +71,15 @@ const [firstFruit, secondFruit, ...otherFruits] = fruits;
 
 const userIds = new Set([1, 2, 3, 4, 5]);
 console.log(userIds);
+
+// Map
+
+const personData = new Map();
+personData.set('Name', 'Sriram');
+
+for (const [key, value] of personData.entries()) {
+  console.log(key);
+  console.log(value);
+}
+
+console.log(personData.size);
