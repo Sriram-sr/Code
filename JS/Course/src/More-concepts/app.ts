@@ -83,3 +83,15 @@ for (const [key, value] of personData.entries()) {
 }
 
 console.log(personData.size);
+
+// Weak set
+
+let person: { name: string; age: number } | null = {
+  name: 'Sriram',
+  age: 24
+};
+
+const weekStorage = new WeakSet();
+weekStorage.add(person);
+person = null; // This will lead JS to garbage collect eventhough weekStorage has reference to it.
+console.log(weekStorage);
