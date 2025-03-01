@@ -3,7 +3,31 @@ const addMovieBtn = document.getElementById(
 ) as HTMLButtonElement;
 const searchBtn = document.getElementById('search-btn') as HTMLButtonElement;
 
-const allMovies = [];
+interface MovieItem {
+  id: string;
+  info: {
+    title: string;
+    [key: string]: string;
+  };
+}
+
+const allMovies: Array<MovieItem> = [];
+
+const renderMovies: () => void = () => {
+  const movieList = document.getElementById('movie-list') as HTMLUListElement;
+  if (allMovies.length === 0) {
+    movieList.classList.remove('visible');
+    return;
+  } else {
+    movieList.classList.add('visible');
+  }
+  movieList.innerHTML = '';
+  allMovies.forEach(movie => {
+    const movieEl = document.createElement('li');
+    movieEl.textContent = movie.info.title;
+    movieList.appendChild(movieEl);
+  });
+};
 
 const addMovieClickHandler: () => void = () => {
   const title = (document.getElementById('title') as HTMLInputElement).value;
@@ -16,8 +40,8 @@ const addMovieClickHandler: () => void = () => {
   if (title === '' || extraName === '' || extraValue === '') {
     return;
   }
-  const movie = {
-    id: Math.random(),
+  const movie: MovieItem = {
+    id: Math.random().toString(),
     info: {
       title: title,
       [extraName]: extraValue
@@ -25,6 +49,7 @@ const addMovieClickHandler: () => void = () => {
   };
   allMovies.push(movie);
   console.log(movie);
+  renderMovies();
 };
 
 addMovieBtn.addEventListener('click', addMovieClickHandler);
