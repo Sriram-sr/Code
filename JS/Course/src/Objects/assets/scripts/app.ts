@@ -13,7 +13,7 @@ interface MovieItem {
 
 const allMovies: Array<MovieItem> = [];
 
-const renderMovies: () => void = () => {
+const renderMovies: (filter?: string) => void = (filter = '') => {
   const movieList = document.getElementById('movie-list') as HTMLUListElement;
   if (allMovies.length === 0) {
     movieList.classList.remove('visible');
@@ -22,9 +22,22 @@ const renderMovies: () => void = () => {
     movieList.classList.add('visible');
   }
   movieList.innerHTML = '';
-  allMovies.forEach(movie => {
+  const filteredMovies = !filter
+    ? allMovies
+    : allMovies.filter(movie =>
+        movie.info.title.toLowerCase().includes(filter)
+      );
+  filteredMovies.forEach(movie => {
     const movieEl = document.createElement('li');
-    movieEl.textContent = movie.info.title;
+    let text = movie.info.title + ' -';
+    for (const key in movie.info) {
+      if (key !== 'title') {
+        text += `
+         ${key}: ${movie.info[key]}
+        `;
+      }
+    }
+    movieEl.textContent = text;
     movieList.appendChild(movieEl);
   });
 };
@@ -43,13 +56,20 @@ const addMovieClickHandler: () => void = () => {
   const movie: MovieItem = {
     id: Math.random().toString(),
     info: {
-      title: title,
+      title,
       [extraName]: extraValue
     }
   };
   allMovies.push(movie);
-  console.log(movie);
   renderMovies();
 };
 
+const searchMovieHandler: () => void = () => {
+  const searchString = document.getElementById(
+    'filter-title'
+  ) as HTMLInputElement;
+  renderMovies(searchString.value.toLowerCase());
+};
+
 addMovieBtn.addEventListener('click', addMovieClickHandler);
+searchBtn.addEventListener('click', searchMovieHandler);
