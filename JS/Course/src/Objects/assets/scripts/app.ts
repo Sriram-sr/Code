@@ -61,6 +61,7 @@ const addMovieClickHandler: () => void = () => {
     }
   };
   allMovies.push(movie);
+  console.log(movie);
   renderMovies();
 };
 
