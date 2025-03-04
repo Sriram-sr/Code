@@ -9,6 +9,7 @@ interface MovieItem {
     title: string;
     [key: string]: string;
   };
+  getFormattedTitle: () => string;
 }
 
 const allMovies: Array<MovieItem> = [];
@@ -29,11 +30,16 @@ const renderMovies: (filter?: string) => void = (filter = '') => {
       );
   filteredMovies.forEach(movie => {
     const movieEl = document.createElement('li');
-    let text = movie.info.title + ' -';
-    for (const key in movie.info) {
+    let { info, getFormattedTitle } = movie;
+    getFormattedTitle = getFormattedTitle.bind(movie);
+    if ('title' in info) {
+      console.log(info.title);
+    }
+    let text = getFormattedTitle() + ' -';
+    for (const key in info) {
       if (key !== 'title') {
         text += `
-         ${key}: ${movie.info[key]}
+         ${key}: ${info[key]}
         `;
       }
     }
@@ -58,10 +64,13 @@ const addMovieClickHandler: () => void = () => {
     info: {
       title,
       [extraName]: extraValue
+    },
+    getFormattedTitle: function () {
+      console.log(`This is ${this}`);
+      return this.info.title.toUpperCase();
     }
   };
   allMovies.push(movie);
-  console.log(movie);
   renderMovies();
 };
 
