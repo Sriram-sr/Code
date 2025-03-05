@@ -36,6 +36,7 @@ const renderMovies: (filter?: string) => void = (filter = '') => {
       console.log(info.title);
     }
     let text = getFormattedTitle() + ' -';
+    // let text = getFormattedTitle.call(movie) + ' -';
     for (const key in info) {
       if (key !== 'title') {
         text += `
