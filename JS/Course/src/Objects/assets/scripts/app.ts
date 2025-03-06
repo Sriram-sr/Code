@@ -38,7 +38,7 @@ const renderMovies: (filter?: string) => void = (filter = '') => {
     let text = getFormattedTitle() + ' -';
     // let text = getFormattedTitle.call(movie) + ' -';
     for (const key in info) {
-      if (key !== 'title') {
+      if (key !== 'title' && key !== '_title') {
         text += `
          ${key}: ${info[key]}
         `;
@@ -63,7 +63,16 @@ const addMovieClickHandler: () => void = () => {
   const movie: MovieItem = {
     id: Math.random().toString(),
     info: {
-      title,
+      get title() {
+        return this._title;
+      },
+      set title(val: string) {
+        if (val.trim() === '') {
+          this._title = 'DEFAULT';
+          return;
+        }
+        this._title = val;
+      },
       [extraName]: extraValue
     },
     getFormattedTitle: function () {
@@ -71,6 +80,8 @@ const addMovieClickHandler: () => void = () => {
       return this.info.title.toUpperCase();
     }
   };
+  movie.info.title = title;
+  console.log(movie.info.title);
   allMovies.push(movie);
   renderMovies();
 };
