@@ -15,6 +15,10 @@ class Product {
 class ShoppingCart {
   items = [];
 
+  addProduct(product: Product) {
+    console.log('Adding!', product);
+  }
+
   render() {
     const cartElement = document.createElement('section');
     cartElement.innerHTML = `
@@ -34,8 +38,7 @@ class ProductItem {
   }
 
   addToCart() {
-    console.log('Adding product to cart');
-    console.log(this.product);
+    App.addProductToCart(this.product);
   }
 
   render() {
@@ -92,19 +95,28 @@ class ProductList {
 }
 
 class Shop {
+  cart: ShoppingCart | null = null;
+
   render() {
     const renderHook = document.getElementById('app') as HTMLDivElement;
-    const cart = new ShoppingCart();
+    this.cart = new ShoppingCart();
     const productList = new ProductList();
-    renderHook.appendChild(cart.render());
+    renderHook.appendChild(this.cart.render());
     renderHook.appendChild(productList.render());
   }
 }
 
 class App {
+  static cart: ShoppingCart | null = null;
+
   static init() {
     const shop = new Shop();
     shop.render();
+    this.cart = shop.cart;
+  }
+
+  static addProductToCart(product: Product) {
+    this.cart?.addProduct(product);
   }
 }
 
