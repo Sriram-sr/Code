@@ -13,10 +13,25 @@ class Product {
 }
 
 class ShoppingCart {
-  items = [];
+  items: Array<Product> = [];
+  totalOutput: HTMLHeadingElement | null = null;
+
+  set cartItems(value: Array<Product>) {
+    this.items = value;
+    this.totalOutput!.innerHTML = `<h2>Total: ${this.totalAmount}</h2>`;
+  }
+
+  get totalAmount() {
+    return this.items.reduce(
+      (prevVal, currItem) => prevVal + currItem.price,
+      0
+    );
+  }
 
   addProduct(product: Product) {
-    console.log('Adding!', product);
+    const updatedItems = [...this.items];
+    updatedItems.push(product);
+    this.cartItems = updatedItems;
   }
 
   render() {
@@ -26,6 +41,7 @@ class ShoppingCart {
     <button>Order Now!</button>
     `;
     cartElement.className = 'cart';
+    this.totalOutput = cartElement.querySelector('h2') as HTMLHeadingElement;
     return cartElement;
   }
 }
