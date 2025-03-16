@@ -143,8 +143,9 @@ class ProductList extends Component {
   ];
 
   render() {
-    const productListElement = this.createRootElement('ul', 'product-list');
-    productListElement.id = 'prod-list';
+    const productListElement = this.createRootElement('ul', 'product-list', [
+      new ElementAttribute('id', 'prod-list')
+    ]);
     for (const product of this.products) {
       const productItem = new ProductItem(product, productListElement.id);
       productItem.render();
@@ -155,8 +156,11 @@ class ProductList extends Component {
 class Shop {
   cart: ShoppingCart | null = null;
 
+  constructor() {
+    this.render();
+  }
+
   render() {
-    // const renderHook = document.getElementById('app') as HTMLDivElement;
     this.cart = new ShoppingCart('app');
     const productList = new ProductList('app');
     this.cart.render();
@@ -169,7 +173,6 @@ class App {
 
   static init() {
     const shop = new Shop();
-    shop.render();
     this.cart = shop.cart;
   }
 
