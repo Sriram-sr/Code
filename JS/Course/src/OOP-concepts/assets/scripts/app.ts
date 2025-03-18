@@ -128,7 +128,7 @@ class ProductList extends Component {
     super(renderHookId);
   }
 
-  products = [
+  #products = [
     new Product(
       'Footwear',
       'A footwear of your choice!',
@@ -153,7 +153,7 @@ class ProductList extends Component {
     const productListElement = this.createRootElement('ul', 'product-list', [
       new ElementAttribute('id', 'prod-list')
     ]);
-    for (const product of this.products) {
+    for (const product of this.#products) {
       const productItem = new ProductItem(product, productListElement.id);
       productItem.render();
     }
