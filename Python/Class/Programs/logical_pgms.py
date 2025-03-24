@@ -126,6 +126,7 @@ def are_anagrams(str1, str2):
 
     return True
 
+
 # print(are_anagrams("Anagram", "Nag a Ram"))
 
 # Sum of digits
@@ -149,4 +150,23 @@ def get_sum_of_digits(number):
 
     # return sum((int(char) for char in str(number)))
 
+
 print(get_sum_of_digits(987))
+
+
+def get_first_digit(number):
+    first_digit = -1
+
+    while number > 0:
+        first_digit = number % 10
+        number //= 10
+
+    return first_digit
+
+    # Approach 2
+
+    # return int(str(number)[0])
+
+
+input_val = 7173
+print(get_first_digit(input_val))
