@@ -44,6 +44,13 @@ console.log(Person.prototype);
 console.log(firstPerson.__proto__);
 console.log(Person.prototype === firstPerson.__proto__);
 
+console.dir(Object);
+console.log(Object.prototype); // Will be used as a fallback object for any object
+console.log(Object.prototype.__proto__); // Null (Prototype chain ends)
+
+console.log('Printing object');
+console.log(firstPerson);
+
 const secondPerson = new Person();
 console.log(firstPerson.__proto__ === secondPerson.__proto__); // since all objects have same fallback object
 
