@@ -13,11 +13,61 @@ class DOMHelper {
   }
 }
 
-class Tooltip {}
+class CoreComponent {
+  element: HTMLDivElement | null = null;
+  hostElement: HTMLElement;
+  insertBefore: boolean;
+
+  constructor(hostElementId?: string, inserBefore = false) {
+    if (hostElementId) {
+      this.hostElement = document.getElementById(hostElementId) as HTMLElement;
+    } else {
+      this.hostElement = document.body;
+    }
+    this.insertBefore = inserBefore;
+  }
+
+  detach() {
+    if (this.element) {
+      this.element?.remove();
+    }
+  }
+
+  attach() {
+    this.hostElement.insertAdjacentElement(
+      this.insertBefore ? 'afterbegin' : 'beforeend',
+      this.element!
+    );
+  }
+}
+
+class Tooltip extends CoreComponent {
+  closeNotifier: VoidFunction;
+
+  constructor(closeNotifierFunction: VoidFunction) {
+    super();
+    this.closeNotifier = closeNotifierFunction;
+    this.create();
+  }
+
+  closeTooltip() {
+    this.detach();
+    this.closeNotifier();
+  }
+
+  create() {
+    const tooltipElement = document.createElement('div');
+    tooltipElement.className = 'card';
+    tooltipElement.textContent = 'Dummy Tooltip';
+    tooltipElement.addEventListener('click', this.closeTooltip.bind(this));
+    this.element = tooltipElement;
+  }
+}
 
 class ProjectItem {
   id: string;
   updateProjectsListHandler: (projectId: string) => void;
+  hasActiveTooltip = false;
 
   constructor(
     id: string,
@@ -30,7 +80,29 @@ class ProjectItem {
     this.connectSwitchButton(projectType);
   }
 
-  connectMoreInfoButton() {}
+  showMoreInfoHandler() {
+    if (this.hasActiveTooltip) {
+      return;
+    }
+    const tooltip = new Tooltip(() => {
+      this.hasActiveTooltip = false;
+    });
+    tooltip.attach();
+    this.hasActiveTooltip = true;
+  }
+
+  connectMoreInfoButton() {
+    const projectItemElement = document.getElementById(
+      this.id
+    ) as HTMLLIElement;
+    const moreInfoButton = projectItemElement?.querySelector(
+      'button:first-of-type'
+    ) as HTMLButtonElement;
+    moreInfoButton.addEventListener(
+      'click',
+      this.showMoreInfoHandler.bind(this)
+    );
+  }
 
   connectSwitchButton(projectType: string) {
     const projectItemElement = document.getElementById(
