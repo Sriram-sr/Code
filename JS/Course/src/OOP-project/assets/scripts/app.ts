@@ -43,10 +43,12 @@ class CoreComponent {
 
 class Tooltip extends CoreComponent {
   closeNotifier: VoidFunction;
+  text: string;
 
-  constructor(closeNotifierFunction: VoidFunction) {
+  constructor(closeNotifierFunction: VoidFunction, text: string) {
     super();
     this.closeNotifier = closeNotifierFunction;
+    this.text = text;
     this.create();
   }
 
@@ -58,7 +60,7 @@ class Tooltip extends CoreComponent {
   create() {
     const tooltipElement = document.createElement('div');
     tooltipElement.className = 'card';
-    tooltipElement.textContent = 'Dummy Tooltip';
+    tooltipElement.textContent = this.text;
     tooltipElement.addEventListener('click', this.closeTooltip.bind(this));
     this.element = tooltipElement;
   }
@@ -84,9 +86,11 @@ class ProjectItem {
     if (this.hasActiveTooltip) {
       return;
     }
+    const projectElement = document.getElementById(this.id) as HTMLLIElement;
+    const tooltipText = projectElement.dataset.extraInfo;
     const tooltip = new Tooltip(() => {
       this.hasActiveTooltip = false;
-    });
+    }, tooltipText!);
     tooltip.attach();
     this.hasActiveTooltip = true;
   }
