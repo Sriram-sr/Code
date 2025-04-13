@@ -1,6 +1,7 @@
 class DOMHelper {
   static moveElement(elementId: string, newDestinationSelector: string) {
     const element = document.getElementById(elementId) as HTMLElement;
+    console.log(element.getBoundingClientRect());
     const destinationElement = document.querySelector(newDestinationSelector);
     destinationElement?.appendChild(element);
   }
@@ -45,8 +46,12 @@ class Tooltip extends CoreComponent {
   closeNotifier: VoidFunction;
   text: string;
 
-  constructor(closeNotifierFunction: VoidFunction, text: string) {
-    super();
+  constructor(
+    closeNotifierFunction: VoidFunction,
+    text: string,
+    hostElementId: string
+  ) {
+    super(hostElementId);
     this.closeNotifier = closeNotifierFunction;
     this.text = text;
     this.create();
@@ -61,6 +66,19 @@ class Tooltip extends CoreComponent {
     const tooltipElement = document.createElement('div');
     tooltipElement.className = 'card';
     tooltipElement.textContent = this.text;
+
+    const hostElementPosLeft = this.hostElement.offsetLeft;
+    const hostElementPosTop = this.hostElement.offsetTop;
+    const hostElementHeight = this.hostElement.clientHeight;
+    const parentElementScrolling = this.hostElement.parentElement?.scrollTop;
+
+    const x = hostElementPosLeft + 20;
+    const y =
+      hostElementPosTop + hostElementHeight - parentElementScrolling! - 10;
+    tooltipElement.style.position = 'absolute';
+    tooltipElement.style.left = x + 'px';
+    tooltipElement.style.top = y + 'px';
+
     tooltipElement.addEventListener('click', this.closeTooltip.bind(this));
     this.element = tooltipElement;
   }
@@ -88,9 +106,13 @@ class ProjectItem {
     }
     const projectElement = document.getElementById(this.id) as HTMLLIElement;
     const tooltipText = projectElement.dataset.extraInfo;
-    const tooltip = new Tooltip(() => {
-      this.hasActiveTooltip = false;
-    }, tooltipText!);
+    const tooltip = new Tooltip(
+      () => {
+        this.hasActiveTooltip = false;
+      },
+      tooltipText!,
+      this.id
+    );
     tooltip.attach();
     this.hasActiveTooltip = true;
   }
