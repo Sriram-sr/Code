@@ -4,6 +4,7 @@ class DOMHelper {
     console.log(element.getBoundingClientRect());
     const destinationElement = document.querySelector(newDestinationSelector);
     destinationElement?.appendChild(element);
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 
   static clearEventListeners(element: HTMLElement) {
@@ -65,7 +66,13 @@ class Tooltip extends CoreComponent {
   create() {
     const tooltipElement = document.createElement('div');
     tooltipElement.className = 'card';
-    tooltipElement.textContent = this.text;
+    // Working with template tag
+    const tooltipTemplate = document.getElementById(
+      'tooltip'
+    ) as HTMLTemplateElement;
+    const tooltipBody = document.importNode(tooltipTemplate.content, true);
+    tooltipBody.querySelector('p')!.textContent = this.text;
+    tooltipElement.appendChild(tooltipBody);
 
     const hostElementPosLeft = this.hostElement.offsetLeft;
     const hostElementPosTop = this.hostElement.offsetTop;
@@ -208,6 +215,17 @@ class ProjectApp {
     finishedProjects.setSwitchHandler(
       activeProjects.addProject.bind(activeProjects)
     );
+    document
+      .getElementById('start-analytics-btn')
+      ?.addEventListener('click', this.startAnalytics);
+  }
+
+  static startAnalytics() {
+    // Dynamic script import
+    const analyticsScript = document.createElement('script');
+    analyticsScript.src = 'assets/scripts/analytics.js';
+    analyticsScript.defer = true;
+    document.head.appendChild(analyticsScript);
   }
 }
 
