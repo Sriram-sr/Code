@@ -215,9 +215,13 @@ class ProjectApp {
     finishedProjects.setSwitchHandler(
       activeProjects.addProject.bind(activeProjects)
     );
+    setTimeout(this.startAnalytics, 3000);
+    const intervalId = setInterval(() => {
+      console.log('Sending analytics data...');
+    }, 2000);
     document
-      .getElementById('start-analytics-btn')
-      ?.addEventListener('click', this.startAnalytics);
+      .getElementById('stop-analytics-btn')
+      ?.addEventListener('click', clearInterval.bind(null, intervalId));
   }
 
   static startAnalytics() {
