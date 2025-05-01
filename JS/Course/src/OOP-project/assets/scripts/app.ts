@@ -105,6 +105,7 @@ class ProjectItem {
     this.updateProjectsListHandler = updateProjectsListFunction;
     this.connectMoreInfoButton();
     this.connectSwitchButton(projectType);
+    this.connectDrag();
   }
 
   showMoreInfoHandler() {
@@ -154,6 +155,15 @@ class ProjectItem {
     );
   }
 
+  connectDrag() {
+    document.getElementById(this.id)?.addEventListener('dragstart', event => {
+      const dragEvent = event as DragEvent;
+      dragEvent.dataTransfer?.setData('text/plain', this.id);
+      dragEvent.dataTransfer!.effectAllowed = 'move';
+      console.log(dragEvent.dataTransfer);
+    });
+  }
+
   update(
     updateProjectListsFunction: (projectId: string) => void,
     projectType: string
@@ -182,6 +192,7 @@ class ProjectList {
         )
       );
     }
+    this.connectDroppable();
   }
 
   setSwitchHandler(switchHandlerFunction: (_project: ProjectItem) => void) {
@@ -203,6 +214,20 @@ class ProjectList {
     );
     this.projects.splice(projectIdx, 1);
   }
+
+  connectDroppable() {
+    const list = document.querySelector(
+      `#${this.projectType}-projects ul`
+    ) as HTMLUListElement;
+    list?.addEventListener('dragenter', event => {
+      const dragEvent = event as DragEvent;
+      console.log(dragEvent.dataTransfer?.types[0]);
+      if (dragEvent.dataTransfer?.types[0] === 'text/plain') {
+        dragEvent.preventDefault();
+        list.parentElement?.classList.add('droppable');
+      }
+    });
+  }
 }
 
 class ProjectApp {
@@ -215,6 +240,7 @@ class ProjectApp {
     finishedProjects.setSwitchHandler(
       activeProjects.addProject.bind(activeProjects)
     );
+    /**
     setTimeout(this.startAnalytics, 3000);
     const intervalId = setInterval(() => {
       console.log('Sending analytics data...');
@@ -222,6 +248,7 @@ class ProjectApp {
     document
       .getElementById('stop-analytics-btn')
       ?.addEventListener('click', clearInterval.bind(null, intervalId));
+     */
   }
 
   static startAnalytics() {
