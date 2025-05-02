@@ -95,3 +95,22 @@ const weekStorage = new WeakSet();
 weekStorage.add(person);
 person = null; // This will lead JS to garbage collect eventhough weekStorage has reference to it.
 console.log(weekStorage);
+
+// Factory functions & Closures
+
+let multiplier = 1.05;
+
+const createTaxCalculator = (taxValue: number) => {
+  return (amount: number) => {
+    console.log(multiplier); // Latest value will be referred
+    return amount * taxValue * multiplier;
+  };
+};
+
+const taxCalculator1 = createTaxCalculator(0.19);
+const taxCalculator2 = createTaxCalculator(0.23);
+
+multiplier = 1.1;
+
+console.log(taxCalculator1(100));
+console.log(taxCalculator2(2000));

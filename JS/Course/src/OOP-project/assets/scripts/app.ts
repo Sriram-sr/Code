@@ -160,7 +160,6 @@ class ProjectItem {
       const dragEvent = event as DragEvent;
       dragEvent.dataTransfer?.setData('text/plain', this.id);
       dragEvent.dataTransfer!.effectAllowed = 'move';
-      console.log(dragEvent.dataTransfer);
     });
   }
 
@@ -221,7 +220,6 @@ class ProjectList {
     ) as HTMLUListElement;
     list?.addEventListener('dragenter', event => {
       const dragEvent = event as DragEvent;
-      console.log(dragEvent.dataTransfer?.types[0]);
       if (dragEvent.dataTransfer?.types[0] === 'text/plain') {
         dragEvent.preventDefault();
         list.parentElement?.classList.add('droppable');
