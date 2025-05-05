@@ -114,3 +114,12 @@ multiplier = 1.1;
 
 console.log(taxCalculator1(100));
 console.log(taxCalculator2(2000));
+
+const powerOf: (num: number, pow: number) => number = (
+  num: number,
+  pow: number
+) => {
+  return pow === 1 ? num : num * powerOf(num, pow - 1);
+};
+
+console.log(powerOf(2, 4));
