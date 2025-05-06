@@ -2,6 +2,10 @@ const ulListElement = document.querySelector('.posts') as HTMLUListElement;
 const postTemplate = document.getElementById(
   'single-post'
 ) as HTMLTemplateElement;
+const formElement = document.querySelector('#new-post form') as HTMLFormElement;
+const fetchButton = document.querySelector(
+  '#available-posts button'
+) as HTMLButtonElement;
 
 interface Post {
   userId: number;
@@ -10,10 +14,11 @@ interface Post {
   body: string;
 }
 
-const sendHttpRequest: (method: string, url: string) => Promise<string> = (
+const sendHttpRequest: (
   method: string,
-  url: string
-) => {
+  url: string,
+  data?: object
+) => Promise<string> = (method, url, data?) => {
   const promise = new Promise<string>((resolve, _reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
@@ -22,7 +27,7 @@ const sendHttpRequest: (method: string, url: string) => Promise<string> = (
       resolve(xhr.response);
     };
 
-    xhr.send();
+    xhr.send(JSON.stringify(data));
   });
 
   return promise;
@@ -44,4 +49,26 @@ const fetchPosts: () => void = () => {
     });
 };
 
-fetchPosts();
+const createPost: (title: string, content: string) => void = (
+  title,
+  content
+) => {
+  const userId = Math.random();
+  const post = {
+    title,
+    content,
+    userId
+  };
+
+  sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
+};
+
+fetchButton.addEventListener('click', fetchPosts);
+formElement.addEventListener('submit', event => {
+  event.preventDefault();
+  const titleElement = formElement.querySelector('#title') as HTMLInputElement;
+  const contentElement = formElement.querySelector(
+    '#content'
+  ) as HTMLInputElement;
+  createPost(titleElement.value, contentElement.value);
+});
