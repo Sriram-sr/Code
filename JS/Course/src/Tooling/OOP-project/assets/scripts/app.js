@@ -1,26 +1,32 @@
-import { ProjectList } from './App/ProjectList.js';
-class ProjectApp {
-    static init() {
-        const activeProjects = new ProjectList('active');
-        const finishedProjects = new ProjectList('finished');
-        activeProjects.setSwitchHandler(finishedProjects.addProject.bind(finishedProjects));
-        finishedProjects.setSwitchHandler(activeProjects.addProject.bind(activeProjects));
-        /**
-        setTimeout(this.startAnalytics, 3000);
-        const intervalId = setInterval(() => {
-          console.log('Sending analytics data...');
-        }, 2000);
-        document
-          .getElementById('stop-analytics-btn')
-          ?.addEventListener('click', clearInterval.bind(null, intervalId));
-         */
-    }
-    static startAnalytics() {
-        // Dynamic script import
-        const analyticsScript = document.createElement('script');
-        analyticsScript.src = 'assets/scripts/Utility/Analytics.js';
-        analyticsScript.defer = true;
-        document.head.appendChild(analyticsScript);
-    }
-}
-ProjectApp.init();
+                                                                                                                               /*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/app.js":
+/*!********************!*\
+  !*** ./src/app.js ***!
+  \********************/
+/***/ (() => {
+
+eval("throw new Error(\"Module parse failed: 'import' and 'export' may appear only with 'sourceType: module' (1:0)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n> import { ProjectList } from './App/ProjectList.js';\\n| class ProjectApp {\\n|     static init() {\");\n\n//# sourceURL=webpack://vannila-js-tooling/./src/app.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./src/app.js"]();
+/******/ 	
+/******/ })()
+;
