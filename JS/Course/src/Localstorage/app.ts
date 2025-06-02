@@ -6,6 +6,9 @@ const retreiveBtn = document.getElementById(
 storeBtn.addEventListener('click', () => {
   //   localStorage.setItem('uId', '12345');
   sessionStorage.setItem('uId', '12345');
+
+  // Cookies
+  document.cookie = 'uid=u123';
 });
 
 retreiveBtn.addEventListener('click', () => {
@@ -16,4 +19,7 @@ retreiveBtn.addEventListener('click', () => {
   } else {
     console.log('Coud not get user Id from storage');
   }
+
+  // Cookies
+  console.log(document.cookie);
 });
