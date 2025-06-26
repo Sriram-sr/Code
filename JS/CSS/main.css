@@ -1,10 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
 }
 
+.main-header {
+  width: 100%;
+  background: #2ddf5c;
+  padding: 8px 16px;
+}
+
 #product-overview {
   background: #ff1b68;
+  height: 528px;
+  padding: 10px;
 }
 
 #product-overview h1 {
