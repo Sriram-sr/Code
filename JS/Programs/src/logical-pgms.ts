@@ -20,7 +20,7 @@ function isLeapYear(year: number): boolean {
   // return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
 }
 
-console.log(isLeapYear(1992));
+// console.log(isLeapYear(1992));
 
 /**
  * Program: Reverse a string
@@ -53,7 +53,7 @@ function reverseString(str: string): string {
   // return reversedText;
 }
 
-console.log(reverseString('hello'));
+// console.log(reverseString('hello'));
 
 /**
  * Program: Maximum Number in an Array
@@ -77,7 +77,7 @@ function findMaxNumber(numbers: Array<number>): number {
   return maxNumber;
 }
 
-console.log(findMaxNumber([5, 2, 9, 1, 5]));
+// console.log(findMaxNumber([5, 2, 9, 1, 5]));
 
 /**
  * Program: FizzBuzz
@@ -99,3 +99,18 @@ function fizzBuzz(): void {
 }
 
 // fizzBuzz();
+
+/**
+ * Program: Palindrome
+ *
+ */
+
+const isPalindrome: (text: string) => boolean = (text) => {
+  if (text === reverseString(text)) {
+    return true;
+  }
+
+  return false;
+}
+
+console.log(isPalindrome('racecar'));
