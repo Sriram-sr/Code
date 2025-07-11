@@ -113,4 +113,25 @@ const isPalindrome: (text: string) => boolean = (text) => {
   return false;
 }
 
-console.log(isPalindrome('racecar'));
+// console.log(isPalindrome('racecar'));
+
+
+/**
+ * Program: Counts the occurrences
+ *
+ */
+
+const getCounter: (text: string) => object = (text) => {
+  const counter = {};
+  for (const char of text) {
+    if (char in counter) {
+      counter[char] += 1;
+    } else {
+      counter[char] = 1;
+    }
+  }
+
+  return counter;
+};
+
+console.log(getCounter('programming'));
