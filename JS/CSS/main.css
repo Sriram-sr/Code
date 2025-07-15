@@ -15,12 +15,21 @@ body {
 
 .main-header > div {
   display: inline-block;
+  vertical-align: middle;
+}
+
+.main-header__brand {
+  color: #024f1f;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 22px;
 }
 
 .main-nav {
   display: inline-block;
   text-align: right;
-  width: calc(100% - 53px);
+  width: calc(100% - 73px);
+  vertical-align: middle;
 }
 
 .main-nav__items {
@@ -31,6 +40,12 @@ body {
 
 .main-nav__item {
   display: inline-block;
+  margin: 0 16px;
+}
+
+.main-nav__item a {
+  color: #024f1f;
+  text-decoration: none;
 }
 
 #product-overview {
