@@ -78,7 +78,7 @@ def get_recursive_factorial(num):
 
 
 # print(find_factorial(5))
-print(get_recursive_factorial(5))
+# print(get_recursive_factorial(5))
 
 
 # Find Maximum Element in a List
@@ -151,8 +151,9 @@ def get_sum_of_digits(number):
     # return sum((int(char) for char in str(number)))
 
 
-print(get_sum_of_digits(987))
+# print(get_sum_of_digits(987))
 
+# Get first digit
 
 def get_first_digit(number):
     first_digit = -1
@@ -169,4 +170,25 @@ def get_first_digit(number):
 
 
 input_val = 7173
-print(get_first_digit(input_val))
+# print(get_first_digit(input_val))
+
+# Raj box code
+
+def find_open_boxes(initial_open_boxes):
+    boxes = [1 for _ in range(initial_open_boxes)]
+    for _1 in range(1, len(boxes) + 1):
+        for box in range(_1, len(boxes) + 1, _1):
+            prev_state = boxes[box - 1]
+            if boxes[box - 1] == 0:
+                boxes[box - 1] = 1
+            else:
+                boxes[box - 1] = 0
+
+    open_boxes = 0
+    for state in boxes:
+        if state == 1:
+            open_boxes += 1
+
+    return open_boxes
+
+print(find_open_boxes(100))
