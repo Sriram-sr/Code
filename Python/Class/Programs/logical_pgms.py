@@ -192,3 +192,39 @@ def find_open_boxes(initial_open_boxes):
     return open_boxes
 
 print(find_open_boxes(100))
+
+# Matrix addition
+
+def add_matrices(matrix_1, matrix_2):
+    if not matrix_1 or not matrix_2 or not isinstance(matrix_1, list) or not isinstance(matrix_2, list) or not all(
+            isinstance(x, list) for x in matrix_1) or not all(isinstance(x, list) for x in matrix_2):
+        return 'Provide valid matrices'
+
+    matrix_1_rows = len(matrix_1)
+    matrix_2_rows = len(matrix_2)
+
+    if matrix_1_rows != matrix_2_rows:
+        return 'Matrix addition is not possible as the rows are not same for both matrices'
+
+    columns = len(matrix_1[0])
+    for row in matrix_1 + matrix_2:
+        if len(row) != columns:
+            return 'Not all columns are of same length in both matrices'
+
+    added_matrices = []
+    for row in range(len(matrix_1)):
+        temp_row = []
+        for col in range(columns):
+            temp_row.append(matrix_1[row][col] + matrix_2[row][col])
+        added_matrices.append(temp_row)
+
+    return added_matrices
+
+matrix_1 = [[1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]]
+matrix_2 = [[9, 8, 7],
+            [6, 2, 4],
+            [3, 2, 0]]
+
+print(add_matrices(matrix_1, matrix_2))
