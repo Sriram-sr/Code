@@ -42,6 +42,11 @@ public class Hello {
 		// Arrays
 
 		int[] numbers = { 1, 2, 3, 4, 5 };
+		int[] moreNumbers = new int[3];
+		moreNumbers[1] = 1000;
+		for (int idx = 0; idx < moreNumbers.length; idx++) {
+			System.out.println(moreNumbers[idx]);
+		}
 		System.out.println(numbers.length);
 		System.out.println(numbers[2]);
 
