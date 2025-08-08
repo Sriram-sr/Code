@@ -12,6 +12,8 @@ public class Hello {
 
 		final String constant = "Constant variable";
 		String stringVar = "String data type";
+		stringVar = stringVar + " And more";
+		System.out.println(stringVar);
 		int intVar = 8;
 		float floatVar = 7.6f;
 		boolean boolVar = false;
@@ -48,7 +50,9 @@ public class Hello {
 			System.out.println(moreNumbers[idx]);
 		}
 		System.out.println(numbers.length);
-		System.out.println(numbers[2]);
+		for (int num : numbers) {
+			System.out.println(num);
+		}
 
 		// Objects
 
