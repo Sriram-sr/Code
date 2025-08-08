@@ -12,16 +12,16 @@ public class Hello {
 
 		final String constant = "Constant variable";
 		String stringVar = "String data type";
-		stringVar = stringVar + " And more";
-		System.out.println(stringVar);
 		int intVar = 8;
+		byte byteVar = 125;
+		short shortVar = 998;
 		float floatVar = 7.6f;
 		boolean boolVar = false;
 		char charVar = 'k';
 		double doubVar = 9.766d;
 		int doubToIntVar = (int) doubVar; // Type casting
 		System.out.println(constant + " " + stringVar + " " + intVar + " " + floatVar + " " + boolVar + " " + charVar
-				+ " " + doubToIntVar);
+				+ " " + doubToIntVar + " " + byteVar + " " + shortVar);
 
 		// Switch statement
 
