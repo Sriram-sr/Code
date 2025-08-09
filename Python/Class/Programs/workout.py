@@ -77,8 +77,10 @@ def logging(num):
 
 logging(8)
 
+
 class Fish:
     pass
+
 
 class GrandParant:
     def __init__(self):
@@ -87,6 +89,7 @@ class GrandParant:
     def describe_grandpa(self):
         print('Grandpa')
 
+
 class Parent(GrandParant):
     def __init__(self):
         print('Parent class init')
@@ -94,12 +97,14 @@ class Parent(GrandParant):
     def describe_appa(self):
         print('Appa')
 
+
 class Student(Parent):
     def __init__(self):
         print('Student class init')
 
     def describe_student(self):
         print('Student')
+
 
 student = Student()
 print(isinstance(student, Fish))
