@@ -22,6 +22,9 @@ public class Hello {
 		int doubToIntVar = (int) doubVar; // Type casting
 		System.out.println(constant + " " + stringVar + " " + intVar + " " + floatVar + " " + boolVar + " " + charVar
 				+ " " + doubToIntVar + " " + byteVar + " " + shortVar);
+		StringBuffer newStr = new StringBuffer("Progress");
+		newStr.append(" is the key!");
+		System.out.println(newStr);
 
 		// Switch statement
 
