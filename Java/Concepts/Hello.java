@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
 class Calculator {
 	public int addition(int num1, int num2) {
 		return num1 + num2;
@@ -15,6 +18,7 @@ public class Hello {
 		int intVar = 8;
 		byte byteVar = 125;
 		short shortVar = 998;
+		long longVar = 8428259394L;
 		float floatVar = 7.6f;
 		boolean boolVar = false;
 		char charVar = 'k';
@@ -25,6 +29,23 @@ public class Hello {
 		StringBuffer newStr = new StringBuffer("Progress");
 		newStr.append(" is the key!");
 		System.out.println(newStr);
+
+		// Ternary operator
+		int marks = 75;
+		char grade = (marks >= 90) ? 'O' : (marks >= 80) ? 'A' : (marks >= 70) ? 'B' : (marks >= 60) ? 'C' : 'D';
+		System.out.println("Grade: " + grade);
+
+		// While... Do while loop
+		int count = 2;
+		while (count <= 1) {
+			System.out.println("While loop is running");
+			count += 1;
+		}
+
+		do {
+			System.out.println("Do while loop is running");
+			count += 1;
+		} while (count <= 1);
 
 		// Switch statement
 
@@ -48,6 +69,9 @@ public class Hello {
 
 		int[] numbers = { 1, 2, 3, 4, 5 };
 		int[] moreNumbers = new int[3];
+		boolean[] userChoices = new boolean[4];
+		System.out.println("Boolean Array!");
+		System.out.println(Arrays.toString(userChoices));
 		moreNumbers[1] = 1000;
 		for (int idx = 0; idx < moreNumbers.length; idx++) {
 			System.out.println(moreNumbers[idx]);
@@ -62,5 +86,12 @@ public class Hello {
 		Calculator calc = new Calculator();
 		int addOutput = calc.addition(4, 5);
 		System.out.println(addOutput);
+
+		// User Input
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter your name: ");
+		String username = scanner.nextLine();
+		System.out.println(username);
+		scanner.close();
 	}
 }

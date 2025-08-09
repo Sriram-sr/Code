@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class Computer {
     String processor;
     String operatingSystem;
@@ -13,10 +15,12 @@ class Computer {
         processor = processorName;
     }
 
+    // Getter
     public float getKernelVersion() {
         return kernelVersion;
     }
 
+    // Setter
     public void setKernelVersion(float value) {
         this.kernelVersion = value;
     }
