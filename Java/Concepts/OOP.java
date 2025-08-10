@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 class Computer {
     String processor;
     String operatingSystem;
@@ -28,6 +26,18 @@ class Computer {
     static String variant = "Laptop";
 }
 
+class Laptop extends Computer {
+    private String brand = "Lenovo";
+
+    public Laptop() {
+      super("Intel");
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+}
+
 public class OOP {
     public static void main(String[] args) {
         try {
@@ -44,5 +54,9 @@ public class OOP {
         macbook.operatingSystem = "MacOS";
         macbook.setKernelVersion(2.0f);
         System.out.println(macbook.getKernelVersion());
+
+        Laptop laptop = new Laptop();
+        System.out.println(laptop.getBrand());
+        System.out.println(laptop.getKernelVersion());
     }
 }

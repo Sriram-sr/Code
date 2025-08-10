@@ -25,10 +25,11 @@ public class Hello {
 		double doubVar = 9.766d;
 		int doubToIntVar = (int) doubVar; // Type casting
 		System.out.println(constant + " " + stringVar + " " + intVar + " " + floatVar + " " + boolVar + " " + charVar
-				+ " " + doubToIntVar + " " + byteVar + " " + shortVar);
+				+ " " + doubToIntVar + " " + byteVar + " " + shortVar + " " + longVar);
 		StringBuffer newStr = new StringBuffer("Progress");
 		newStr.append(" is the key!");
 		System.out.println(newStr);
+		System.out.println(stringVar.charAt(2));
 
 		// Ternary operator
 		int marks = 75;
