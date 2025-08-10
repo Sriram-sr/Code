@@ -30,6 +30,7 @@ public class Hello {
 		newStr.append(" is the key!");
 		System.out.println(newStr);
 		System.out.println(stringVar.charAt(2));
+		System.out.println(stringVar.substring(3)); // From idx 3 to end of string
 
 		// Ternary operator
 		int marks = 75;
@@ -93,6 +94,12 @@ public class Hello {
 		System.out.println("Enter your name: ");
 		String username = scanner.nextLine();
 		System.out.println(username);
+		String firstName = scanner.next();
+		String lastName = scanner.next();
+		System.out.println(firstName + " " + lastName);
 		scanner.close();
+
+		String toBeDeleted = "This string is to be deleted";
+		System.out.println(toBeDeleted.substring(7));
 	}
 }
