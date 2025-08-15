@@ -62,6 +62,16 @@ public class Programs {
         System.out.println(Arrays.toString(elements));
         System.out.println("Sum: " + sum);
 
+        // Program to take take integers till you get 10 and print them in the end
+        
+        String allIntegers = "";
+        
+        int inputNumber = 0;
+        while (inputNumber != 10) {
+            inputNumber = scanner.nextInt();
+            allIntegers += inputNumber + " ";
+        }
+        System.out.println(allIntegers);
         scanner.close();
     }
 }

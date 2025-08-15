@@ -3,6 +3,7 @@ class Computer {
     String operatingSystem;
     String memory;
     private float kernelVersion = 1.22f;
+    static String variant = "Laptop";
 
     static {
         System.out.println("Inside static block"); // Executes while class is loaded
@@ -23,7 +24,9 @@ class Computer {
         this.kernelVersion = value;
     }
 
-    static String variant = "Laptop";
+    public void getManufacturedYear() {
+        System.out.println("Manufactured in 2008");
+    }
 }
 
 class Laptop extends Computer {
@@ -35,6 +38,11 @@ class Laptop extends Computer {
 
     public String getBrand() {
         return brand;
+    }
+
+    @Override
+    public void getManufacturedYear() {
+        System.out.println("Manufactured in 2016");
     }
 }
 
@@ -58,5 +66,6 @@ public class OOP {
         Laptop laptop = new Laptop();
         System.out.println(laptop.getBrand());
         System.out.println(laptop.getKernelVersion());
+        laptop.getManufacturedYear();
     }
 }
