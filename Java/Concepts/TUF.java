@@ -1,5 +1,34 @@
 class Solution {
+    // Print last character of string
+    
+    public char lastChar(String s) {
+        return s.charAt(s.length() - 1);
+    }
+
+    // Print X N numbers of times
+
+    public void printX(int X, int N) {
+        if (N == 0) {
+            System.out.println("");
+            return;
+        }
+        for (int count = 0; count < N; count++) {
+            if (count == N - 1) {
+                System.out.println(X);
+            } else {
+                System.out.print(X + " ");
+            }
+        }
+    }
+
+    // Sum of first last element in array
+
+    public int sumOfFirstAndLast(int[] nums) {
+        return nums[0] + nums[nums.length - 1];
+    }
+
     // Switch case - Days of week
+
     public void whichWeekDay(int day) {
         switch (day) {
             case 1:
@@ -29,6 +58,7 @@ class Solution {
     }
 
     // If else marks
+
     public void studentGrade(int marks) {
         if (marks >= 90) {
             System.out.print("Grade A");
@@ -48,6 +78,10 @@ public class TUF {
     public static void main(String[] args) {
         Solution solution = new Solution();
         // solution.studentGrade(15);
-        solution.whichWeekDay(-8);
+        // solution.whichWeekDay(-8);
+        // int[] numbers = {2};
+        // System.out.println(solution.sumOfFirstAndLast(numbers));
+        // solution.printX(4, 2);
+        System.out.println(solution.lastChar("takeuforward"));
     }
 }
