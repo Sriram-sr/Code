@@ -101,5 +101,9 @@ public class Hello {
 
 		String toBeDeleted = "This string is to be deleted";
 		System.out.println(toBeDeleted.substring(7));
+
+		// Find square of number
+    
+		System.out.println(Math.pow(5, 2));
 	}
 }

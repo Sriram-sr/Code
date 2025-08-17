@@ -1,42 +1,43 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class Programs {
-    public static void main(String args[]) {
-        // Odd or Even
+class Solutions {
+    private Scanner scanner;
 
-        int number = 12;
-        if (number % 2 == 0) {
+    public Solutions() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    // Odd or Even
+
+    public void findOddOrEven(int num) {
+        if (num % 2 == 0) {
             System.out.println("Number is even");
         } else {
             System.out.println("Number is odd");
         }
+    }
 
-        // Find square of number
+    // Reverse a number
 
-        System.out.println(Math.pow(number, 2));
-
-        // Find last digit of a number
-
-        System.out.println(number % 10);
-
-        // Reverse a number
-
+    public int reverseNumber(int num) {
         int reversed = 0;
         int remainder = 0;
-        while (number >= 1) {
-            remainder = number % 10;
+        while (num >= 1) {
+            remainder = num % 10;
             reversed = (reversed * 10) + remainder;
-            number /= 10;
+            num /= 10;
         }
-        System.out.println(reversed);
 
-        // Greatest of three numbers
+        return reversed;
+    }
 
-        Scanner scanner = new Scanner(System.in);
-        int num1 = scanner.nextInt();
-        int num2 = scanner.nextInt();
-        int num3 = scanner.nextInt();
+    // Greatest of three numbers
+
+    public void findGreatestNumber() {
+        int num1 = this.scanner.nextInt();
+        int num2 = this.scanner.nextInt();
+        int num3 = this.scanner.nextInt();
 
         if (num1 > num2 && num1 > num3) {
             System.out.println("Num 1 is the greatest");
@@ -47,31 +48,65 @@ public class Programs {
         } else {
             System.out.println("No number is the greatest");
         }
+        this.scanner.close();
+    }
 
-        // Sum of elements
+    // Sum of elements in a array
 
-        int size = scanner.nextInt();
+    public int findSumOfArrayElements() {
+        int size = this.scanner.nextInt();
         int[] elements = new int[size];
         int sum = 0;
 
         for (int idx = 0; idx < size; idx++) {
-            elements[idx] = scanner.nextInt();
+            elements[idx] = this.scanner.nextInt();
             sum += elements[idx];
         }
 
         System.out.println(Arrays.toString(elements));
-        System.out.println("Sum: " + sum);
+        this.scanner.close();
 
-        // Program to take take integers till you get 10 and print them in the end
-        
+        return sum;
+    }
+
+    // Program to take take integers till you get 10 and print them in the end
+
+    public void takeInputAndDisplay() {
         String allIntegers = "";
-        
+
         int inputNumber = 0;
         while (inputNumber != 10) {
-            inputNumber = scanner.nextInt();
+            inputNumber = this.scanner.nextInt();
             allIntegers += inputNumber + " ";
         }
         System.out.println(allIntegers);
-        scanner.close();
+        this.scanner.close();
+    }
+
+    // Program to find the sum of digits
+
+    public int sumOfDigits(int num) {
+        int rem, digitsSum = 0;
+
+        while (num >= 1) {
+            rem = num % 10;
+            digitsSum += rem;
+            num /= 10;
+        }
+
+        return digitsSum;
+    }
+}
+
+public class Programs {
+    public static void main(String args[]) {
+
+        Solutions solutions = new Solutions();
+        // solutions.findOddOrEven(19);
+        // System.out.println(solutions.reverseNumber(271));
+        // solutions.findGreatestNumber();
+        // System.out.println(solutions.findSumOfArrayElements());
+        // solutions.takeInputAndDisplay();
+        System.out.println(solutions.sumOfDigits(271));
     }
 }
