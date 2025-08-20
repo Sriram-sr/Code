@@ -191,7 +191,7 @@ def find_open_boxes(initial_open_boxes):
 
     return open_boxes
 
-print(find_open_boxes(100))
+# print(find_open_boxes(100))
 
 # Matrix addition
 
@@ -227,4 +227,20 @@ matrix_2 = [[9, 8, 7],
             [6, 2, 4],
             [3, 2, 0]]
 
-print(add_matrices(matrix_1, matrix_2))
+# print(add_matrices(matrix_1, matrix_2))
+
+
+def get_last_digit(a, b):
+    base = 0
+    exponent = 0
+    try:
+        base = int(a)
+        exponent = int(b)
+    except ValueError:
+        return
+    power_value = base ** exponent
+
+    return power_value % 10
+
+
+print(get_last_digit('3', '10'))
