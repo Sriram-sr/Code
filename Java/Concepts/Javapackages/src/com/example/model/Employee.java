@@ -5,6 +5,10 @@ public class Employee {
     private String name;
     private int age;
 
+    String defaultVar = "Default access specifier";
+    public String publicVar = "Default access specifier";
+    protected String protectedVar = "Default access specifier";
+
     public Employee(int id, String name, int age) {
         this.id = id;
         this.name = name;
