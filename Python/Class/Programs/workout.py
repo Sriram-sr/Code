@@ -58,7 +58,7 @@ pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 # assert re.search(pattern, text)
 
-print(re.search(r'hello', 'Say hello world!'))
+# print(re.search(r'hello', 'Say hello world!'))
 
 
 def meta_func(func):
@@ -75,7 +75,7 @@ def logging(num):
     print(f'The number is {num}')
 
 
-logging(8)
+# logging(8)
 
 
 class Fish:
@@ -107,4 +107,24 @@ class Student(Parent):
 
 
 student = Student()
-print(isinstance(student, Fish))
+# print(isinstance(student, Fish))
+
+'''
+Write a program to print the below pattern
+        A
+        AB
+        ABC
+        ABCD
+        ABCDE
+'''
+
+
+def pattern_alphabets(n):
+    for row in range(1, n + 1):
+        alpha_val = 65
+        for col in range(1, row + 1):
+            print(chr(alpha_val), end = '')
+            alpha_val += 1
+        print()
+
+pattern_alphabets(5)
