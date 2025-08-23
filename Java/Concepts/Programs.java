@@ -96,6 +96,25 @@ class Solutions {
 
         return digitsSum;
     }
+
+    // Program to check whether a given number is Armstrong or not
+
+    public boolean isAmstrongNumber(int num) {
+        int length = String.valueOf(num).length();
+        int armstrongValue = 0;
+        int originalValue = num;
+        int remainder;
+        while (num > 0) {
+            remainder = num % 10;
+            armstrongValue += Math.pow(remainder, length);
+            num /= 10;
+        }
+        if (armstrongValue == originalValue) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 public class Programs {
@@ -107,6 +126,7 @@ public class Programs {
         // solutions.findGreatestNumber();
         // System.out.println(solutions.findSumOfArrayElements());
         // solutions.takeInputAndDisplay();
-        System.out.println(solutions.sumOfDigits(271));
+        // System.out.println(solutions.sumOfDigits(271));
+        System.out.println(solutions.isAmstrongNumber(1634));
     }
 }
