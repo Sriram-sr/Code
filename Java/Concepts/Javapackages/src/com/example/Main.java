@@ -15,6 +15,22 @@ class Database extends Employee {
     }
 }
 
+class NetworkBook {
+    final String author = "Willey";
+
+    public final void describeAuthor() { // Cannot override this method
+        System.out.println("Book by Willey");
+    }
+}
+
+class NetworkBookV2 extends NetworkBook {
+    String author = "Jim";
+
+    public void describeNewEdition() {
+        System.out.println("New edition by Jim");
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         Employee employee = new Employee(1, "Sriram", 25);
@@ -24,5 +40,8 @@ public class Main {
 
         Database data = new Database();
         data.getEmployeeData();
+
+        NetworkBookV2 nwbook = new NetworkBookV2();
+        nwbook.describeNewEdition();
     }
 }
