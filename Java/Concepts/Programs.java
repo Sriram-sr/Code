@@ -115,6 +115,28 @@ class Solutions {
 
         return false;
     }
+
+    // Given a positive integer n, count the number of digits in n that divide n
+    // evenly
+
+    public int evenlyDivides(int n) {
+        int originalValue = n;
+        int count = 0;
+        int rem;
+
+        while (n > 0) {
+            rem = n % 10;
+            n /= 10;
+            if (rem == 0) {
+                continue;
+            }
+            if (originalValue % rem == 0) {
+                count += 1;
+            }
+        }
+
+        return count;
+    }
 }
 
 public class Programs {
@@ -127,6 +149,7 @@ public class Programs {
         // System.out.println(solutions.findSumOfArrayElements());
         // solutions.takeInputAndDisplay();
         // System.out.println(solutions.sumOfDigits(271));
-        System.out.println(solutions.isAmstrongNumber(1634));
+        // System.out.println(solutions.isAmstrongNumber(1634));
+        System.out.println(solutions.evenlyDivides(8604020));
     }
 }
