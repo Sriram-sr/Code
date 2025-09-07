@@ -27,13 +27,17 @@ class Computer {
     public void getManufacturedYear() {
         System.out.println("Manufactured in 2008");
     }
+
+    public void getArchitecture() {
+        System.out.println("In parent computer!");
+    }
 }
 
 class Laptop extends Computer {
     private String brand = "Lenovo";
 
     public Laptop() {
-      super("Intel");
+        super("Intel");
     }
 
     public String getBrand() {
@@ -43,6 +47,10 @@ class Laptop extends Computer {
     @Override
     public void getManufacturedYear() {
         System.out.println("Manufactured in 2016");
+    }
+
+    public void getLapArchitecture() {
+        System.out.println("In child Laptop!");
     }
 }
 
@@ -67,5 +75,11 @@ public class OOP {
         System.out.println(laptop.getBrand());
         System.out.println(laptop.getKernelVersion());
         laptop.getManufacturedYear();
+
+        Computer lapIn25 = new Laptop(); // Implicitely its upcasting
+        // lapIn25.getLapArchitecture(); Will throw error since reference is Computer
+        Laptop lapOwnInstance = (Laptop) lapIn25; // Downcasting
+        lapOwnInstance.getLapArchitecture();
+        lapOwnInstance.getArchitecture();
     }
 }
