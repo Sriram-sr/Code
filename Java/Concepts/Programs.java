@@ -147,6 +147,41 @@ class Solutions {
             }
         }
     }
+
+    // Palindrome Number
+
+    public boolean isPalindrome(int n) {
+        int original = n;
+        int reversed = 0;
+        int remainder = 0;
+        while (n >= 1) {
+            remainder = n % 10;
+            reversed = (reversed * 10) + remainder;
+            n /= 10;
+        }
+
+        if (original == reversed) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // Return the Largest Digit in a Number
+
+    public int getLargest(int n) {
+        int largest = 0, rem;
+
+        while (n > 0) {
+            rem = n % 10;
+            if (rem > largest) {
+                largest = rem;
+            }
+            n /= 10;
+        }
+
+        return largest;
+    }
 }
 
 public class Programs {
@@ -160,6 +195,7 @@ public class Programs {
         // System.out.println(solutions.sumOfDigits(271));
         // System.out.println(solutions.isAmstrongNumber(1634));
         // System.out.println(solutions.evenlyDivides(8604020));
-        solutions.printPairSum(new int[] { 2, 9, 4, -1, 8, 5 });
+        // solutions.printPairSum(new int[] { 2, 9, 4, -1, 8, 5 });
+        System.out.println(solutions.getLargest(99));
     }
 }
