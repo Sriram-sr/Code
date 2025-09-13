@@ -186,18 +186,36 @@ class Solutions {
     // Check for Perfect Number
 
     public boolean isPerfect(int n) {
-        int perfectNumber = 0;
-        for (int ele = 1; ele < n; ele++) {
-            if (n % ele == 0) {
-                perfectNumber += ele;
+        // Brute-force
+
+        /*
+         * int perfectNumber = 0;
+         * for (int ele = 1; ele < n; ele++) {
+         * if (n % ele == 0) {
+         * perfectNumber += ele;
+         * }
+         * }
+         * 
+         * if (n == perfectNumber) {
+         * return true;
+         * }
+         * 
+         * return false;
+         * 
+         */
+
+        // Optimised
+
+        int perfectNum = n != 1 ? 1: 0;
+
+        for (int ele = 2; ele * ele <= n; ele++) {
+            if (n % ele == 0 && n / ele != ele) {
+                perfectNum += ele;
+                perfectNum += n / ele;
             }
         }
 
-        if (n == perfectNumber) {
-            return true;
-        }
-
-        return false;
+        return perfectNum == n;
     }
 }
 
@@ -214,6 +232,6 @@ public class Programs {
         // System.out.println(solutions.evenlyDivides(8604020));
         // solutions.printPairSum(new int[] { 2, 9, 4, -1, 8, 5 });
         // System.out.println(solutions.getLargest(99));
-        System.out.println(solutions.isPerfect(28));
+        System.out.println(solutions.isPerfect(1));
     }
 }
