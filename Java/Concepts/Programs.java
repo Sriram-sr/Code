@@ -260,6 +260,21 @@ class Solutions {
 
         return count;
     }
+
+    // GCD of Two Numbers
+
+    public int gcdOfTwoNumbers(int n1, int n2) {
+        int gcd = 1;
+        int min = n1 < n2 ? n1 : n2;
+
+        for (int ele = 1; ele <= min; ele++) {
+            if (n1 % ele == 0 && n2 % ele == 0) {
+                gcd = ele;
+            }
+        }
+
+        return gcd;
+    }
 }
 
 public class Programs {
@@ -277,6 +292,7 @@ public class Programs {
         // System.out.println(solutions.getLargest(99));
         // System.out.println(solutions.isPerfect(1));
         // System.out.println(Solutions.isPrime(16));
-        System.out.println(solutions.countPrimeNumbers(10));
+        // System.out.println(solutions.countPrimeNumbers(10));
+        System.out.println(solutions.gcdOfTwoNumbers(40, 39));
     }
 }
