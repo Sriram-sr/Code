@@ -1,5 +1,19 @@
 package OOP;
 
+abstract class Shape {
+    public void getColour() {
+        System.out.println("Colour of the shape!");
+    }
+
+    public abstract void getArea();
+}
+
+class Square extends Shape {
+    public void getArea() {
+        System.out.println("Area is side X side");
+    }
+}
+
 // Run time polymorphism or Dyanmic method dispatch example
 
 class Computer {
@@ -30,5 +44,8 @@ public class OverridingDemo {
 
         Computer trueGadget = new Smartphone();
         trueGadget.sayHello();
+
+        Shape square = new Square();
+        square.getArea();
     }
 }
