@@ -206,7 +206,7 @@ class Solutions {
 
         // Optimised
 
-        int perfectNum = n != 1 ? 1: 0;
+        int perfectNum = n != 1 ? 1 : 0;
 
         for (int ele = 2; ele * ele <= n; ele++) {
             if (n % ele == 0 && n / ele != ele) {
@@ -216,6 +216,49 @@ class Solutions {
         }
 
         return perfectNum == n;
+    }
+
+    // Check for Prime Number
+
+    public static boolean isPrime(int n) {
+        // Brute-force
+
+        // if (n == 1) {
+        // return false;
+        // }
+        // for (int i = 2; i < n; i++) {
+        // if (n % i == 0) {
+        // return false;
+        // }
+        // }
+        // return true;
+
+        // Optimised
+
+        if (n == 1) {
+            return false;
+        }
+
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Count of Prime Numbers till N
+
+    public int countPrimeNumbers(int n) {
+        int count = 0;
+
+        for (int i = 2; i <= n; i++) {
+            if (Solutions.isPrime(i)) {
+                count += 1;
+            }
+        }
+
+        return count;
     }
 }
 
@@ -232,6 +275,8 @@ public class Programs {
         // System.out.println(solutions.evenlyDivides(8604020));
         // solutions.printPairSum(new int[] { 2, 9, 4, -1, 8, 5 });
         // System.out.println(solutions.getLargest(99));
-        System.out.println(solutions.isPerfect(1));
+        // System.out.println(solutions.isPerfect(1));
+        // System.out.println(Solutions.isPrime(16));
+        System.out.println(solutions.countPrimeNumbers(10));
     }
 }
