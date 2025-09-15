@@ -275,6 +275,21 @@ class Solutions {
 
         return gcd;
     }
+
+    // Power Of Numbers
+
+    public int powerOfNumbers(int n) {
+        int originalNum = n;
+        int rem, power = 0;
+
+        while (n > 0) {
+            rem = n % 10;
+            power = power * 10 + rem;
+            n /= 10;
+        }
+
+        return (int) Math.pow(originalNum, power);
+    }
 }
 
 public class Programs {
@@ -293,6 +308,7 @@ public class Programs {
         // System.out.println(solutions.isPerfect(1));
         // System.out.println(Solutions.isPrime(16));
         // System.out.println(solutions.countPrimeNumbers(10));
-        System.out.println(solutions.gcdOfTwoNumbers(40, 39));
+        // System.out.println(solutions.gcdOfTwoNumbers(40, 39));
+        System.out.println(solutions.powerOfNumbers(30));
     }
 }
