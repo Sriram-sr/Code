@@ -264,16 +264,30 @@ class Solutions {
     // GCD of Two Numbers
 
     public int gcdOfTwoNumbers(int n1, int n2) {
-        int gcd = 1;
-        int min = n1 < n2 ? n1 : n2;
+        // Brute-force
 
-        for (int ele = 1; ele <= min; ele++) {
-            if (n1 % ele == 0 && n2 % ele == 0) {
-                gcd = ele;
+        // int gcd = 1;
+        // int min = n1 < n2 ? n1 : n2;
+
+        // for (int ele = 1; ele <= min; ele++) {
+        // if (n1 % ele == 0 && n2 % ele == 0) {
+        // gcd = ele;
+        // }
+        // }
+
+        // return gcd;
+
+        // Optimised
+
+        while (n1 != 0 && n2 != 0) {
+            if (n1 > n2) {
+                n1 = n1 % n2;
+            } else {
+                n2 = n2 % n1;
             }
         }
 
-        return gcd;
+        return n1 != 0 ? n1 : n2;
     }
 
     // Power Of Numbers
@@ -308,7 +322,7 @@ public class Programs {
         // System.out.println(solutions.isPerfect(1));
         // System.out.println(Solutions.isPrime(16));
         // System.out.println(solutions.countPrimeNumbers(10));
-        // System.out.println(solutions.gcdOfTwoNumbers(40, 39));
-        System.out.println(solutions.powerOfNumbers(30));
+        System.out.println(solutions.gcdOfTwoNumbers(12, 6));
+        // System.out.println(solutions.powerOfNumbers(30));
     }
 }
