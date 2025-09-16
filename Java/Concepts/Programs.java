@@ -263,7 +263,7 @@ class Solutions {
 
     // GCD of Two Numbers
 
-    public int gcdOfTwoNumbers(int n1, int n2) {
+    public static int gcdOfTwoNumbers(int n1, int n2) {
         // Brute-force
 
         // int gcd = 1;
@@ -304,6 +304,29 @@ class Solutions {
 
         return (int) Math.pow(originalNum, power);
     }
+
+    // LCM of two numbers
+
+    public int lcmOfNumbers(int n1, int n2) {
+        // Brute-force
+    
+        // int max = n1 > n2 ? n1 : n2;
+        // int count = 1, lcm;
+
+        // do {
+        // lcm = count * max;
+        // if (lcm % n1 == 0 && lcm % n2 == 0) {
+        // break;
+        // }
+        // count++;
+        // } while (count != 0);
+
+        // return lcm;
+
+        // Optimised
+
+        return (n1 * n2) / Solutions.gcdOfTwoNumbers(n1, n2);
+    }
 }
 
 public class Programs {
@@ -322,7 +345,8 @@ public class Programs {
         // System.out.println(solutions.isPerfect(1));
         // System.out.println(Solutions.isPrime(16));
         // System.out.println(solutions.countPrimeNumbers(10));
-        System.out.println(solutions.gcdOfTwoNumbers(12, 6));
         // System.out.println(solutions.powerOfNumbers(30));
+        // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
+        System.out.println(solutions.lcmOfNumbers(3, 5));
     }
 }
