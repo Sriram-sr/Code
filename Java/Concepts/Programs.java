@@ -309,7 +309,7 @@ class Solutions {
 
     public int lcmOfNumbers(int n1, int n2) {
         // Brute-force
-    
+
         // int max = n1 > n2 ? n1 : n2;
         // int count = 1, lcm;
 
@@ -326,6 +326,22 @@ class Solutions {
         // Optimised
 
         return (n1 * n2) / Solutions.gcdOfTwoNumbers(n1, n2);
+    }
+
+    // Divisors of a Number
+
+    public int[] getDivisors(int n) {
+        int[] list = new int[n];
+
+        int count = 0;
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                list[count] = i;
+                count++;
+            }
+        }
+
+        return Arrays.copyOf(list, count);
     }
 }
 
@@ -347,6 +363,7 @@ public class Programs {
         // System.out.println(solutions.countPrimeNumbers(10));
         // System.out.println(solutions.powerOfNumbers(30));
         // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
-        System.out.println(solutions.lcmOfNumbers(3, 5));
+        // System.out.println(solutions.lcmOfNumbers(3, 5));
+        System.out.println(Arrays.toString(solutions.getDivisors(8)));
     }
 }

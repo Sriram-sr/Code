@@ -54,6 +54,30 @@ class Laptop extends Computer {
     }
 }
 
+class Outer {
+    String onlyVar = "Only variable of this class";
+
+    public void express() {
+        System.out.println("Expressing outer class");
+    }
+
+    class Inner {
+        public void expressInner() {
+            System.out.println("Expressing inner class");
+        }
+    }
+
+    static class StaticInner {
+        public void expressStaticInner() {
+            System.out.println("Expressing static inner class");
+        }
+    }
+}
+
+abstract class SecureFirewall {
+    abstract void configDHCP();
+}
+
 public class OOP {
     public static void main(String[] args) {
         try {
@@ -81,5 +105,29 @@ public class OOP {
         Laptop lapOwnInstance = (Laptop) lapIn25; // Downcasting
         lapOwnInstance.getLapArchitecture();
         lapOwnInstance.getArchitecture();
+
+        Outer outer = new Outer();
+        outer.express();
+        Outer.Inner inner = outer.new Inner();
+        inner.expressInner();
+        Outer.StaticInner staticInnerInstance = new Outer.StaticInner();
+        staticInnerInstance.expressStaticInner();
+
+        // Anonymous inner class
+
+        Outer outer2 = new Outer(){
+            @Override
+            public void express() {
+                System.out.println("Overridden outer with anonymous inner class");
+            }
+        };
+        outer2.express();
+
+        SecureFirewall ciscoasa = new SecureFirewall() {
+            public void configDHCP() { // Inner class allows to create instance for abstract classes
+                System.out.println("Configuring DHCP");
+            }
+        };
+        ciscoasa.configDHCP();
     }
 }
