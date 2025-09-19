@@ -343,6 +343,38 @@ class Solutions {
 
         return Arrays.copyOf(list, count);
     }
+
+    // Reverse an array
+
+    public int[] reverseArray(int[] arr, int n) {
+        // int[] tempArray = new int[n];
+
+        // for (int idx = n - 1; idx >= 0; idx--) {
+        // tempArray[n - 1 - idx] = arr[idx];
+        // }
+
+        // for (int idx = 0; idx < n; idx++) {
+        // arr[idx] = tempArray[idx];
+        // }
+
+        // return arr;
+
+        // Approach 2
+
+        int left = 0;
+        int right = n - 1;
+        int temp;
+
+        while (right > left) {
+            temp = arr[right];
+            arr[right] = arr[left];
+            arr[left] = temp;
+            left++;
+            right--;
+        }
+
+        return arr;
+    }
 }
 
 public class Programs {
@@ -364,6 +396,7 @@ public class Programs {
         // System.out.println(solutions.powerOfNumbers(30));
         // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
         // System.out.println(solutions.lcmOfNumbers(3, 5));
-        System.out.println(Arrays.toString(solutions.getDivisors(8)));
+        // System.out.println(Arrays.toString(solutions.getDivisors(8)));
+        System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 }, 2)));
     }
 }
