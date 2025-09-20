@@ -347,6 +347,8 @@ class Solutions {
     // Reverse an array
 
     public int[] reverseArray(int[] arr, int n) {
+        // Brute-force
+
         // int[] tempArray = new int[n];
 
         // for (int idx = n - 1; idx >= 0; idx--) {
@@ -359,7 +361,7 @@ class Solutions {
 
         // return arr;
 
-        // Approach 2
+        // Optimised
 
         int left = 0;
         int right = n - 1;
@@ -374,6 +376,15 @@ class Solutions {
         }
 
         return arr;
+    }
+
+    public boolean arraySortedOrNot(int[] arr, int n) {
+        for (int idx = 0; idx <= n - 2; idx++) {
+            if (!(arr[idx] <= arr[idx + 1])) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
@@ -397,6 +408,8 @@ public class Programs {
         // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
         // System.out.println(solutions.lcmOfNumbers(3, 5));
         // System.out.println(Arrays.toString(solutions.getDivisors(8)));
-        System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 }, 2)));
+        // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
+        // 2)));
+        System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
     }
 }
