@@ -78,6 +78,18 @@ abstract class SecureFirewall {
     abstract void configDHCP();
 }
 
+interface Framework {
+    int version = 2; // Should initialize them as they are final static by default
+
+    void describeFramework(); // They are by default public absract
+}
+
+class Library implements Framework {
+    public void describeFramework() {
+        System.out.println("Cutting edge framework!");
+    }   
+}
+
 public class OOP {
     public static void main(String[] args) {
         try {
@@ -129,5 +141,9 @@ public class OOP {
             }
         };
         ciscoasa.configDHCP();
+
+        Framework library = new Library();
+        library.describeFramework();
+        System.out.println(Framework.version);
     }
 }
