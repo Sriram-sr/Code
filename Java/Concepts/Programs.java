@@ -386,6 +386,20 @@ class Solutions {
         }
         return true;
     }
+
+    // Palindrome Check string
+
+    public boolean palindromeCheck(String s) {
+        int lastIdx = s.length() - 1;
+        StringBuilder reverse = new StringBuilder();
+
+        while (lastIdx >= 0) {
+            reverse.append(s.charAt(lastIdx));
+            lastIdx--;
+        }
+
+        return s.equals(reverse.toString());
+    }
 }
 
 public class Programs {
@@ -410,6 +424,7 @@ public class Programs {
         // System.out.println(Arrays.toString(solutions.getDivisors(8)));
         // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
         // 2)));
-        System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
+        // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
+        System.out.println(solutions.palindromeCheck("aabbccbbaa"));
     }
 }
