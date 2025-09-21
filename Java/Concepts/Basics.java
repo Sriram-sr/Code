@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 class Employee {
@@ -28,6 +29,10 @@ class Manager extends Employee {
     }
 }
 
+enum StatusCodes {
+    Failed, Passed, Skipped, Errored
+};
+
 public class Basics {
     public static void main(String[] args) {
         int number = -9;
@@ -45,5 +50,11 @@ public class Basics {
         Employee manager = new Manager("Bob", 80000, "IT");
         System.out.println(employee.getDetails());
         System.out.println(manager.getDetails());
+
+        StatusCodes status = StatusCodes.Errored;
+        StatusCodes[] allStatus = StatusCodes.values();
+        System.out.println(status);
+        System.out.println(status.ordinal());
+        System.out.println(Arrays.toString(allStatus));
     }
 }
