@@ -390,15 +390,30 @@ class Solutions {
     // Palindrome Check string
 
     public boolean palindromeCheck(String s) {
-        int lastIdx = s.length() - 1;
-        StringBuilder reverse = new StringBuilder();
+        // int lastIdx = s.length() - 1;
+        // StringBuilder reverse = new StringBuilder();
 
-        while (lastIdx >= 0) {
-            reverse.append(s.charAt(lastIdx));
-            lastIdx--;
+        // while (lastIdx >= 0) {
+        // reverse.append(s.charAt(lastIdx));
+        // lastIdx--;
+        // }
+
+        // return s.equals(reverse.toString());
+
+        // Approach 2
+
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
 
-        return s.equals(reverse.toString());
+        return true;
     }
 }
 
@@ -425,6 +440,6 @@ public class Programs {
         // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
         // 2)));
         // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
-        System.out.println(solutions.palindromeCheck("aabbccbbaa"));
+        System.out.println(solutions.palindromeCheck("racecar"));
     }
 }
