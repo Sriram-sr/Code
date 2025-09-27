@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 class Solutions {
     private Scanner scanner;
@@ -415,6 +416,24 @@ class Solutions {
 
         return true;
     }
+
+    // Min and Max in Array
+
+    public ArrayList<Integer> getMinMaxOfArray(int[] arr) {
+        ArrayList<Integer> finalList = new ArrayList<>();
+        finalList.add(arr[0]);
+        finalList.add(arr[0]);
+
+        for (int ele : arr) {
+            if (ele < finalList.get(0)) {
+                finalList.set(0, ele);
+            } else if (ele > finalList.get(1)) {
+                finalList.set(1, ele);
+            }
+        }
+
+        return finalList;
+    }
 }
 
 public class Programs {
@@ -440,6 +459,7 @@ public class Programs {
         // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
         // 2)));
         // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
-        System.out.println(solutions.palindromeCheck("racecar"));
+        // System.out.println(solutions.palindromeCheck("racecar"));
+        System.out.println(solutions.getMinMaxOfArray(new int[] { 1, 4, 3, -5, -4, 8, 6 }));
     }
 }
