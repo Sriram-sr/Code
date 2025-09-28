@@ -87,7 +87,13 @@ interface Framework {
 class Library implements Framework {
     public void describeFramework() {
         System.out.println("Cutting edge framework!");
-    }   
+    }
+}
+
+@FunctionalInterface
+interface MicroFramework {
+    // Can only have one method in the interface
+    void describeFramework(int estYear);
 }
 
 public class OOP {
@@ -127,7 +133,7 @@ public class OOP {
 
         // Anonymous inner class
 
-        Outer outer2 = new Outer(){
+        Outer outer2 = new Outer() {
             @Override
             public void express() {
                 System.out.println("Overridden outer with anonymous inner class");
@@ -145,5 +151,8 @@ public class OOP {
         Framework library = new Library();
         library.describeFramework();
         System.out.println(Framework.version);
+
+        MicroFramework mic = (int estYear) -> System.out.println("The framework got established in " + estYear);
+        mic.describeFramework(1995);
     }
 }
