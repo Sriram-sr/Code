@@ -434,6 +434,31 @@ class Solutions {
 
         return finalList;
     }
+
+    // Largest Odd Number in a String
+
+    public String largestOddNumberString(String s) {
+        int n = s.length();
+        int endIdx = -1;
+        for (int idx = n - 1; idx >= 0; idx--) {
+            if ((s.charAt(idx) - '0') % 2 == 1) {
+                endIdx = idx;
+                break;
+            }
+        }
+        if (endIdx == -1) {
+            return "";
+        }
+
+        int startIdx = 0;
+        for (startIdx = 0; startIdx < n; startIdx++) {
+            if (s.charAt(startIdx) != '0') {
+                break;
+            }
+        }
+
+        return s.substring(startIdx, endIdx + 1);
+    }
 }
 
 public class Programs {
@@ -460,6 +485,8 @@ public class Programs {
         // 2)));
         // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
         // System.out.println(solutions.palindromeCheck("racecar"));
-        System.out.println(solutions.getMinMaxOfArray(new int[] { 1, 4, 3, -5, -4, 8, 6 }));
+        // System.out.println(solutions.getMinMaxOfArray(new int[] { 1, 4, 3, -5, -4, 8,
+        // 6 }));
+        System.out.println(solutions.largestOddNumberString("800"));
     }
 }
