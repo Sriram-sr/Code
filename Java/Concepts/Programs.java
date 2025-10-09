@@ -459,6 +459,52 @@ class Solutions {
 
         return s.substring(startIdx, endIdx + 1);
     }
+
+    // Longest Common Prefix
+
+    public String longestCommonPrefix(String[] str) {
+        /**
+         * String sample = str[0], temp;
+         * String prefix = "";
+         * for (int wordIdx = 1; wordIdx < str.length; wordIdx++) {
+         * temp = "";
+         * for (int charIdx = 0; charIdx < Math.min(sample.length(),
+         * str[wordIdx].length()); charIdx++) {
+         * if (str[wordIdx].charAt(charIdx) == sample.charAt(charIdx)) {
+         * temp += sample.charAt(charIdx);
+         * } else {
+         * break;
+         * }
+         * }
+         * if (temp == "") {
+         * prefix = "";
+         * break;
+         * }
+         * if (prefix.length() == 0 || temp.length() < prefix.length()) {
+         * prefix = temp;
+         * }
+         * }
+         * 
+         * return prefix;
+         */
+
+        // Approach 2
+
+        Arrays.sort(str);
+        String first = str[0];
+        String last = str[str.length - 1];
+
+        String prefix = "";
+        for (int idx = 0; idx < Math.min(first.length(), last.length()); idx++) {
+            if (first.charAt(idx) != last.charAt(idx)) {
+                break;
+            } else {
+                prefix += first.charAt(idx);
+            }
+        }
+
+        return prefix;
+    }
 }
 
 public class Programs {
@@ -487,6 +533,8 @@ public class Programs {
         // System.out.println(solutions.palindromeCheck("racecar"));
         // System.out.println(solutions.getMinMaxOfArray(new int[] { 1, 4, 3, -5, -4, 8,
         // 6 }));
-        System.out.println(solutions.largestOddNumberString("800"));
+        // System.out.println(solutions.largestOddNumberString("800"));
+        System.out.println(solutions.longestCommonPrefix(new String[] { "float", "flow",
+                "flight", "flop" }));
     }
 }
