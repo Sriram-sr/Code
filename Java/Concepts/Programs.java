@@ -332,17 +332,35 @@ class Solutions {
     // Divisors of a Number
 
     public int[] getDivisors(int n) {
-        int[] list = new int[n];
+        // int[] list = new int[n];
+
+        // int count = 0;
+        // for (int i = 1; i <= n; i++) {
+        // if (n % i == 0) {
+        // list[count] = i;
+        // count++;
+        // }
+        // }
+
+        // return Arrays.copyOf(list, count);
+
+        // Optimised
 
         int count = 0;
-        for (int i = 1; i <= n; i++) {
-            if (n % i == 0) {
-                list[count] = i;
-                count++;
+        int temp[] = new int[(int) Math.sqrt(n) * 2];
+
+        for (int num = 1; num * num <= n; num++) {
+            if (n % num == 0) {
+                temp[count++] = num;
+                if (num * num != n) {
+                    temp[count++] = n / num;
+                }
             }
         }
 
-        return Arrays.copyOf(list, count);
+        Arrays.sort(temp, 0, count);
+
+        return Arrays.copyOf(temp, count);
     }
 
     // Reverse an array
@@ -488,7 +506,7 @@ class Solutions {
          * return prefix;
          */
 
-        // Approach 2
+        // Optimised
 
         Arrays.sort(str);
         String first = str[0];
@@ -526,7 +544,7 @@ public class Programs {
         // System.out.println(solutions.powerOfNumbers(30));
         // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
         // System.out.println(solutions.lcmOfNumbers(3, 5));
-        // System.out.println(Arrays.toString(solutions.getDivisors(8)));
+        System.out.println(Arrays.toString(solutions.getDivisors(1000)));
         // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
         // 2)));
         // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
@@ -534,7 +552,8 @@ public class Programs {
         // System.out.println(solutions.getMinMaxOfArray(new int[] { 1, 4, 3, -5, -4, 8,
         // 6 }));
         // System.out.println(solutions.largestOddNumberString("800"));
-        System.out.println(solutions.longestCommonPrefix(new String[] { "float", "flow",
-                "flight", "flop" }));
+        // System.out.println(solutions.longestCommonPrefix(new String[] { "float",
+        // "flow",
+        // "flight", "flop" }));
     }
 }
