@@ -29,12 +29,12 @@ class Solutions {
             reversed = (reversed * 10) + remainder;
             num /= 10;
         }
-        
-        if(reversed > Integer.MAX_VALUE || reversed < Integer.MIN_VALUE){
+
+        if (reversed > Integer.MAX_VALUE || reversed < Integer.MIN_VALUE) {
             return 0;
         }
-        if(num < 0){
-            return (int)(-1 * reversed);
+        if (num < 0) {
+            return (int) (-1 * reversed);
         }
 
         return (int) reversed;
@@ -194,7 +194,7 @@ class Solutions {
     // Check for Perfect Number
 
     public boolean isPerfect(int n) {
-        // Brute-force
+        // Brute
 
         /*
          * int perfectNumber = 0;
@@ -212,7 +212,7 @@ class Solutions {
          * 
          */
 
-        // Optimised
+        // Optimal
 
         int perfectNum = n != 1 ? 1 : 0;
 
@@ -229,7 +229,7 @@ class Solutions {
     // Check for Prime Number
 
     public static boolean isPrime(int n) {
-        // Brute-force
+        // Brute
 
         // if (n == 1) {
         // return false;
@@ -241,7 +241,7 @@ class Solutions {
         // }
         // return true;
 
-        // Optimised
+        // Optimal
 
         if (n == 1) {
             return false;
@@ -272,7 +272,7 @@ class Solutions {
     // GCD of Two Numbers
 
     public static int gcdOfTwoNumbers(int n1, int n2) {
-        // Brute-force
+        // Brute
 
         // int gcd = 1;
         // int min = n1 < n2 ? n1 : n2;
@@ -285,7 +285,7 @@ class Solutions {
 
         // return gcd;
 
-        // Optimised
+        // Optimal
 
         while (n1 != 0 && n2 != 0) {
             if (n1 > n2) {
@@ -316,7 +316,7 @@ class Solutions {
     // LCM of two numbers
 
     public int lcmOfNumbers(int n1, int n2) {
-        // Brute-force
+        // Brute
 
         // int max = n1 > n2 ? n1 : n2;
         // int count = 1, lcm;
@@ -331,7 +331,7 @@ class Solutions {
 
         // return lcm;
 
-        // Optimised
+        // Optimal
 
         return (n1 * n2) / Solutions.gcdOfTwoNumbers(n1, n2);
     }
@@ -351,7 +351,7 @@ class Solutions {
 
         // return Arrays.copyOf(list, count);
 
-        // Optimised
+        // Optimal
 
         int count = 0;
         int temp[] = new int[(int) Math.sqrt(n) * 2];
@@ -373,7 +373,7 @@ class Solutions {
     // Reverse an array
 
     public int[] reverseArray(int[] arr, int n) {
-        // Brute-force
+        // Brute
 
         // int[] tempArray = new int[n];
 
@@ -387,7 +387,7 @@ class Solutions {
 
         // return arr;
 
-        // Optimised
+        // Optimal
 
         int left = 0;
         int right = n - 1;
@@ -513,7 +513,7 @@ class Solutions {
          * return prefix;
          */
 
-        // Optimised
+        // Optimal
 
         Arrays.sort(str);
         String first = str[0];
@@ -530,13 +530,64 @@ class Solutions {
 
         return prefix;
     }
+
+    // Rotate String
+
+    public boolean rortateString(String s, String goal) {
+        // Brute
+
+        if (s.length() != goal.length()) {
+            return false;
+        }
+
+        if (s.length() == 1) {
+            return s.equals(goal);
+        }
+
+        int shifts = s.length();
+        while (shifts > 0) {
+            s = s.substring(1) + s.charAt(0);
+            if (s.equals(goal)) {
+                return true;
+            }
+            shifts--;
+        }
+
+        return false;
+
+        // Optimimal
+
+        // return s.length() == goal.length() && (s + s).contains(goal);
+    }
+
+    // Valid Anagram
+
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        int[] freqS = new int[26], freqT = new int[26];
+        for (int idx = 0; idx < s.length(); idx++) {
+            freqS[s.charAt(idx) - 'a']++;
+            freqT[t.charAt(idx) - 'a']++;
+        }
+
+        for (int charIdx = 0; charIdx < freqS.length; charIdx++) {
+            if (freqS[charIdx] != freqT[charIdx]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
         // solutions.findOddOrEven(19);
-        System.out.println(solutions.reverseNumber(-1534236469));
+        // System.out.println(solutions.reverseNumber(-1534236469));
         // solutions.findGreatestNumber();
         // System.out.println(solutions.findSumOfArrayElements());
         // solutions.takeInputAndDisplay();
@@ -562,5 +613,7 @@ public class Programs {
         // System.out.println(solutions.longestCommonPrefix(new String[] { "float",
         // "flow",
         // "flight", "flop" }));
+        // System.out.println(solutions.rortateString("size", "zesi"));
+        System.out.println(solutions.isAnagram("anagram", "nagaram"));
     }
 }
