@@ -22,15 +22,22 @@ class Solutions {
     // Reverse a number
 
     public int reverseNumber(int num) {
-        int reversed = 0;
+        long reversed = 0;
         int remainder = 0;
-        while (num >= 1) {
+        while (num != 0) {
             remainder = num % 10;
             reversed = (reversed * 10) + remainder;
             num /= 10;
         }
+        
+        if(reversed > Integer.MAX_VALUE || reversed < Integer.MIN_VALUE){
+            return 0;
+        }
+        if(num < 0){
+            return (int)(-1 * reversed);
+        }
 
-        return reversed;
+        return (int) reversed;
     }
 
     // Greatest of three numbers
@@ -529,7 +536,7 @@ public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
         // solutions.findOddOrEven(19);
-        // System.out.println(solutions.reverseNumber(271));
+        System.out.println(solutions.reverseNumber(-1534236469));
         // solutions.findGreatestNumber();
         // System.out.println(solutions.findSumOfArrayElements());
         // solutions.takeInputAndDisplay();
@@ -544,7 +551,7 @@ public class Programs {
         // System.out.println(solutions.powerOfNumbers(30));
         // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
         // System.out.println(solutions.lcmOfNumbers(3, 5));
-        System.out.println(Arrays.toString(solutions.getDivisors(1000)));
+        // System.out.println(Arrays.toString(solutions.getDivisors(1000)));
         // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
         // 2)));
         // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
