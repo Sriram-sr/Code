@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 
 public class CollectionsDemo {
     public static void main(String[] args) {
@@ -39,5 +40,13 @@ public class CollectionsDemo {
         });
 
         System.out.println(numbers);
+
+        // LinkedList
+
+        LinkedList<Integer> llist = new LinkedList<>();
+        llist.add(2);
+        llist.add(4);
+        llist.addFirst(1);
+        System.out.println(llist);
     }
 }
