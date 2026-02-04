@@ -523,37 +523,16 @@ class Solutions {
 
         return prefix;
     }
+
+    // Max handshakes in a room
+    public int maxHandshakes(int n) {
+        return n * (n - 1) / 2;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        // solutions.findOddOrEven(19);
-        // System.out.println(solutions.reverseNumber(271));
-        // solutions.findGreatestNumber();
-        // System.out.println(solutions.findSumOfArrayElements());
-        // solutions.takeInputAndDisplay();
-        // System.out.println(solutions.sumOfDigits(271));
-        // System.out.println(solutions.isAmstrongNumber(1634));
-        // System.out.println(solutions.evenlyDivides(8604020));
-        // solutions.printPairSum(new int[] { 2, 9, 4, -1, 8, 5 });
-        // System.out.println(solutions.getLargest(99));
-        // System.out.println(solutions.isPerfect(1));
-        // System.out.println(Solutions.isPrime(16));
-        // System.out.println(solutions.countPrimeNumbers(10));
-        // System.out.println(solutions.powerOfNumbers(30));
-        // System.out.println(solutions.gcdOfTwoNumbers(12, 6));
-        // System.out.println(solutions.lcmOfNumbers(3, 5));
-        System.out.println(Arrays.toString(solutions.getDivisors(1000)));
-        // System.out.println(Arrays.toString(solutions.reverseArray(new int[] { 8, 0 },
-        // 2)));
-        // System.out.println(solutions.arraySortedOrNot(new int[] { 5, 5 }, 2));
-        // System.out.println(solutions.palindromeCheck("racecar"));
-        // System.out.println(solutions.getMinMaxOfArray(new int[] { 1, 4, 3, -5, -4, 8,
-        // 6 }));
-        // System.out.println(solutions.largestOddNumberString("800"));
-        // System.out.println(solutions.longestCommonPrefix(new String[] { "float",
-        // "flow",
-        // "flight", "flop" }));
+        System.out.println(solutions.maxHandshakes(6));
     }
 }
