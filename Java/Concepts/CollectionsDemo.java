@@ -46,6 +46,7 @@ public class CollectionsDemo {
         LinkedList<Integer> llist = new LinkedList<>();
         llist.add(2);
         llist.add(4);
+        llist.add(8);
         llist.addFirst(1);
         System.out.println(llist);
     }
