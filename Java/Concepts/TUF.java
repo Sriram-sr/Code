@@ -77,11 +77,6 @@ class Solution {
 public class TUF {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        // solution.studentGrade(15);
-        // solution.whichWeekDay(-8);
-        // int[] numbers = {2};
-        // System.out.println(solution.sumOfFirstAndLast(numbers));
-        // solution.printX(4, 2);
         System.out.println(solution.lastChar("takeuforward"));
     }
 }
