@@ -206,6 +206,6 @@ class Solutions {
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.maxHandshakes(6));
+        System.out.println(solutions.maxHandshakes(5);
     }
 }
