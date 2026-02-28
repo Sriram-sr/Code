@@ -128,3 +128,27 @@ def pattern_alphabets(n):
         print()
 
 pattern_alphabets(5)
+
+
+def modify_reference(ref_obj):
+    ref_obj.num = 999
+
+class Parent:
+    def __init__(self, num, txt):
+        self.num = num
+        self.txt = txt
+
+    def get_num(self):
+        print(f'Number is {self.num}')
+
+
+parent = Parent(2, 'some')
+parent.get_num()
+
+modify_reference(parent)
+
+parent.get_num()
+
+check = lambda x: x ^ 2
+
+print(check(2))
