@@ -152,3 +152,21 @@ parent.get_num()
 check = lambda x: x ^ 2
 
 print(check(2))
+
+
+def minion_game(word):
+    vowels = 'aeiou'
+    word_length = len(word)
+    kelvin_score = 0
+    stuart_score = 0
+
+    for idx in range(word_length):
+        if word[idx] in vowels:
+            kelvin_score += (word_length - idx + 1)
+        else:
+            stuart_score += (word_length - idx + 1)
+
+    return f"Kelvin {kelvin_score}" if kelvin_score > stuart_score else f"Stuart {stuart_score}"
+
+
+print(minion_game('banana'))
