@@ -1,6 +1,6 @@
 import re
 
-long_text = 'Learning Python at Mieupro'
+long_text = 'Learning Python at X'
 
 # print(long_text.casefold())
 # print(len(long_text))
