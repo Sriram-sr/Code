@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -159,7 +160,7 @@ class Solutions {
          * prefix = temp;
          * }
          * }
-         * 
+         *
          * return prefix;
          */
 
@@ -182,18 +183,14 @@ class Solutions {
     }
 
     public boolean isLeapYear(int year) {
-        if (year % 400 == 0)
-            return true;
-        else if (year % 4 == 0 && year % 100 != 100)
-            return true;
-        else
-            return false;
+        if (year % 400 == 0) return true;
+        else if (year % 4 == 0) return true;
+        else return false;
     }
 
     public void leapYearInRange(int start, int end) {
         for (int year = start; year <= end; year++) {
-            if (isLeapYear(year))
-                System.out.println(year);
+            if (isLeapYear(year)) System.out.println(year);
         }
     }
 
@@ -201,11 +198,25 @@ class Solutions {
     public int maxHandshakes(int n) {
         return n * (n - 1) / 2;
     }
+
+    public int[] swapAdjacents(int[] arr) {
+        int temp;
+
+        for (int idx = 0; idx < arr.length; idx++) {
+            if (idx % 2 == 1) {
+                temp = arr[idx];
+                arr[idx] = arr[idx - 1];
+                arr[idx - 1] = temp;
+            }
+        }
+
+        return arr;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.maxHandshakes(5);
+        System.out.println(Arrays.toString(solutions.swapAdjacents(new int[] { 20, 10, 40, 30, 60, 50 })));
     }
 }

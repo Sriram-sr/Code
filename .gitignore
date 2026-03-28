@@ -1,2 +1,6 @@
 package-lock.json
 .vscode/
+
+# --- IntelliJ IDEA ---
+.idea/
+*.iml
