@@ -212,11 +212,25 @@ class Solutions {
 
         return arr;
     }
+
+    public int countOperations(int n) {
+        int cnt = 0;
+        
+        while (n != 0) {
+            if (n % 2 == 0)
+                n /= 2;
+            else
+                n -= 1;
+            cnt += 1;
+       }
+       
+       return cnt;
+   }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(Arrays.toString(solutions.swapAdjacents(new int[] { 20, 10, 40, 30, 60, 50 })));
+        System.out.println(solutions.countOperations(24));
     }
 }
