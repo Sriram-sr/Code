@@ -27,8 +27,9 @@ class Child(Base):
         print(f'From the parent {self.public_variable}, {self._protected_variable}')
 
     def invoke_parent_methods(self):
-        self.__private_method()
+        self._protected_method()
+        self.__private_method()  # This will raise an error as private method cannot be accessed in child class
 
 
-# child_instance = Child()
-# child_instance.invoke_parent_methods()
+child_instance = Child()
+child_instance.invoke_parent_methods()
