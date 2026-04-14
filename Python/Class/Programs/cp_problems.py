@@ -31,6 +31,19 @@ class Solution:
                 high = mid - 1
 
         return low
+    
+    def countDigit(self, n: int) -> int:
+        if n == 0:
+            return 1
+
+        n = abs(n)
+        count = 0
+
+        while n > 0:
+            count += 1
+            n //= 10
+
+        return count
 
 
 solution = Solution()

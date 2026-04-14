@@ -170,3 +170,20 @@ def minion_game(word):
 
 
 print(minion_game('banana'))
+
+
+def decorate_username(func):
+    def wrapper(*args, **kwargs):
+        print('Timestamp before')
+        print(func(*args, **kwargs))
+        print('Timestamp after')
+
+    return wrapper
+
+
+@decorate_username
+def get_username(cec_id):
+    return f'{cec_id}_cisco'
+
+
+# get_username('sripanne')

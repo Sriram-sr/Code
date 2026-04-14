@@ -215,22 +215,29 @@ class Solutions {
 
     public int countOperations(int n) {
         int cnt = 0;
-        
+
         while (n != 0) {
-            if (n % 2 == 0)
-                n /= 2;
-            else
-                n -= 1;
+            if (n % 2 == 0) n /= 2;
+            else n -= 1;
             cnt += 1;
-       }
-       
-       return cnt;
-   }
+        }
+
+        return cnt;
+    }
+
+    public int findInsertPosition(int[] arr, int k) {
+        for (int idx = 0; idx < arr.length; idx++) {
+            if (arr[idx] == k) return idx;
+            else if (arr[idx] > k) return idx;
+        }
+
+        return arr.length;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.countOperations(24));
+        System.out.println(solutions.findInsertPosition(new int[] {1, 3, 4, 6, 9}, 5));
     }
 }
