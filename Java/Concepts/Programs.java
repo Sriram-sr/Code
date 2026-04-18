@@ -226,18 +226,36 @@ class Solutions {
     }
 
     public int findInsertPosition(int[] arr, int k) {
-        for (int idx = 0; idx < arr.length; idx++) {
-            if (arr[idx] == k) return idx;
-            else if (arr[idx] > k) return idx;
+        // Brute O(n) time and O(1) space
+
+//        for (int idx = 0; idx < arr.length; idx++) {
+//            if (arr[idx] == k) return idx;
+//            else if (arr[idx] > k) return idx;
+//        }
+//
+//        return arr.length;
+
+        // Optimal
+
+        int low = 0;
+        int high = arr.length - 1;
+        int mid;
+
+        while (low <= high) {
+            mid = low + (high - low) / 2;
+
+            if (arr[mid] == k) return mid;
+            else if (arr[mid] < k) low = mid + 1;
+            else high = mid - 1;
         }
 
-        return arr.length;
+        return low;
     }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.findInsertPosition(new int[] {1, 3, 4, 6, 9}, 5));
+        System.out.println(solutions.findInsertPosition(new int[]{1, 3, 4, 6, 9}, 10));
     }
 }
