@@ -1,12 +1,12 @@
 class Solution:
-    def swap_adjacent(self, arr : list) -> list:
+    def swap_adjacent(self, arr : list[int]) -> list[int]:
         for idx in range(len(arr)):
             if idx % 2 == 1:
                 arr[idx], arr[idx - 1] = arr[idx - 1], arr[idx]
 
         return arr
     
-    def find_insert_position(self, arr: list, k: int) -> int:
+    def find_insert_position(self, arr: list[int], k: int) -> int:
         # for idx in range(len(arr)):
         #     if arr[idx] == k:
         #         return idx
@@ -32,7 +32,7 @@ class Solution:
 
         return low
     
-    def countDigit(self, n: int) -> int:
+    def count_digit(self, n: int) -> int:
         if n == 0:
             return 1
 
