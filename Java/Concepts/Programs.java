@@ -251,11 +251,31 @@ class Solutions {
 
         return low;
     }
+
+    public int countSubStrings(String S, String sub) {
+        // Brute O(n * m)
+
+        int count = 0;
+        boolean match;
+
+        for (int idx = 0; idx < S.length() - sub.length() + 1; idx++) {
+            match = true;
+            for (int subIdx = idx; subIdx < idx + sub.length(); subIdx++) {
+                if (S.charAt(subIdx) != sub.charAt(subIdx - idx)) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) count++;
+        }
+
+        return count;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.findInsertPosition(new int[]{1, 3, 4, 6, 9}, 10));
+        System.out.println(solutions.countSubStrings("aaaa", "aa"));
     }
 }
