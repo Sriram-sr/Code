@@ -183,14 +183,18 @@ class Solutions {
     }
 
     public boolean isLeapYear(int year) {
-        if (year % 400 == 0) return true;
-        else if (year % 4 == 0) return true;
-        else return false;
+        if (year % 400 == 0)
+            return true;
+        else if (year % 4 == 0)
+            return true;
+        else
+            return false;
     }
 
     public void leapYearInRange(int start, int end) {
         for (int year = start; year <= end; year++) {
-            if (isLeapYear(year)) System.out.println(year);
+            if (isLeapYear(year))
+                System.out.println(year);
         }
     }
 
@@ -217,8 +221,10 @@ class Solutions {
         int cnt = 0;
 
         while (n != 0) {
-            if (n % 2 == 0) n /= 2;
-            else n -= 1;
+            if (n % 2 == 0)
+                n /= 2;
+            else
+                n -= 1;
             cnt += 1;
         }
 
@@ -228,12 +234,12 @@ class Solutions {
     public int findInsertPosition(int[] arr, int k) {
         // Brute O(n) time and O(1) space
 
-//        for (int idx = 0; idx < arr.length; idx++) {
-//            if (arr[idx] == k) return idx;
-//            else if (arr[idx] > k) return idx;
-//        }
-//
-//        return arr.length;
+        // for (int idx = 0; idx < arr.length; idx++) {
+        // if (arr[idx] == k) return idx;
+        // else if (arr[idx] > k) return idx;
+        // }
+        //
+        // return arr.length;
 
         // Optimal
 
@@ -244,9 +250,12 @@ class Solutions {
         while (low <= high) {
             mid = low + (high - low) / 2;
 
-            if (arr[mid] == k) return mid;
-            else if (arr[mid] < k) low = mid + 1;
-            else high = mid - 1;
+            if (arr[mid] == k)
+                return mid;
+            else if (arr[mid] < k)
+                low = mid + 1;
+            else
+                high = mid - 1;
         }
 
         return low;
@@ -266,16 +275,28 @@ class Solutions {
                     break;
                 }
             }
-            if (match) count++;
+            if (match)
+                count++;
         }
 
         return count;
+    }
+
+    public int[] runningSum(int[] arr) {
+        int sum = 0;
+
+        for (int idx = 0; idx < arr.length; idx++) {
+            sum += arr[idx];
+            arr[idx] = sum;
+        }
+
+        return arr;
     }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.countSubStrings("aaaa", "aa"));
+        System.out.println(Arrays.toString(solutions.runningSum(new int[] { 1, 2, 3, 4, 5 })));
     }
 }
