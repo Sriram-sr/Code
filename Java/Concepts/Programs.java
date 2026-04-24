@@ -292,11 +292,34 @@ class Solutions {
 
         return arr;
     }
+
+    public int sumOfDigits(int num) {
+        int sum = 0;
+        int rem;
+
+        while (num > 0) {
+            rem = num % 10;
+            sum += rem;
+            num /= 10;
+        }
+
+        return sum;
+    }
+
+    public int[] sumOfEachDigits(int[] arr) {
+        // O (N * log M) where M is the number with max digits
+
+        for (int idx = 0; idx < arr.length; idx++) {
+            arr[idx] = sumOfDigits(arr[idx]);
+        }
+
+        return arr;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(Arrays.toString(solutions.runningSum(new int[] { 1, 2, 3, 4, 5 })));
+        System.out.println(Arrays.toString(solutions.sumOfEachDigits(new int[]{14, 6, 33, 42, 58})));
     }
 }
