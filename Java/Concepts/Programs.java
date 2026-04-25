@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class Solutions {
     private Scanner scanner;
@@ -183,18 +184,14 @@ class Solutions {
     }
 
     public boolean isLeapYear(int year) {
-        if (year % 400 == 0)
-            return true;
-        else if (year % 4 == 0)
-            return true;
-        else
-            return false;
+        if (year % 400 == 0) return true;
+        else if (year % 4 == 0) return true;
+        else return false;
     }
 
     public void leapYearInRange(int start, int end) {
         for (int year = start; year <= end; year++) {
-            if (isLeapYear(year))
-                System.out.println(year);
+            if (isLeapYear(year)) System.out.println(year);
         }
     }
 
@@ -221,10 +218,8 @@ class Solutions {
         int cnt = 0;
 
         while (n != 0) {
-            if (n % 2 == 0)
-                n /= 2;
-            else
-                n -= 1;
+            if (n % 2 == 0) n /= 2;
+            else n -= 1;
             cnt += 1;
         }
 
@@ -250,12 +245,9 @@ class Solutions {
         while (low <= high) {
             mid = low + (high - low) / 2;
 
-            if (arr[mid] == k)
-                return mid;
-            else if (arr[mid] < k)
-                low = mid + 1;
-            else
-                high = mid - 1;
+            if (arr[mid] == k) return mid;
+            else if (arr[mid] < k) low = mid + 1;
+            else high = mid - 1;
         }
 
         return low;
@@ -275,8 +267,7 @@ class Solutions {
                     break;
                 }
             }
-            if (match)
-                count++;
+            if (match) count++;
         }
 
         return count;
@@ -315,11 +306,21 @@ class Solutions {
 
         return arr;
     }
+
+    public HashMap<Integer, Integer> getFrequency(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int ele : arr) {
+            map.put(ele, map.getOrDefault(ele, 0) + 1);
+        }
+
+        return map;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(Arrays.toString(solutions.sumOfEachDigits(new int[]{14, 6, 33, 42, 58})));
+        solutions.getFrequency(new int[]{2, 3, 7, 2, 1, 7, 5, 7, 4});
     }
-}
+}`
