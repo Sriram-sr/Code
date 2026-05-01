@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -316,11 +317,40 @@ class Solutions {
 
         return map;
     }
+
+    public List<List<Integer>> getSublists(int[] arr, int n, int k) {
+        int sublistsInRange = n / k;
+        int extraValues = n % k;
+        int totalSubLists = extraValues > 0 ? sublistsInRange + 1 : sublistsInRange;
+
+        List<List<Integer>> result = new ArrayList<>();
+        int ptr = 0;
+        List<Integer> subList;
+
+        for (int idx = 0; idx < totalSubLists; idx++) {
+            subList = new ArrayList<>();
+            if (extraValues > 0 && idx == totalSubLists - 1) {
+                for (int subIdx = 0; subIdx < extraValues; subIdx++) {
+                    subList.add(arr[ptr]);
+                    ptr++;
+                }
+            } else {
+                for (int subIdx = 0; subIdx < k; subIdx++) {
+                    subList.add(arr[ptr]);
+                    ptr++;
+                }
+            }
+            result.add(subList);
+        }
+
+        System.out.println(result);
+        return result;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        solutions.getFrequency(new int[]{2, 3, 7, 2, 1, 7, 5, 7, 4});
+        solutions.getSublists(new int[]{2, 3, 7, 4, 1, 6, 5, 8}, 8, 9);
     }
-}`
+}
