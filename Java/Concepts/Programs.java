@@ -319,6 +319,8 @@ class Solutions {
     }
 
     public List<List<Integer>> getSublists(int[] arr, int n, int k) {
+        // Optimal O(n) time and O(n) space
+
         int sublistsInRange = n / k;
         int extraValues = n % k;
         int totalSubLists = extraValues > 0 ? sublistsInRange + 1 : sublistsInRange;
@@ -343,7 +345,6 @@ class Solutions {
             result.add(subList);
         }
 
-        System.out.println(result);
         return result;
     }
 }
