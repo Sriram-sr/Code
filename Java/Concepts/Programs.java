@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.List;
@@ -349,6 +348,8 @@ class Solutions {
     }
 
     public int majorityElement(int[] nums) {
+        // O(n) time and O(1) space
+
         int majEle = -1;
         int cnt = 0;
 
@@ -365,12 +366,46 @@ class Solutions {
 
         return majEle;
     }
+
+    public List<Integer> leaders(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        int n = nums.length;
+
+        if (n == 1) {
+            result.add(nums[0]);
+            return result;
+        }
+
+        int leader = nums[n - 1];
+        result.add(leader);
+
+        for (int idx = n - 2; idx >= 0; idx--) {
+            if (nums[idx] > leader) {
+                leader = nums[idx];
+                result.add(nums[idx]);
+            }
+        }
+
+        int left = 0;
+        int right = result.size() - 1;
+        int temp;
+
+        while (left < right) {
+            temp = result.get(right);
+            result.set(right, result.get(left));
+            result.set(left, temp);
+            left++;
+            right--;
+        }
+
+        return result;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.majorityElement(new int[]{1, 1, 1, 2, 1, 2}));
+        System.out.println(solutions.leaders(new int[]{3, 6, 1, 4, 0, 2}));
         ;
     }
 }
