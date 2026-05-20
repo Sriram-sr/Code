@@ -347,11 +347,30 @@ class Solutions {
 
         return result;
     }
+
+    public int majorityElement(int[] nums) {
+        int majEle = -1;
+        int cnt = 0;
+
+        for (int ele : nums) {
+            if (cnt == 0) {
+                majEle = ele;
+                cnt = 1;
+            } else if (ele == majEle) {
+                cnt++;
+            } else {
+                cnt--;
+            }
+        }
+
+        return majEle;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        solutions.getSublists(new int[]{2, 3, 7, 4, 1, 6, 5, 8}, 8, 9);
+        System.out.println(solutions.majorityElement(new int[]{1, 1, 1, 2, 1, 2}));
+        ;
     }
 }
