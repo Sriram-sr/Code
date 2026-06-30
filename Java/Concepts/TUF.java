@@ -1,6 +1,6 @@
 class Solution {
     // Print last character of string
-    
+
     public char lastChar(String s) {
         return s.charAt(s.length() - 1);
     }
@@ -74,9 +74,42 @@ class Solution {
     }
 }
 
+class BankAccount {
+    private String name;
+    private double balance;
+
+    BankAccount(String name, double balance) {
+        this.name = name;
+        this.balance = balance;
+    }
+
+    BankAccount() {
+        this.name = "";
+        this.balance = 0;
+    }
+
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public double getBalance() {
+        return this.balance;
+    }
+}
+
 public class TUF {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.lastChar("takeuforward"));
+//        System.out.println(solution.lastChar("takeuforward"));
+
+        BankAccount account = new BankAccount("Sriram", 100);
+        double availableBalance = account.getBalance();
+        account.setName("Raina");
+        System.out.println(account.getName());
+        System.out.println(availableBalance);
     }
 }
