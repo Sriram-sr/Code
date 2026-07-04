@@ -422,7 +422,6 @@ class Solutions {
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-//        solutions.getNFibonacciNumbers(10);
-        System.out.println(solutions.fib(5));
+        solutions.getNFibonacciNumbers(10);
     }
 }
