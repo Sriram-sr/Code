@@ -88,6 +88,11 @@ class BankAccount {
         this.balance = 0;
     }
 
+    // Chaining constructor
+    BankAccount(String name) {
+        this(name, 0);
+    }
+
     public void setName(String newName) {
         this.name = newName;
     }
@@ -111,5 +116,7 @@ public class TUF {
         account.setName("Raina");
         System.out.println(account.getName());
         System.out.println(availableBalance);
+        BankAccount newAccount = new BankAccount("Sriram SR");
+        System.out.println(newAccount.getBalance());
     }
 }
