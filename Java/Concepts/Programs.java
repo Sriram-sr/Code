@@ -400,12 +400,29 @@ class Solutions {
 
         return result;
     }
+
+    public void getNFibonacciNumbers(int n) {
+        int cnt = 0;
+        int n1 = 0;
+        int n2 = 1;
+        int sum;
+
+        System.out.println(n1);
+        System.out.println(n2);
+        while (cnt < n - 2) {
+            sum = n1 + n2;
+            System.out.println(sum);
+            n1 = n2;
+            n2 = sum;
+            cnt++;
+        }
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.leaders(new int[]{3, 6, 1, 4, 0, 2}));
-        ;
+//        solutions.getNFibonacciNumbers(10);
+        System.out.println(solutions.fib(5));
     }
 }
