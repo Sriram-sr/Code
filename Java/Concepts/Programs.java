@@ -417,6 +417,29 @@ class Solutions {
             cnt++;
         }
     }
+
+    public int secondLargestElement(int[] nums) {
+        if (nums.length < 2) {
+            return -1;
+        }
+
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+
+        for (int val : nums) {
+            if (val > largest) {
+                secondLargest = largest;
+                largest = val;
+            } else if (val > secondLargest & val != largest) {
+                secondLargest = val;
+            }
+        }
+
+        if (secondLargest == Integer.MIN_VALUE)
+            return -1;
+
+        return secondLargest;
+    }
 }
 
 public class Programs {
