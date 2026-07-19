@@ -402,19 +402,33 @@ class Solutions {
     }
 
     public void getNFibonacciNumbers(int n) {
-        int cnt = 0;
-        int n1 = 0;
-        int n2 = 1;
-        int sum;
+//        int cnt = 0;
+//        int n1 = 0;
+//        int n2 = 1;
+//        int sum;
+//
+//        System.out.println(n1);
+//        System.out.println(n2);
+//        while (cnt < n - 2) {
+//            sum = n1 + n2;
+//            System.out.println(sum);
+//            n1 = n2;
+//            n2 = sum;
+//            cnt++;
+//        }
 
-        System.out.println(n1);
-        System.out.println(n2);
-        while (cnt < n - 2) {
-            sum = n1 + n2;
-            System.out.println(sum);
-            n1 = n2;
-            n2 = sum;
-            cnt++;
+        // Approach 2
+
+        int first = 0;
+        int last = 1;
+        int next;
+
+        for (int val = 0; val < n; val++) {
+            System.out.println(first);
+
+            next = first + last;
+            first = last;
+            last = next;
         }
     }
 
@@ -435,8 +449,7 @@ class Solutions {
             }
         }
 
-        if (secondLargest == Integer.MIN_VALUE)
-            return -1;
+        if (secondLargest == Integer.MIN_VALUE) return -1;
 
         return secondLargest;
     }
