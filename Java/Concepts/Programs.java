@@ -453,11 +453,28 @@ class Solutions {
 
         return secondLargest;
     }
+
+    public List<Object> removeEmptyLists(List<Object> inputList) {
+        // Sample input - [This, [], [3, 4, []], 4, [[], []], false]
+
+        List<Object> result = new ArrayList<>();
+
+        for (Object ele : inputList) {
+            if (ele instanceof List) {
+                @SuppressWarnings("unchecked") List<Object> cleanedSubList = removeEmptyLists((List<Object>) ele);
+
+                if (!cleanedSubList.isEmpty()) result.add(cleanedSubList);
+            } else {
+                result.add(ele);
+            }
+        }
+
+        return result;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        solutions.getNFibonacciNumbers(10);
     }
 }
