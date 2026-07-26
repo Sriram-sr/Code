@@ -471,10 +471,29 @@ class Solutions {
 
         return result;
     }
+
+    public void moveZeroes(int[] nums) {
+        int[] result = new int[nums.length];
+        int idx = 0;
+
+        for (int ele : nums) {
+            if (ele != 0) {
+                result[idx] = ele;
+                idx++;
+            }
+        }
+
+        for (int eleIdx = 0; eleIdx < nums.length; eleIdx++) {
+            nums[eleIdx] = result[eleIdx];
+        }
+
+        System.out.println(Arrays.toString(nums));
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
+        solutions.moveZeroes(new int[]{0, 1, 4, 0, 5, 2});
     }
 }
