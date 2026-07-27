@@ -59,6 +59,43 @@ class Book {
     }
 }
 
+class Employee {
+    public String name;
+    protected int employeeId;
+    private double salary;
+
+    Employee(String _name, int _employeeId, double _salary) {
+        this.name = _name;
+        this.employeeId = _employeeId;
+
+        if (_salary < 0) {
+            System.out.println("Invalid salary");
+            this.salary = 0;
+        } else {
+            this.salary = _salary;
+        }
+    }
+
+    public void setSalary(double _salary) {
+        if (_salary < 0) {
+            System.out.println("Invalid salary");
+            this.salary = 0;
+        } else {
+            this.salary = _salary;
+        }
+    }
+
+    public double getSalary() {
+        return this.salary;
+    }
+
+    public void displayEmployeeDetails() {
+        System.out.println("Name : " + this.name);
+        System.out.println("Employee Id : " + this.employeeId);
+        System.out.printf("Salary : %.2f\n", this.salary);
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         Student student = new Student();
