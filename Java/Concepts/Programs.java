@@ -489,11 +489,32 @@ class Solutions {
 
         System.out.println(Arrays.toString(nums));
     }
+
+    public List<Integer> findDuplicateElements(int[] arr) {
+        int max = arr[0];
+
+        for (int ele : arr) {
+            if (ele > max) max = ele;
+        }
+
+        int[] hash = new int[max + 1];
+
+        for (int ele : arr)
+            hash[ele] += 1;
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int idx = 0; idx < hash.length; idx++) {
+            if (hash[idx] > 1) result.add(idx);
+        }
+
+        return result;
+    }
 }
 
 public class Programs {
     public static void main(String args[]) {
         Solutions solutions = new Solutions();
-        solutions.moveZeroes(new int[]{0, 1, 4, 0, 5, 2});
+        System.out.println(solutions.findDuplicateElements(new int[]{2, 2, 2, 2, 2}));
     }
 }
