@@ -491,6 +491,10 @@ class Solutions {
     }
 
     public List<Integer> findDuplicateElements(int[] arr) {
+        // Worst time complexity
+
+        if (arr.length == 0) return new ArrayList<>();
+
         int max = arr[0];
 
         for (int ele : arr) {
@@ -513,8 +517,8 @@ class Solutions {
 }
 
 public class Programs {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.findDuplicateElements(new int[]{2, 2, 2, 2, 2}));
+        System.out.println(solutions.findDuplicateElements(new int[]{1, 5, 3, 1, 4}));
     }
 }
