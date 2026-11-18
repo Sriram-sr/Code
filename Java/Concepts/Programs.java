@@ -514,11 +514,35 @@ class Solutions {
 
         return result;
     }
+
+    public String largeOddNum(String s) {
+        // Optimal O(n) time & O(1) space
+
+        int lastIdx = -1;
+        for (int idx = s.length() - 1; idx >= 0; idx--) {
+            if (s.charAt(idx) % 2 == 1) {
+                lastIdx = idx;
+                break;
+            }
+        }
+
+        if (lastIdx == -1) return "";
+
+        int firstIdx = -1;
+        for (int idx = 0; idx < s.length(); idx++) {
+            if (s.charAt(idx) != '0') {
+                firstIdx = idx;
+                break;
+            }
+        }
+
+        return s.substring(firstIdx, lastIdx + 1);
+    }
 }
 
 public class Programs {
     public static void main(String[] args) {
         Solutions solutions = new Solutions();
-        System.out.println(solutions.findDuplicateElements(new int[]{1, 5, 3, 1, 4}));
+        System.out.println(solutions.largeOddNum("003618286"));
     }
 }
